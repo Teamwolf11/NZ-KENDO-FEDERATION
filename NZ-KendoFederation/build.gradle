@@ -11,4 +11,7 @@ repositories {
 
 dependencies {
     testImplementation     'junit:junit:4.13'
+    //jdbc 'org.postgresql:postgresql:42.2.0'
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation 'org.postgresql:postgresql:42.2.23'
 }
