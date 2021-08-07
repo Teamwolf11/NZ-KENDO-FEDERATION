@@ -60,6 +60,10 @@ public class DatabaseTest {
 
         row = st.executeUpdate();
         System.out.println("Deleted " + row + " row(s)");
+        
+        
+        
+        System.out.println("Looks like everything works!");
     }
     
 }
