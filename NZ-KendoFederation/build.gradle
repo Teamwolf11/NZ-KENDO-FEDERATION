@@ -15,3 +15,46 @@ dependencies {
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation 'org.postgresql:postgresql:42.2.23'
 }
+
+
+task createMissingSourceDirs {
+   group = "Source Directories"
+   description = "Create all of the missing source directories for this project."
+   doFirst {
+      sourceSets.each { def sourceRoot ->
+         sourceRoot.allSource.srcDirTrees.each { def sourceDir ->
+            if(!sourceDir.dir.exists()) {
+               println "Creating ${sourceDir}"
+               mkdir sourceDir.dir
+            }
+         }
+      }
+   }
+}
+ 
+task deleteEmptySourceDirs {
+   group = "Source Directories"
+   description = "Delete all empty source directories."
+   doFirst {
+      sourceSets.each { def sourceRoot ->
+         sourceRoot.allSource.srcDirTrees.each { def sourceDir ->
+            if(sourceDir.dir.exists() && sourceDir.dir.isDirectory() && sourceDir.dir.list().length == 0) {
+               println "Removing empty ${sourceDir}"
+               sourceDir.dir.delete()
+            }
+         }
+      }
+   }
+}
+
+
+sourceSets {
+    web {
+        resources {
+            srcDirs = ['public']
+        }
+        java { 
+            srcDirs = []
+        }
+    }
+}

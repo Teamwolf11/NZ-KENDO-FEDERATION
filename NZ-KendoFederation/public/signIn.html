@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>New Zealand Kendo Federation</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/angular.js"></script>
+        <script src="js/angular-resource.js"></script>
+        <script src="js/ngStorage.js"></script>
+        <script src="js/otagoReviewApp.js"></script>
+
+    </head>
+
+    <body>
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a>Sign In</a></li>
+                </ul>
+            </nav>
+            <!--<div ng-include="'menu.html'" ></div>-->
+        </header>
+
+        <main>
+            <section class="boxes">
+                <h2>Please sign in to continue.</h2>
+
+                <form>
+                    <fieldset class="textInputs">
+                        <legend>Account Details</legend>
+                        <ul>
+                            <li><label for="emailAddress">Email address: </label><input type="email" id="Email" tabindex="1" required placeholder="Please enter your email address"></li>
+                            <li><label for="password">Password: </label><input type="password" id="password" tabindex="2" required placeholder="Please enter your password"></li>
+                        </ul>
+                    </fieldset>
+                    <fieldset>
+                        <label><input type="reset" name="reset" value="Reset"></label>
+                        <label><input type="submit" name="submit" value="Sign In"></label>
+                    </fieldset>
+                </form>
+                <p>If you don't have an account then you can <a href="createAccount.html">create one</a></p>
+
+            </section>
+        </main>
+    </body>
+
+</html>
