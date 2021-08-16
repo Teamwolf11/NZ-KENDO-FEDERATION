@@ -9,6 +9,6 @@ package domain;
  *
  * @author lachl
  */
-class Club {
+public class Club {
     
 }
