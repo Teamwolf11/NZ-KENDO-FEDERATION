@@ -17,6 +17,9 @@ public class Event {
     public String venue;                //Location of event
     public String highGrade;            //Highest grade available to be given by this Event
 
+public Event(){
+    }
+    
     public Event(String Event_id, String name, Club relatedClub, String venue, String highGrade) {
         this.Event_id = Event_id;
         this.name = name;

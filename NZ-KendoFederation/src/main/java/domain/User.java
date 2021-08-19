@@ -2,13 +2,17 @@ package domain;
 
 import java.util.List;
 
-class User {
+public class User {
     
     public String userId;
     public String username;
     public String password;
     public String memberId;
     public List<AppRoles> roles;
+    
+    public User(){
+        
+    }
 
     public User(String userId, String username, String password, String memberId, List<AppRoles> roles) {
         this.userId = userId;
