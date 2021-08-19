@@ -1,6 +1,6 @@
 package dao;
 
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+
 import domain.Member;
 import java.sql.Date;
 import static java.time.temporal.TemporalQueries.localDate;
@@ -22,7 +22,6 @@ public class MemberCollectionsDAO implements MemberDAO {
         boris.setNzkfId("6565");
         boris.setfName("Boris");
         boris.setlName("Doloris");
-//        Date date=Date.valueOf("2011-02-18");
         boris.setJoinDate(Date.valueOf("2011-02-18"));
       
         Member doris = new Member();
@@ -31,7 +30,6 @@ public class MemberCollectionsDAO implements MemberDAO {
         doris.setNzkfId("6666");
         doris.setfName("Doris");
         doris.setlName("Doloris");
-//        Date date1=Date.valueOf("2011-03-18");
         boris.setJoinDate(Date.valueOf("2011-03-18"));
  
         saveMember(boris);

@@ -5,6 +5,7 @@
  */
 package domain;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -16,7 +17,7 @@ public class Member {
     public String member_id;
     public String nzkfId;
     public User user;
-    public Date joinDate;
+    public Timestamp joinDate;  // should be timestamp to get date and time
     public String fName;    //FirstName
     public String lName;    //LastName
     public String mName;    //middleName
@@ -30,7 +31,7 @@ public class Member {
         this.member_id = id;
         this.nzkfId = nzkfId;
         this.user = user;
-        this.joinDate = joinDate;
+        this.joinDate = new Timestamp(joinDate.getTime());
         this.fName = fName;
         this.lName = lName;
         this.mName = mName;
@@ -62,12 +63,12 @@ public class Member {
         this.user = user;
     }
 
-    public Date getJoinDate() {
+    public Timestamp getJoinDate() {
         return joinDate;
     }
 
     public void setJoinDate(Date joinDate) {
-        this.joinDate = joinDate;
+        this.joinDate = new Timestamp(joinDate.getTime());
     }
 
     public String getfName() {
