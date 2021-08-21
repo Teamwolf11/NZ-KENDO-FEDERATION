@@ -5,23 +5,42 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/dropdownList.js"></script>
         <script src="js/angular.js"></script>
         <script src="js/angular-resource.js"></script>
         <script src="js/ngStorage.js"></script>
-        <script src="js/otagoReviewApp.js"></script>
     </head>
 
     <body>
+        <section class="top-box">
+            <figure>
+                <!-- divided image size by 4 to set width and height -->
+                <img src="images/kendoLogo.png" alt="Kendo Logo"> 
+            </figure>
+            <a href ="signIn.html">Login</a>
+        </section>
+
+
         <header>
             <nav>
                 <ul>
                     <li><a>Home</a></li>
-                    <li><a href ="signIn.html">Sign In</a></li>
+                    <li><a href="">About</a></li>
+                    <li onclick="myFunction()" class="dropbtn">Martial Arts
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="">Kendo</a>
+                            <a href="">Iaido</a>
+                            <a href="">Naginata</a>
+                            <a href="">Judo</a>
+                        </div>
+                    </li>
+                    <li><a href ="">News & Events</a></li>
+                    <li><a href ="">Locations</a></li>
+                    <li><a href ="">Contact</a></li>
                 </ul>
             </nav>
         </header>
 
-        <h1>Kendo Federation</h1>
 
         <main>
             <section class="boxes">

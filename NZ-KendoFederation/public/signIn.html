@@ -5,44 +5,73 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/dropdownList.js"></script>
         <script src="js/angular.js"></script>
         <script src="js/angular-resource.js"></script>
         <script src="js/ngStorage.js"></script>
-        <script src="js/otagoReviewApp.js"></script>
-
     </head>
 
     <body>
+        <section class="top-box">
+            <figure>
+                <!-- divided image size by 4 to set width and height -->
+                <img src="images/kendoLogo.png" alt="Kendo Logo"> 
+            </figure>
+        </section>
+
         <header>
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a>Sign In</a></li>
+                    <li><a href="">About</a></li>
+                    <li onclick="myFunction()" class="dropbtn">Martial Arts
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="">Kendo</a>
+                            <a href="">Iaido</a>
+                            <a href="">Naginata</a>
+                            <a href="">Judo</a>
+                        </div>
+                    </li>
+                    <li><a href ="">News & Events</a></li>
+                    <li><a href ="">Locations</a></li>
+                    <li><a href ="">Contact</a></li>
                 </ul>
             </nav>
-            <!--<div ng-include="'menu.html'" ></div>-->
         </header>
 
+
         <main>
-            <section class="boxes">
-                <h2>Please sign in to continue.</h2>
 
-                <form>
-                    <fieldset class="textInputs">
-                        <legend>Account Details</legend>
-                        <ul>
-                            <li><label for="emailAddress">Email address: </label><input type="email" id="Email" tabindex="1" required placeholder="Please enter your email address"></li>
-                            <li><label for="password">Password: </label><input type="password" id="password" tabindex="2" required placeholder="Please enter your password"></li>
-                        </ul>
-                    </fieldset>
-                    <fieldset>
-                        <label><input type="reset" name="reset" value="Reset"></label>
-                        <label><input type="submit" name="submit" value="Sign In"></label>
-                    </fieldset>
-                </form>
-                <p>If you don't have an account then you can <a href="createAccount.html">create one</a></p>
+            <div class="grid-container">
+                <section>
+                    <h2>Sign in</h2>
+                    <form>
+                        <fieldset class="textInputs">
+                            <input type="email" id="email" tabindex="1" required placeholder="Email address">
+                            <input type="password" id="password" tabindex="2" required placeholder="Password">
+                            <p><a href="link...">Forgot your password?</a></p>
+                            <input type="submit" name="submit" value="Sign In">
+                        </fieldset>
+                    </form>
+                </section>
 
-            </section>
+                <section>
+                    <h2>Create an account</h2>
+                    <form>
+                        <fieldset class="textInputs">
+
+                            <input type="text" id="fName" tabindex="1" required pattern="[a-zA-Z '-]+" placeholder="First name">
+                            <input type="text" id="lName" tabindex="2" required pattern="[a-zA-Z '-]+" placeholder="Last name">
+                            <input type="email" id="email" tabindex="3" required placeholder="Email address">
+                            <input type="tel" id="phone" tabindex="4" required pattern="[0-9 ()-]+" placeholder="Phone number">
+                            <input type="text" id="date" tabindex="5" required placeholder="Birthday" onfocus="(this.type = 'date')">
+                            <input type="text" id="address" tabindex="6" required pattern="[a-zA-Z0-9 '-,]+" placeholder="Address">
+                            <input type="password" id="password" tabindex="7" required placeholder="Password">
+                            <label><input type="submit" name="submit" value="Create Account"></label>
+                        </fieldset>
+                    </form>
+                </section>
+            </div>
         </main>
     </body>
 
