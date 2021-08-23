@@ -39,38 +39,7 @@ public class DatabaseConnector {
     
 }
 
-//    public static void main(String[] args) throws SQLException {
-//        DatabaseConnector obj = new DatabaseConnector();
-////        System.out.println("here" + obj.getConnection());
-//    }
-//
-//    public Connection getConnection() throws ClassNotFoundException, SQLException {
-//        Connection conn = null;
-//        String url = "jdbc:postgresql://localhost:5432/postgres";
-//        Properties props = new Properties();
-//        props.setProperty("user", "javaapp");
-//        props.setProperty("password", "D4h/XW57%sw31");
-//        //props.setProperty("ssl","true");
-//        try {
-//
-//            Class.forName("org.postgresql.Driver");
-//            conn = DriverManager.getConnection(url, props);
-//
-//            if (conn != null) {
-//                System.out.println("Connected to database");
-//            }
-//        } catch (SQLException ex) {
-//            throw new RuntimeException(ex);
-//        }
-//        //call test file
-//        DatabaseTest dbt = new DatabaseTest();
-//        dbt.dbTest(conn);
-//
-//        conn.close();
-//        return conn;
-//    }
-//
-//}
+
 
 
 
