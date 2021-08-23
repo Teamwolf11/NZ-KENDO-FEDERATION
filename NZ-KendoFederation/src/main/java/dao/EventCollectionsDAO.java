@@ -11,7 +11,7 @@ import java.util.Map;
  *
  * @author Maaha Ahmad
  */
-public class EventCollectionsDAO {
+public class EventCollectionsDAO implements EventDAO {
 
     private static Map<String, Event> events = new HashMap<String, Event>();
 
@@ -39,13 +39,16 @@ public class EventCollectionsDAO {
         saveEvent(event2);
     }
 
+    @Override
     public void saveEvent(Event event) {
         events.put(event.getEvent_id(), event);
     }
 
+    @Override
     public Event getEvent(String eventID){
         return events.get(eventID);
     }
     
     // delete event
+    // update event
 }
