@@ -2,8 +2,8 @@ package dao;
 
 
 import domain.Member;
-import java.sql.Date;
-import static java.time.temporal.TemporalQueries.localDate;
+import domain.User;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,40 +12,44 @@ import java.util.Map;
  * @author Maaha Ahmad
  */
 public class MemberCollectionsDAO implements MemberDAO {
-    private static Map<String, Member> members = new HashMap<String, Member>();
+    private static Map<Integer, Member> members = new HashMap<Integer, Member>();
+    private static Map<Integer, User> users = new HashMap<Integer, User>();
     
     public MemberCollectionsDAO(){
-
-        Member boris = new Member();
-        boris.setMemberId("5454");
-//        boris.setUser("b345");
-        boris.setNzkfId("6565");
-        boris.setfName("Boris");
-        boris.setlName("Doloris");
-        boris.setJoinDate(Date.valueOf("2011-02-18"));
-      
-        Member doris = new Member();
-        doris.setMemberId("6454");
-//        doris.setUser("d345");
-        doris.setNzkfId("6666");
-        doris.setfName("Doris");
-        doris.setlName("Doloris");
-        boris.setJoinDate(Date.valueOf("2011-03-18"));
- 
-        saveMember(boris);
-        saveMember(doris);
     }
     
     @Override
     public void saveMember(Member member){
         members.put(member.getMemberId(), member);
+//        users.put(member.getUser().userId, member.getUser());
     }
     
     @Override
-    public Member getMember(String memberId){
+    public void saveUser(User user){
+         users.put(user.getUserId(), user);
+    }
+    
+    
+    @Override
+    public Member getMember(int memberId){
         return members.get(memberId);
     }
     
+    @Override
+    public User getUser(int userId){
+        return users.get(userId);
+    }
+    
+    
+//    @Override
+//	public Boolean validateCredentials(String username, String password) {
+//		if (members.containsKey(username)) {
+//			return members.get(username).getPassword().equals(password);
+//		} else {
+//			return false;
+//		}
+//	}
+    
     // delete Member?  
-    // validate member
+   
 }

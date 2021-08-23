@@ -1,6 +1,7 @@
 package dao;
 
 import domain.Member;
+import domain.User;
 
 /**
  *
@@ -8,10 +9,13 @@ import domain.Member;
  */
 public interface MemberDAO {
 
-    Member getMember(String memberId);
+    Member getMember(int memberId);
     // delete Member?
     // validate member
 
     void saveMember(Member member);
     
+    void saveUser(User user);
+    
+    User getUser(int userId);
 }
