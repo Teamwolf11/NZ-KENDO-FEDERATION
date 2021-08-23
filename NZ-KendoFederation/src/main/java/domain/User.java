@@ -4,17 +4,18 @@ import java.util.List;
 
 public class User {
     
-    public String userId;
+    public int userId;
     public String username;
     public String password;
-    public String memberId;
-    public List<AppRoles> roles;
+    public int memberId;
+    // public List<AppRoles> roles;
+    public int roles;
     
     public User(){
         
     }
 
-    public User(String userId, String username, String password, String memberId, List<AppRoles> roles) {
+    public User(int userId, String username, String password, int memberId, int roles) {    // removed approles just for testing
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -22,11 +23,11 @@ public class User {
         this.roles = roles;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -46,20 +47,25 @@ public class User {
         this.password = password;
     }
 
-    public String getMemberId() {
+    public int getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(String memberId) {
+    public void setMemberId(int memberId) {
         this.memberId = memberId;
     }
 
-    public List<AppRoles> getRoles() {
+    public int getRoles() {
         return roles;
     }
 
-    public void setRoles(List<AppRoles> roles) {
+    public void setRoles(int roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", memberId=" + memberId + ", roles=" + roles + '}';
     }
     
     
