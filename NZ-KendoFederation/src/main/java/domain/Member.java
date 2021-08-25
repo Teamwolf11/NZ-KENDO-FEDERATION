@@ -13,19 +13,20 @@ import java.util.Date;
  */
 public class Member {
     
-    public String member_id;
-    public String nzkfId;
-    public User user;
-    public Date joinDate;
-    public String fName;    //FirstName
-    public String lName;    //LastName
-    public String mName;    //middleName
-    public char sex;        //Will have to talk to Taasha about how she wants gender to work
-    public String ethnicity;
+    private String member_id;
+    private String nzkfId;
+    private User user;
+    private Date joinDate;
+    private String fName;    //FirstName
+    private String lName;    //LastName
+    private String mName;    //middleName
+    private char sex;        //Will have to talk to Taasha about how she wants gender to work
+    private String ethnicity;
 
     public Member() {
     }
     
+    //All info known
     public Member(String id, String nzkfId, User user, Date joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
         this.member_id = id;
         this.nzkfId = nzkfId;
@@ -37,6 +38,30 @@ public class Member {
         this.sex = sex;
         this.ethnicity = ethnicity;
     }
+    
+    //MemberId from database not known
+        public Member(String nzkfId, User user, Date joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
+        this.nzkfId = nzkfId;
+        this.user = user;
+        this.joinDate = joinDate;
+        this.fName = fName;
+        this.lName = lName;
+        this.mName = mName;
+        this.sex = sex;
+        this.ethnicity = ethnicity;
+    }
+        
+    //MemberId and User class not known    
+    public Member(String nzkfId, Date joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
+        this.nzkfId = nzkfId;
+        this.user = user;
+        this.joinDate = joinDate;
+        this.fName = fName;
+        this.lName = lName;
+        this.mName = mName;
+        this.sex = sex;
+        this.ethnicity = ethnicity;
+    }    
 
     public String getMemberId() {
         return member_id;

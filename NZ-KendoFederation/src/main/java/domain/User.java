@@ -2,19 +2,36 @@ package domain;
 
 import java.util.List;
 
-class User {
+public class User {
     
-    public String userId;
-    public String username;
-    public String password;
-    public String memberId;
-    public List<AppRoles> roles;
+    private String userId;
+    private String username;
+    private String password;
+    private String memberId;
+    private List<AppRoles> roles;
 
+    // Instance where a user is linked to a member Id
     public User(String userId, String username, String password, String memberId, List<AppRoles> roles) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.memberId = memberId;
+        this.roles = roles;
+    }
+    
+    // Instance where a user is not linked to a memberId
+    public User(String userId, String username, String password, List<AppRoles> roles) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+    
+    // Instance where user doesn't have a memberId or database has given userId
+    public User(String username, String password, List<AppRoles> roles) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
         this.roles = roles;
     }
 

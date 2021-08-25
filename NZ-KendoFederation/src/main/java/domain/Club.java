@@ -11,4 +11,6 @@ package domain;
  */
 class Club {
     
+    
+    
 }

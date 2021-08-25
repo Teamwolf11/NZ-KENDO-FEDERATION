@@ -2,11 +2,11 @@ package domain;
 
 import java.util.Date;
 
-class MartialArt {
-    public String martialArtId;
-    public String name;             //Name of the martial art
-    public String grade;             //Grade of this instance
-    public Date dateReceived;       //When rank was given
+public class MartialArt {
+    private String martialArtId;
+    private String name;             //Name of the martial art
+    private String grade;             //Grade of this instance
+    private Date dateReceived;       //When rank was given
 
     public MartialArt(String martialArtId, String name, String grade, Date dateReceived) {
         this.martialArtId = martialArtId;
