@@ -1,34 +1,23 @@
 package domain;
 
-import java.util.List;
-
 public class User {
     
-    private String userId;
-    private String username;
-    private String password;
-    private String memberId;
-    private List<AppRoles> roles;
+    public String userId;
+    public String username;
+    public String password;
+    public AppRoles roles;
+    
+    public User(){   
+    }
 
-    // Instance where a user is linked to a member Id
-    public User(String userId, String username, String password, String memberId, List<AppRoles> roles) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.memberId = memberId;
-        this.roles = roles;
-    }
-    
-    // Instance where a user is not linked to a memberId
-    public User(String userId, String username, String password, List<AppRoles> roles) {
+    public User(String userId, String username, String password, AppRoles roles) {    
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.roles = roles;
     }
     
-    // Instance where user doesn't have a memberId or database has given userId
-    public User(String username, String password, List<AppRoles> roles) {
+    public User(String username, String password, AppRoles roles) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -59,20 +48,17 @@ public class User {
         this.password = password;
     }
 
-    public String getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
-    }
-
-    public List<AppRoles> getRoles() {
+    public AppRoles getRoles() {
         return roles;
     }
 
-    public void setRoles(List<AppRoles> roles) {
+    public void setRoles(AppRoles roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", roles=" + roles + '}';
     }
     
     

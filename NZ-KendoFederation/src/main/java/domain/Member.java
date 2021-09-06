@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  *
@@ -13,21 +9,21 @@ import java.util.Date;
  */
 public class Member {
     
-    private String member_id;
-    private String nzkfId;
-    private User user;
-    private Date joinDate;
-    private String fName;    //FirstName
-    private String lName;    //LastName
-    private String mName;    //middleName
-    private char sex;        //Will have to talk to Taasha about how she wants gender to work
-    private String ethnicity;
+    public String member_id;
+    public String nzkfId;
+    public User user;
+    public LocalDateTime joinDate; 
+    public String fName;    //FirstName
+    public String lName;    //LastName
+    public String mName;    //middleName
+    public char sex;        //Will have to talk to Taasha about how she wants gender to work
+    public String ethnicity;
 
     public Member() {
     }
     
     //All info known
-    public Member(String id, String nzkfId, User user, Date joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
+    public Member(String id, String nzkfId, User user, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
         this.member_id = id;
         this.nzkfId = nzkfId;
         this.user = user;
@@ -40,7 +36,7 @@ public class Member {
     }
     
     //MemberId from database not known
-        public Member(String nzkfId, User user, Date joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
+        public Member(String nzkfId, User user, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
         this.nzkfId = nzkfId;
         this.user = user;
         this.joinDate = joinDate;
@@ -52,7 +48,7 @@ public class Member {
     }
         
     //MemberId and User class not known    
-    public Member(String nzkfId, Date joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
+    public Member(String nzkfId, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
         this.nzkfId = nzkfId;
         this.user = user;
         this.joinDate = joinDate;
@@ -87,11 +83,11 @@ public class Member {
         this.user = user;
     }
 
-    public Date getJoinDate() {
+    public LocalDateTime getJoinDate() {
         return joinDate;
     }
 
-    public void setJoinDate(Date joinDate) {
+    public void setJoinDate(LocalDateTime joinDate) {
         this.joinDate = joinDate;
     }
 
@@ -134,7 +130,29 @@ public class Member {
     public void setEthnicity(String ethnicity) {
         this.ethnicity = ethnicity;
     }
-    
-    
+
+    @Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Member other = (Member) obj;
+		if (!Objects.equals(this.member_id, other.member_id)) {
+			return false;
+		}
+		return true;
+	}
+    @Override
+    public String toString() {
+        return "Member{" + "member_id=" + member_id + ", nzkfId=" + nzkfId + ", user=" + user + ", joinDate=" + joinDate + ", fName=" + fName + ", lName=" + lName + ", mName=" + mName + ", sex=" + sex + ", ethnicity=" + ethnicity + '}';
+    }
+
+   
     
 }

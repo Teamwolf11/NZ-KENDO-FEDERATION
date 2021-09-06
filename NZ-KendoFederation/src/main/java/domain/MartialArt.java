@@ -8,6 +8,9 @@ public class MartialArt {
     private String grade;             //Grade of this instance
     private Date dateReceived;       //When rank was given
 
+    public MartialArt(){
+    }
+    
     public MartialArt(String martialArtId, String name, String grade, Date dateReceived) {
         this.martialArtId = martialArtId;
         this.name = name;
