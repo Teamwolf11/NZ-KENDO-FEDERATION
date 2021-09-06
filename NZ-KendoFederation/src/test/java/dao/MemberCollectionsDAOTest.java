@@ -3,7 +3,6 @@ package dao;
 import domain.AppRoles;
 import domain.Member;
 import domain.User;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -81,20 +80,22 @@ public class MemberCollectionsDAOTest {
         member.deleteMember(member2);
         //member.deleteMember(member3);
 
-        //member.deleteUser(user1);
-        //member.deleteUser(user1);
+        member.deleteUser(user1);
+        member.deleteUser(user1);
         //member.deleteMember(member3);
     }
 
     @Test
-    public void testSaveMember() {
-        //System.out.println(member2.getUser());
-        String[] ids = member.saveNewMember(member2);
-        //System.out.println(ids[0]);
-        member2.setMemberId(ids[1]);
-        member2.getUser().setUserId(ids[0]);
-        Member memberCheck = member.getMember(ids[1]);
-        assertEquals(member2, memberCheck);
+    public void testSaveNewMember() {
+        String[] ids = member.saveNewMember(member2); //Insert member and user
+        member2.setMemberId(ids[1]); //Update java class with member id
+        member2.getUser().setUserId(ids[0]);  //Update java class with user id
+        Member memberCheck = member.getMember(ids[1]);  //call member from db
+        assertEquals(member2, memberCheck);  //Member check
+        
+        User userCheck = member.getUser(ids[0]);  //call user from db
+        //Techinically should add test for checking user objects are the same, but cbf dealing with the app role stuff
+        assertEquals(member2.getUser().getRoles().toString(), userCheck.getRoles().toString());  //User check
 
     }
 

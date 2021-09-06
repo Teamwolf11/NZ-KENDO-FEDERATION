@@ -31,6 +31,11 @@ public class AppRoles {
     public void setAppRoleId(String appRoleId) {
         this.appRoleId = appRoleId;
     }
+
+    @Override
+    public String toString() {
+        return "AppRoles{" + "name=" + name + ", appRoleId=" + appRoleId + '}';
+    }
     
     
 

@@ -17,29 +17,24 @@ import Database.DatabaseConnector;
 public class MemberJdbcDAO implements MemberDAO {
 
     public Connection con = null;
-    public DatabaseConnector obj = new DatabaseConnector();
+    //public DatabaseConnector obj = new DatabaseConnector();
 
-//    public MemberJdbcDAO(Connection con) throws SQLException, ClassNotFoundException {
-//        this.con = con;
-//        if (con != null) {
-//            System.out.println("Connected to database");
-//        }
-//    }
-//    public MemberJdbcDAO() throws SQLException, ClassNotFoundException {
-//        DatabaseConnector db = new DatabaseConnector();
-//        this.con =  db.connect();
-//        if (con != null) {
-//                System.out.println("Connected to database");
-//            }
-//    }
     public MemberJdbcDAO() {
     }
 
+    /**
+     * Pulls member from the db through SELECT statement
+     *
+     * @author Lachlan (Plagirised from Maaha)
+     * @param memberId
+     * @return member object pulled from db
+     */
     @Override
     public Member getMember(String memberId) {
+
+        //Creates a connection to the db
         try {
             DatabaseConnector db = new DatabaseConnector();
-            //db.connect();
             con = db.connect();
 
             String sql = "SELECT * FROM public.member WHERE member_id = ?";
@@ -58,25 +53,38 @@ public class MemberJdbcDAO implements MemberDAO {
                     char sex = rs.getString("sex").charAt(0);
                     String ethnicity = rs.getString("ethnicity");
 
-                    System.out.println("here now yay");
+                    con.close();
                     return new Member(memberId, nzkfId, getUser(userID), joinDate.toLocalDateTime(), fName, lName, mName, sex, ethnicity);
                 } else {
+                    con.close();
                     return null;
                 }
             }
         } catch (SQLException ex) {
-            System.out.println("error here 1");
+            System.out.println("Invalid member ID");
             throw new DAOException(ex.getMessage(), ex);
         }
     }
 
+    /**
+     * A method for creating an entirely new member. DO NOT USE THIS METHOD IF
+     * TRYING TO CONNECT USER WITH PREVIOUS MEMBER!!
+     *
+     * Creates a new user through a select statement. This statement returns the
+     * generated user id. This Id is taken by the member insert to connect the
+     * two.
+     *
+     * @author Lachlan (Plagirised from Maaha)
+     * @param member
+     * @return ids of User and Member, id[0] and id[1] respectively
+     */
     @Override
     public String[] saveNewMember(Member member) {
         String[] ids = new String[2];
 
+        //Creates a connection to the db
         try {
             DatabaseConnector db = new DatabaseConnector();
-            //db.connect();
             con = db.connect();
 
             String sql1 = "INSERT INTO public.member (nzkf_membership_id, user_id, join_date, first_name, last_name, middle_name, sex, ethnicity) VALUES (?,?,?,?,?,?,?,?) RETURNING member_id";
@@ -156,32 +164,35 @@ public class MemberJdbcDAO implements MemberDAO {
 
     @Override
     public User getUser(String userId) {
-        String sql = "SELECT user_id,username,password, public.user.app_role_id, name FROM public.user, public.app_role WHERE user_id = ?  ORDER BY user_id";
+        try {
+            DatabaseConnector db = new DatabaseConnector();
+            con = db.connect();
 
-        try (PreparedStatement stmt = con.prepareStatement(sql);) {
-            System.out.println("Finally here");
-            stmt.setInt(1, Integer.parseInt(userId));
-//            System.out.println("Finally here");
-            ResultSet rs = stmt.executeQuery();
+            String sql = "SELECT user_id,username,password, public.user.app_role_id, name FROM public.user INNER JOIN public.app_role ON public.user.app_role_id = app_role.app_role_id WHERE user_id = ?";
 
-            if (rs.next()) {
-                String username = rs.getString("username");
-                String password = rs.getString("password");
-                //int member_id = rs.getInt("member_id");
-                String roleId = Integer.toString(rs.getInt("app_role_id"));
-                String roleName = rs.getString("name");
+            try (PreparedStatement stmt = con.prepareStatement(sql);) {
+                stmt.setInt(1, Integer.parseInt(userId));
+                ResultSet rs = stmt.executeQuery();
 
-                System.out.println("user ID " + userId);
-                AppRoles role = new AppRoles(roleId, roleName);
-                return new User(userId, username, password, role);
-            } else {
-                return null;
+                if (rs.next()) {
+                    String username = rs.getString("username");
+                    String password = rs.getString("password");
+                    String roleId = Integer.toString(rs.getInt("app_role_id"));
+                    String roleName = rs.getString("name");
+
+                    System.out.println("user ID " + userId);
+                    AppRoles role = new AppRoles(roleId, roleName);
+                    con.close();
+                    return new User(userId, username, password, role);
+                } else {
+                    con.close();
+                    return null;
+                }
             }
         } catch (SQLException ex) {
-            System.out.println("error here 3");
-            throw new DAOException(ex.getMessage(), ex);
+            Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        return null;
     }
 
     @Override
