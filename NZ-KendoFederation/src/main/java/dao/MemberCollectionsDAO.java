@@ -17,48 +17,19 @@ import java.util.Map;
 public class MemberCollectionsDAO implements MemberDAO {
     private static Map<String, Member> members = new HashMap<String, Member>();
     private static Map<String, User> users = new HashMap<String, User>();
-    private static Map<String, AppRoles> roles = new HashMap<String, AppRoles>();
     
     public MemberCollectionsDAO(){
     }
     
     @Override
-    public String[] saveNewMember(Member member){
-        String memId = member.getMemberId();
-        members.put(member.getMemberId(), member);
-//        users.put(member.getUser().userId, member.getUser());
-       String[] ids = {memId};
-        return ids;
-    }
-    
-    @Override
-    public void saveUser(User user){
-         users.put(user.getUserId(), user);
-    }
-    
+    public Member saveMember(Member member){
+      members.put(member.getMemberId(), member);
+      return member;
+    } 
     
     @Override
     public Member getMember(String memberId){
         return members.get(memberId);
-    }
-    
-    @Override
-    public User getUser(String userId){
-        return users.get(userId);
-    }
-    
-    @Override
-    public AppRoles getAppRole(String appRoleId){
-        return roles.get(appRoleId);
-    }
-    
-    @Override
-    public void saveAppRole(AppRoles role){
-         roles.put(role.getAppRoleId(), role);
-    }
-    
-    @Override
-    public void deleteUser(User user){  
     }
     
     @Override
@@ -76,5 +47,25 @@ public class MemberCollectionsDAO implements MemberDAO {
 //	}
     
     // delete Member?  
+
+    @Override
+    public Object[] saveNewMember(Member member, User user) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Member getSimpleMember(String memberId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Member> getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Member> getAllSimple() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
    
 }
