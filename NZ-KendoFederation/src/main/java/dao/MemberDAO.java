@@ -1,6 +1,5 @@
 package dao;
 
-import domain.AppRoles;
 import domain.Member;
 import domain.User;
 import java.util.List;
@@ -12,20 +11,16 @@ import java.util.List;
 public interface MemberDAO {
 
     Member getMember(String memberId);
-    // delete Member?
-    // validate member
-
-    String[] saveNewMember(Member member);
     
-    void saveUser(User user);
-    
-    User getUser(String userId);
-    
-    AppRoles getAppRole(String roleId);
-    
-    void saveAppRole(AppRoles Approle);
+    Member saveMember(Member member);
     
     void deleteMember(Member member);
     
-    void deleteUser(User user);
+    Object[] saveNewMember(Member member, User user); //When user and member needs to be added.
+    
+    Member getSimpleMember(String memberId);  //Used when only the member class is needed - User is NULL
+    
+    List<Member> getAll();
+    
+    List<Member> getAllSimple();
 }
