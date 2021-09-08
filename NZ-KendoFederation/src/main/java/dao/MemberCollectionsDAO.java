@@ -49,7 +49,7 @@ public class MemberCollectionsDAO implements MemberDAO {
     // delete Member?  
 
     @Override
-    public Object[] saveNewMember(Member member, User user) {
+    public Member saveNewMember(Member member, User user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

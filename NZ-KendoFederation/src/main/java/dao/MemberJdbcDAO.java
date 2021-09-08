@@ -76,10 +76,10 @@ public class MemberJdbcDAO implements MemberDAO {
                     return null;
                 }
             }
-        } catch (SQLException ex) {
-            System.out.println("Invalid member ID");
-            throw new DAOException(ex.getMessage(), ex);
+         } catch (SQLException ex) {
+            Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
     /**
@@ -92,18 +92,17 @@ public class MemberJdbcDAO implements MemberDAO {
      *
      * @author Lachlan (Plagirised from Maaha)
      * @param member
-     * @return ids of User and Member, id[0] and id[1] respectively
+     * @return returns member with a reference to the user class
      */
     @Override
-    public Object[] saveNewMember(Member member, User user) {
-        Object[] obj = new Object[2];
+    public Member saveNewMember(Member member, User user) {
         UserJdbcDAO userJdbc = new UserJdbcDAO();
 
-        obj[0] = userJdbc.saveUser(user);
-        member.setUser((User) obj[0]);
-        obj[1] = saveMember(member);
+        user = userJdbc.saveUser(user);
+        member.setUser(user);
+        member = saveMember(member);
         
-        return obj;
+        return member;
         
     }
 
@@ -126,7 +125,7 @@ public class MemberJdbcDAO implements MemberDAO {
 
             try (PreparedStatement insertMemberstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
                 insertMemberstmt.setString(1, member.getNzkfId());
-                insertMemberstmt.setInt(2, Integer.parseInt(member.getMemberId()));
+                //insertMemberstmt.setInt(2, Integer.parseInt(member.getUser().getUserId()));
                 insertMemberstmt.setTimestamp(3, timestamp);
                 insertMemberstmt.setString(4, member.getfName());
                 insertMemberstmt.setString(5, member.getlName());
@@ -134,6 +133,13 @@ public class MemberJdbcDAO implements MemberDAO {
                 insertMemberstmt.setString(7, String.valueOf(member.getSex()));
                 insertMemberstmt.setString(8, member.getEthnicity());
 
+                /* if statment to sort out when user is/isn't null */
+                if (member.getUser() == null) {
+                    insertMemberstmt.setNull(2, Types.NULL);
+                } else {
+                    insertMemberstmt.setInt(2, Integer.parseInt(member.getUser().getUserId()));
+                }
+                
                 int row = insertMemberstmt.executeUpdate();
 
                 if (row == 0) {
@@ -200,16 +206,14 @@ public class MemberJdbcDAO implements MemberDAO {
                     String ethnicity = rs.getString("ethnicity");
 
                     con.close();
-
-                    new Member(memberId, nzkfId, null, joinDate.toLocalDateTime(), fName, lName, mName, sex, ethnicity);
+                    return new Member(memberId, nzkfId, null, joinDate.toLocalDateTime(), fName, lName, mName, sex, ethnicity);                   
                 } else {
                     con.close();
                     return null;
                 }
             }
         } catch (SQLException ex) {
-            System.out.println("Invalid member ID");
-            throw new DAOException(ex.getMessage(), ex);
+            Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -258,8 +262,9 @@ public class MemberJdbcDAO implements MemberDAO {
                 return mem;
             }
         } catch (SQLException ex) {
-            throw new DAOException(ex.getMessage(), ex);
+            Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
     public List<Member> getAllSimple() {
@@ -291,8 +296,9 @@ public class MemberJdbcDAO implements MemberDAO {
                 return mem;
             }
         } catch (SQLException ex) {
-            throw new DAOException(ex.getMessage(), ex);
+            Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
 }
