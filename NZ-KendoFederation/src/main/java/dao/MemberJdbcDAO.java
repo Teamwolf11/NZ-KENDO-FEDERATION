@@ -18,7 +18,6 @@ import java.util.List;
 public class MemberJdbcDAO implements MemberDAO {
 
     public Connection con = null;
-    //public DatabaseConnector obj = new DatabaseConnector();
 
     public MemberJdbcDAO() {
     }
@@ -106,6 +105,16 @@ public class MemberJdbcDAO implements MemberDAO {
         
     }
 
+    /**
+     * Saves a member to the db. Can be used when user is null or not.
+     * Keep in mind this does not create a user row in the db.
+     * Use saveNewMember() if wanting to insert both
+     * 
+     * @author lachlan
+     * @param member
+     * @return returns member with new member Id
+     */
+    
     @Override
     public Member saveMember(Member member) {
         try {
@@ -164,6 +173,13 @@ public class MemberJdbcDAO implements MemberDAO {
         return null;
     }
 
+    
+    /**
+     * Deletes a member from the db
+     * 
+     * @author Lachlan
+     * @param member 
+     */
     @Override
     public void deleteMember(Member member) {
         try {
@@ -183,6 +199,15 @@ public class MemberJdbcDAO implements MemberDAO {
         }
     }
 
+    
+    /**
+     * Gets a member from the db.
+     * Used when user is not needed. User and AppRoles is NULL in the java class
+     * 
+     * @author Lachlan
+     * @param memberId
+     * @return returns member with user as null
+     */
     @Override
     public Member getSimpleMember(String memberId) { //Used when only the member class is needed - User is NULL
         //Creates a connection to the db
@@ -218,6 +243,12 @@ public class MemberJdbcDAO implements MemberDAO {
         return null;
     }
 
+    /**
+     * For pulling up all the member data and other relevant account info for this person
+     * 
+     * @author Lachlan
+     * @return return all members, their users and app roles
+     */
     @Override
     public List<Member> getAll() { 
         List<Member> mem = new ArrayList<Member>();
@@ -267,6 +298,12 @@ public class MemberJdbcDAO implements MemberDAO {
         return null;
     }
 
+     /**
+     * For pulling up all the member data without user and app role
+     * 
+     * @author Lachlan
+     * @return return all members without their users and app roles
+     */
     public List<Member> getAllSimple() {
         List<Member> mem = new ArrayList<Member>();
         try {
@@ -300,5 +337,4 @@ public class MemberJdbcDAO implements MemberDAO {
         }
         return null;
     }
-
 }
