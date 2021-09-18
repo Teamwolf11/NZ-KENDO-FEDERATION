@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS public.member;
 
 CREATE TABLE IF NOT EXISTS public.club
 (
-    club_id integer NOT NULL,
+    club_id SERIAL NOT NULL,
     name character varying NOT NULL,
     location character varying,
     contact_details character varying NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS public.club_role
 
 CREATE TABLE IF NOT EXISTS public.event
 (
-    event_id integer NOT NULL UNIQUE,
+    event_id SERIAL NOT NULL UNIQUE,
     name character varying NOT NULL,
     club_id integer NOT NULL,
     venue character varying,
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS public.event_line
 
 CREATE TABLE IF NOT EXISTS public.martial_arts
 (
-    martial_art_id integer NOT NULL,
+    martial_art_id SERIAL NOT NULL,
     name character varying NOT NULL,
     "desc" character varying,
     PRIMARY KEY (martial_art_id)
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS public.member_martial_arts
 
 CREATE TABLE IF NOT EXISTS public.app_role
 (
-    app_role_id integer NOT NULL,
+    app_role_id SERIAL NOT NULL,
     name character varying NOT NULL,
     PRIMARY KEY (app_role_id)
 );
@@ -85,10 +85,10 @@ CREATE TABLE IF NOT EXISTS public.member
 
 CREATE TABLE IF NOT EXISTS public.user
 (
-    user_id integer NOT NULL,
+    user_id SERIAL NOT NULL,
     username character varying NOT NULL,
     password character varying NOT NULL,
-    member_id integer,
+    --member_id integer,
     app_role_id integer NOT NULL,
     PRIMARY KEY (user_id)
 );
@@ -133,9 +133,13 @@ ALTER TABLE public."user"
     REFERENCES public.app_role (app_role_id)
     NOT VALID;
 
-CREATE USER javaapp WITH PASSWORD 'D4h/XW57%sw31';
+INSERT INTO app_role (name) VALUES ('Admin');
+INSERT INTO app_role (name) VALUES ('Club Leader');
+INSERT INTO app_role (name) VALUES ('General Member');
+
+--CREATE USER javaapp WITH PASSWORD 'D4h/XW57%sw31';
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO javaapp;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO javaapp;
---GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO javaapp;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO javaapp;
 
 END;
