@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="MemberApp">
     <head>
         <title>New Zealand Kendo Federation</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/style.css">
-        <script src="js/dropdownList.js"></script>
         <script src="js/angular.js"></script>
         <script src="js/angular-resource.js"></script>
         <script src="js/ngStorage.js"></script>
+        <script src="js/dropdownList.js"></script>
+        <script src="js/signIn.js"></script>
     </head>
 
-    <body>
+    <body ng-controller="MemberController as membCtrl">
         <section class="top-box">
             <figure>
                 <!-- divided image size by 4 to set width and height -->
@@ -45,10 +46,12 @@
             <div class="grid-container">
                 <section>
                     <h2>Sign in</h2>
-                    <form>
+                    <p>{{membCtrl.signInMessage}}</p>
+                    
+                    <form ng-submit="membCtrl.signIn(email, password)">
                         <fieldset class="textInputs">
-                            <input type="email" id="email" tabindex="1" required placeholder="Email address">
-                            <input type="password" id="password" tabindex="2" required placeholder="Password">
+                            <input type="email" ng-model="email" id="email" tabindex="1" required placeholder="Email address">
+                            <input type="password" ng-model="password" id="password" tabindex="2" required placeholder="Password">
                             <p><a href="link...">Forgot your password?</a></p>
                             <input type="submit" name="submit" value="Sign In">
                         </fieldset>
@@ -57,16 +60,16 @@
 
                 <section>
                     <h2>Create an account</h2>
-                    <form>
+                    
+                    <form ng-submit="membCtrl.registerMember(member)">
                         <fieldset class="textInputs">
-
-                            <input type="text" id="fName" tabindex="1" required pattern="[a-zA-Z '-]+" placeholder="First name">
-                            <input type="text" id="lName" tabindex="2" required pattern="[a-zA-Z '-]+" placeholder="Last name">
-                            <input type="email" id="email" tabindex="3" required placeholder="Email address">
-                            <input type="tel" id="phone" tabindex="4" required pattern="[0-9 ()-]+" placeholder="Phone number">
-                            <input type="text" id="date" tabindex="5" required placeholder="Birthday" onfocus="(this.type = 'date')">
-                            <input type="text" id="address" tabindex="6" required pattern="[a-zA-Z0-9 '-,]+" placeholder="Address">
-                            <input type="password" id="password" tabindex="7" required placeholder="Password">
+                            <input type="text" ng-model="customer.fName" id="fName" tabindex="1" required pattern="[a-zA-Z '-]+" placeholder="First name">
+                            <input type="text" ng-model="customer.lName" id="lName" tabindex="2" required pattern="[a-zA-Z '-]+" placeholder="Last name">
+                            <input type="email" ng-model="customer.email" id="email" tabindex="3" required placeholder="Email address">
+                            <input type="tel" ng-model="customer.phone" id="phone" tabindex="4" required pattern="[0-9 ()-]+" placeholder="Phone number">
+                            <!-- <input type="text" ng-model="customer.username" id="date" tabindex="5" required placeholder="Birthday" onfocus="(this.type = 'date')">-->
+                            <input type="text" ng-model="customer.address" id="address" tabindex="6" required pattern="[a-zA-Z0-9 '-,]+" placeholder="Address">
+                            <input type="password" ng-model="customer.username" id="password" tabindex="7" required placeholder="Password">
                             <label><input type="submit" name="submit" value="Create Account"></label>
                         </fieldset>
                     </form>
