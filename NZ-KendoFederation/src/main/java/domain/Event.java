@@ -5,17 +5,25 @@
  */
 package domain;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author lachl
  */
 public class Event {
-    
+
     public String Event_id;
     public String name;                 //Name of the event
     public Club relatedClub;
     public String venue;                //Location of event
     public String highGrade;            //Highest grade available to be given by this Event
+//    public Timestamp date;
+//    public String nameOfGradingPanel;
+//    public String headOfGradingPanel;
+    
+    public Event() {
+    }
 
     public Event(String Event_id, String name, Club relatedClub, String venue, String highGrade) {
         this.Event_id = Event_id;
@@ -64,6 +72,5 @@ public class Event {
     public void setHighGrade(String highGrade) {
         this.highGrade = highGrade;
     }
-    
-    
+
 }
