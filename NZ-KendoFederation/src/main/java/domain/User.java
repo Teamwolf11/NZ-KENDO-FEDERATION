@@ -3,7 +3,7 @@ package domain;
 public class User {
     
     public String userId;
-    public String username;
+    public String email;
     public String password;
     public AppRoles roles;
     
@@ -12,14 +12,14 @@ public class User {
 
     public User(String userId, String username, String password, AppRoles roles) {    
         this.userId = userId;
-        this.username = username;
+        this.email = username;
         this.password = password;
         this.roles = roles;
     }
     
     public User(String username, String password, AppRoles roles) {
         this.userId = userId;
-        this.username = username;
+        this.email = username;
         this.password = password;
         this.roles = roles;
     }
@@ -32,12 +32,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -58,7 +58,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", roles=" + roles + '}';
+        return "User{" + "userId=" + userId + ", username=" + email + ", password=" + password + ", roles=" + roles + '}';
     }
     
     

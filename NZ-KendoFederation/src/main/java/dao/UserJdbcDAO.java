@@ -38,7 +38,7 @@ public class UserJdbcDAO implements UserDAO {
             DatabaseConnector db = new DatabaseConnector();
             Connection con = db.connect();
 
-            String sql = "SELECT user_id,username,password, public.user.app_role_id, name FROM public.user INNER JOIN public.app_role ON public.user.app_role_id = app_role.app_role_id WHERE user_id = ?";
+            String sql = "SELECT user_id,email,password, public.user.app_role_id, name FROM public.user INNER JOIN public.app_role ON public.user.app_role_id = app_role.app_role_id WHERE user_id = ?";
 
             try (PreparedStatement stmt = con.prepareStatement(sql);) {
                 stmt.setInt(1, Integer.parseInt(userId));
@@ -46,7 +46,7 @@ public class UserJdbcDAO implements UserDAO {
 
                 if (rs.next()) {
                      //User fields
-                    String username = rs.getString("username");
+                    String username = rs.getString("email");
                     String password = rs.getString("password");
 
                     //Role fields
@@ -81,10 +81,10 @@ public class UserJdbcDAO implements UserDAO {
             DatabaseConnector db = new DatabaseConnector();
             Connection con = db.connect();
 
-            String sql2 = "INSERT INTO public.user (username, password, app_role_id) VALUES (?,?,?) RETURNING user_id";
+            String sql2 = "INSERT INTO public.user (email, password, app_role_id) VALUES (?,?,?) RETURNING user_id";
 
             try (PreparedStatement insertUserstmt = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);) {
-                insertUserstmt.setString(1, user.getUsername());
+                insertUserstmt.setString(1, user.getEmail());
                 insertUserstmt.setString(2, user.getPassword());
                 insertUserstmt.setInt(3, Integer.parseInt(user.getRoles().getAppRoleId()));
 
@@ -110,7 +110,7 @@ public class UserJdbcDAO implements UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return user;
     }
 
     /**

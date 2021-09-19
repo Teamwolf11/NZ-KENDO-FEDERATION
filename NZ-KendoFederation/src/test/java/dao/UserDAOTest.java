@@ -30,12 +30,12 @@ public class UserDAOTest {
         AppRoles role = new AppRoles("3", "General Member");
 
         user1 = new User();
-        user1.setUsername("boris83");
+        user1.setEmail("boris83@test.test");
         user1.setPassword("qwerty");
         user1.setRoles(role);
 
         user2 = new User();
-        user2.setUsername("jane83");
+        user2.setEmail("jane83@test.test");
         user2.setPassword("qwerty");
         user2.setRoles(role); 
         
@@ -58,9 +58,9 @@ public class UserDAOTest {
         user2.setUserId(userJDBC.saveUser(user2).getUserId()); //Insert User and give class the proper ID
         
         User userCheck = userJDBC.getUser(user2.getUserId());  //call user from db
-        //assertEquals(user2, userCheck);
+        
         assertEquals(user2.getUserId(), userCheck.getUserId());
-        assertEquals(user2.getUsername(), userCheck.getUsername());
+        assertEquals(user2.getEmail(), userCheck.getEmail());
         assertEquals(user2.getPassword(), userCheck.getPassword());
         assertEquals(user2.getRoles().getName(), userCheck.getRoles().getName());
         assertEquals(user2.getRoles().getAppRoleId(), userCheck.getRoles().getAppRoleId());
@@ -72,7 +72,7 @@ public class UserDAOTest {
         User userCheck1 = userJDBC.getUser(user1.getUserId());  //call user from db
         //assertEquals(user1, userCheck1);
         assertEquals(user1.getUserId(), userCheck1.getUserId());
-        assertEquals(user1.getUsername(), userCheck1.getUsername());
+        assertEquals(user1.getEmail(), userCheck1.getEmail());
         assertEquals(user1.getPassword(), userCheck1.getPassword());
         assertEquals(user1.getRoles().getName(), userCheck1.getRoles().getName());
         assertEquals(user1.getRoles().getAppRoleId(), userCheck1.getRoles().getAppRoleId());
@@ -89,7 +89,7 @@ public class UserDAOTest {
         User userCheck = userJDBC.getUser(user1.getUserId());  //call user from db
         //assertEquals(user1, userCheck);
         assertEquals(user1.getUserId(), userCheck.getUserId());
-        assertEquals(user1.getUsername(), userCheck.getUsername());
+        assertEquals(user1.getEmail(), userCheck.getEmail());
         assertEquals(user1.getPassword(), userCheck.getPassword());
         assertEquals(user1.getRoles().getName(), userCheck.getRoles().getName());
         assertEquals(user1.getRoles().getAppRoleId(), userCheck.getRoles().getAppRoleId());

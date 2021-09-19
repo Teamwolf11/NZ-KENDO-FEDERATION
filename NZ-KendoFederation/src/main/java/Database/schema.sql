@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS public.event
 (
     event_id SERIAL NOT NULL UNIQUE,
     name character varying NOT NULL,
+	start_date timestamp without time zone,
     club_id integer NOT NULL,
     venue character varying,
     highest_grade_available character varying NOT NULL,
@@ -74,6 +75,8 @@ CREATE TABLE IF NOT EXISTS public.member
     member_id SERIAL NOT NULL,
     nzkf_membership_id character varying NOT NULL,
     user_id integer,
+	email character varying,
+	date_of_birth timestamp without time zone,
     join_date timestamp without time zone,
     first_name character varying NOT NULL,
 	last_name character varying NOT NULL,
@@ -86,9 +89,8 @@ CREATE TABLE IF NOT EXISTS public.member
 CREATE TABLE IF NOT EXISTS public.user
 (
     user_id SERIAL NOT NULL,
-    username character varying NOT NULL,
+    email character varying NOT NULL UNIQUE,
     password character varying NOT NULL,
-    --member_id integer,
     app_role_id integer NOT NULL,
     PRIMARY KEY (user_id)
 );
