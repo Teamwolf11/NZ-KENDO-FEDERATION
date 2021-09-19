@@ -48,24 +48,24 @@ public class MemberCollectionsDAO implements MemberDAO {
     
     // delete Member?  
 
-    @Override
-    public Member saveNewMember(Member member, User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    @Override
+//    public Member saveNewMember(Member member, User user) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 
-    @Override
-    public Member getSimpleMember(String memberId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    @Override
+//    public Member getSimpleMember(String memberId) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
 
     @Override
     public List<Member> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public List<Member> getAllSimple() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    @Override
+//    public List<Member> getAllSimple() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
    
 }

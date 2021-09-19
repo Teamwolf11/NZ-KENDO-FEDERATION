@@ -7,8 +7,8 @@ DROP TABLE IF EXISTS public.event;
 DROP TABLE IF EXISTS public."user";
 DROP TABLE IF EXISTS public.club;
 DROP TABLE IF EXISTS public.martial_arts;
-DROP TABLE IF EXISTS public.app_role;
 DROP TABLE IF EXISTS public.member;
+DROP TABLE IF EXISTS public.app_role;
 
 
 CREATE TABLE IF NOT EXISTS public.club
@@ -74,25 +74,18 @@ CREATE TABLE IF NOT EXISTS public.member
 (
     member_id SERIAL NOT NULL,
     nzkf_membership_id character varying NOT NULL,
-    user_id integer,
-	email character varying,
-	date_of_birth timestamp without time zone,
+    app_role_id integer NOT NULL,
+    password character varying NOT NULL,
+    email character varying,
+    date_of_birth timestamp without time zone,
     join_date timestamp without time zone,
     first_name character varying NOT NULL,
-	last_name character varying NOT NULL,
-	middle_name character varying,
+    last_name character varying NOT NULL,
+    middle_name character varying,
     sex character varying,
     ethnicity character varying,
+	phone_num character varying,
     PRIMARY KEY (member_id)
-);
-
-CREATE TABLE IF NOT EXISTS public.user
-(
-    user_id SERIAL NOT NULL,
-    email character varying NOT NULL UNIQUE,
-    password character varying NOT NULL,
-    app_role_id integer NOT NULL,
-    PRIMARY KEY (user_id)
 );
 
 ALTER TABLE public.club_role
@@ -130,7 +123,7 @@ ALTER TABLE public.member_martial_arts
     REFERENCES public.martial_arts (martial_art_id)
     NOT VALID;
 
-ALTER TABLE public."user"
+ALTER TABLE public.member
     ADD FOREIGN KEY (app_role_id)
     REFERENCES public.app_role (app_role_id)
     NOT VALID;

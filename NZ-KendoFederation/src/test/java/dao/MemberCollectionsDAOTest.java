@@ -34,20 +34,11 @@ public class MemberCollectionsDAOTest {
 
         AppRoles role = new AppRoles("3", "General Member");
 
-        user1 = new User();
-        user1.setEmail("boris83");
-        user1.setPassword("qwerty");
-        user1.setRoles(role);
-
-        user2 = new User();
-        user2.setEmail("jane83");
-        user2.setPassword("qwerty");
-        user2.setRoles(role);
-
         member1 = new Member();
-        member1.setUser(user1);
+        member1.setRole(role);
         member1.setNzkfId("6565");
         member1.setEmail("email@test.test1");
+        member1.setPassword("qwerty");
         member1.setDob(dateTime);
         member1.setfName("Boris");
         member1.setmName("Horis");
@@ -57,8 +48,9 @@ public class MemberCollectionsDAOTest {
         member1.setEthnicity("Asian");
 
         member2 = new Member();
-        member2.setUser(user2);
+        member2.setRole(role);
         member2.setNzkfId("6564");
+        member2.setPassword("QWERTY");
         member2.setEmail("email@test.test2");
         member2.setDob(dateTime);
         member2.setfName("Jane");
@@ -69,7 +61,8 @@ public class MemberCollectionsDAOTest {
         member2.setEthnicity("Asian");
 
         member3 = new Member();
-        member3.setUser(null);
+        member3.setRole(role);
+        member3.setPassword("hello");
         member3.setNzkfId("1234");
         member3.setEmail("email@test.test3");
         member3.setDob(dateTime);
@@ -80,7 +73,7 @@ public class MemberCollectionsDAOTest {
         member3.setSex('F');
         member3.setEthnicity("European");
 
-        member1 = memberJdbc.saveNewMember(member1, user1);
+        member1 = memberJdbc.saveMember(member1);
     }
 
     @After
@@ -89,35 +82,35 @@ public class MemberCollectionsDAOTest {
         memberJdbc.deleteMember(member2);
         memberJdbc.deleteMember(member3);
 
-        userJdbc.deleteUser(member1.getUser());
-        userJdbc.deleteUser(member2.getUser());
+        //userJdbc.deleteUser(member1.getUser());
+        //userJdbc.deleteUser(member2.getUser());
         //member3 has no user
     }
 
-    @Test
-    public void testSaveNewMember() {
-        member2 = memberJdbc.saveNewMember(member2, user2);
-        Member memberCheck = memberJdbc.getMember(member2.getMemberId());  //call member from db
-        assertEquals(member2, memberCheck);  //Member check
-    }
+//    @Test
+//    public void testSaveNewMember() {
+//        member2 = memberJdbc.saveNewMember(member2, user2);
+//        Member memberCheck = memberJdbc.getMember(member2.getMemberId());  //call member from db
+//        assertEquals(member2, memberCheck);  //Member check
+//    }
 
     @Test
     public void testSaveMember() {
         member3 = memberJdbc.saveMember(member3);
         System.out.println(member3);
-        Member memberCheck = memberJdbc.getSimpleMember(member3.getMemberId());  //call member from db
+        Member memberCheck = memberJdbc.getMember(member3.getMemberId());  //call member from db
         assertEquals(member3, memberCheck);  //Member check
     }
 
     @Test
     public void testGetMember() {
-        Member memberCheck = memberJdbc.getSimpleMember(member1.getMemberId());  //call member from db
+        Member memberCheck = memberJdbc.getMember(member1.getMemberId());  //call member from db
         assertEquals(member1, memberCheck);  //Member check
     }
 
     @Test
     public void testDeleteMember() {
-        Member memberCheck1 = memberJdbc.getSimpleMember(member1.getMemberId());  //call member from db
+        Member memberCheck1 = memberJdbc.getMember(member1.getMemberId());  //call member from db
         assertEquals(member1, memberCheck1);  //Member check
 
         //Remove and check

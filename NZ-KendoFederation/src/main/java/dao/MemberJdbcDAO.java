@@ -39,7 +39,7 @@ public class MemberJdbcDAO implements MemberDAO {
             DatabaseConnector db = new DatabaseConnector();
             con = db.connect();
 
-            String sql = "SELECT member.*, public.user.email, password, public.user.email as user_email,app_role.app_role_id, name FROM public.member LEFT JOIN public.user ON member.user_id = public.user.user_id INNER JOIN public.app_role ON public.user.app_role_id = app_role.app_role_id WHERE member_id = ?";
+            String sql = "SELECT member.*, app_role.app_role_id, name FROM public.member INNER JOIN public.app_role ON member.app_role_id = app_role.app_role_id WHERE member_id = ?";
 
             try (PreparedStatement stmt = con.prepareStatement(sql);) {
                 stmt.setInt(1, Integer.parseInt(memberId));
@@ -56,12 +56,9 @@ public class MemberJdbcDAO implements MemberDAO {
                     String ethnicity = rs.getString("ethnicity");
                     String email = rs.getString("email");
                     Timestamp dob = rs.getTimestamp("date_of_birth");
-                    
-                    //User fields
-                    String userID = Integer.toString(rs.getInt("user_id"));
-                    String username = rs.getString("user_email");
                     String password = rs.getString("password");
-
+                    String phoneNum = rs.getString("phone_num");
+                    
                     //Role fields
                     String roleId = Integer.toString(rs.getInt("app_role_id"));
                     String roleName = rs.getString("name");
@@ -69,9 +66,9 @@ public class MemberJdbcDAO implements MemberDAO {
                     con.close();
 
                     AppRoles role = new AppRoles(roleId, roleName);
-                    User user = new User(userID, username, password, role);
+                    //User user = new User(userID, username, password, role);
                     
-                    return new Member(memberId, nzkfId, user, email, dob.toLocalDateTime(), joinDate.toLocalDateTime(), fName, lName, mName, sex, ethnicity);
+                    return new Member(memberId, role, nzkfId, email, password, dob.toLocalDateTime(), joinDate.toLocalDateTime(), fName, lName, mName, sex, ethnicity, phoneNum);
                 } else {
                     con.close();
                     return null;
@@ -95,17 +92,17 @@ public class MemberJdbcDAO implements MemberDAO {
      * @param member
      * @return returns member with a reference to the user class
      */
-    @Override
-    public Member saveNewMember(Member member, User user) {
-        UserJdbcDAO userJdbc = new UserJdbcDAO();
-
-        user = userJdbc.saveUser(user);
-        member.setUser(user);
-        member = saveMember(member);
-        
-        return member;
-        
-    }
+//    @Override
+//    public Member saveNewMember(Member member, User user) {
+//        UserJdbcDAO userJdbc = new UserJdbcDAO();
+//
+//        user = userJdbc.saveUser(user);
+//        member.setUser(user);
+//        member = saveMember(member);
+//        
+//        return member;
+//        
+//    }
 
     /**
      * Saves a member to the db. Can be used when user is null or not.
@@ -132,26 +129,22 @@ public class MemberJdbcDAO implements MemberDAO {
             LocalDateTime date = member.getJoinDate();
             Timestamp timestamp = Timestamp.valueOf(date);
 
-            String sql = "INSERT INTO public.member (nzkf_membership_id, user_id, email, date_of_birth, join_date, first_name, last_name, middle_name, sex, ethnicity) VALUES (?,?,?,?,?,?,?,?,?,?) RETURNING member_id";
+            String sql = "INSERT INTO public.member (nzkf_membership_id, app_role_id, email, password, date_of_birth, join_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES (?,?,?,?,?,?,?,?,?,?,?,?) RETURNING member_id";
 
             try (PreparedStatement insertMemberstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
                 insertMemberstmt.setString(1, member.getNzkfId());
-                //insertMemberstmt.setInt(2, Integer.parseInt(member.getUser().getUserId()));
+                insertMemberstmt.setInt(2, Integer.parseInt(member.getRole().getAppRoleId()));
                 insertMemberstmt.setString(3, member.getEmail());
-                insertMemberstmt.setTimestamp(4, Timestamp.valueOf(member.getDob()));
-                insertMemberstmt.setTimestamp(5, timestamp);
-                insertMemberstmt.setString(6, member.getfName());
-                insertMemberstmt.setString(7, member.getlName());
-                insertMemberstmt.setString(8, member.getmName());
-                insertMemberstmt.setString(9, String.valueOf(member.getSex()));
-                insertMemberstmt.setString(10, member.getEthnicity());
+                insertMemberstmt.setString(4, member.getPassword());
+                insertMemberstmt.setTimestamp(5, Timestamp.valueOf(member.getDob()));
+                insertMemberstmt.setTimestamp(6, timestamp);
+                insertMemberstmt.setString(7, member.getfName());
+                insertMemberstmt.setString(8, member.getlName());
+                insertMemberstmt.setString(9, member.getmName());
+                insertMemberstmt.setString(10, String.valueOf(member.getSex()));
+                insertMemberstmt.setString(11, member.getEthnicity());
+                insertMemberstmt.setString(12, member.getPhoneNum());
 
-                /* if statment to sort out when user is/isn't null */
-                if (member.getUser() == null) {
-                    insertMemberstmt.setNull(2, Types.NULL);
-                } else {
-                    insertMemberstmt.setInt(2, Integer.parseInt(member.getUser().getUserId()));
-                }
                 
                 int row = insertMemberstmt.executeUpdate();
 
@@ -212,43 +205,43 @@ public class MemberJdbcDAO implements MemberDAO {
      * @param memberId
      * @return returns member with user as null
      */
-    @Override
-    public Member getSimpleMember(String memberId) { //Used when only the member class is needed - User is NULL
-        //Creates a connection to the db
-        try {
-            DatabaseConnector db = new DatabaseConnector();
-            con = db.connect();
-
-            String sql = "SELECT * FROM public.member WHERE member_id = ?";
-
-            try (PreparedStatement stmt = con.prepareStatement(sql);) {
-                stmt.setInt(1, Integer.parseInt(memberId));
-                ResultSet rs = stmt.executeQuery();
-
-                if (rs.next()) {
-                    String nzkfId = rs.getString("nzkf_membership_id");
-                    Timestamp joinDate = rs.getTimestamp("join_date");
-                    String fName = rs.getString("first_name");
-                    String lName = rs.getString("last_name");
-                    String mName = rs.getString("middle_name");
-                    char sex = rs.getString("sex").charAt(0);
-                    String ethnicity = rs.getString("ethnicity");
-                    String email = rs.getString("email");
-                    Timestamp dob = rs.getTimestamp("date_of_birth");
-
-                    con.close();
-                    System.out.println();
-                    return new Member(memberId, nzkfId, null, email, dob.toLocalDateTime(), joinDate.toLocalDateTime(), fName, lName, mName, sex, ethnicity);                   
-                } else {
-                    con.close();
-                    return null;
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
+//    @Override
+//    public Member getSimpleMember(String memberId) { //Used when only the member class is needed - User is NULL
+//        //Creates a connection to the db
+//        try {
+//            DatabaseConnector db = new DatabaseConnector();
+//            con = db.connect();
+//
+//            String sql = "SELECT * FROM public.member WHERE member_id = ?";
+//
+//            try (PreparedStatement stmt = con.prepareStatement(sql);) {
+//                stmt.setInt(1, Integer.parseInt(memberId));
+//                ResultSet rs = stmt.executeQuery();
+//
+//                if (rs.next()) {
+//                    String nzkfId = rs.getString("nzkf_membership_id");
+//                    Timestamp joinDate = rs.getTimestamp("join_date");
+//                    String fName = rs.getString("first_name");
+//                    String lName = rs.getString("last_name");
+//                    String mName = rs.getString("middle_name");
+//                    char sex = rs.getString("sex").charAt(0);
+//                    String ethnicity = rs.getString("ethnicity");
+//                    String email = rs.getString("email");
+//                    Timestamp dob = rs.getTimestamp("date_of_birth");
+//
+//                    con.close();
+//                    System.out.println();
+//                    return new Member(memberId, nzkfId, null, email, dob.toLocalDateTime(), joinDate.toLocalDateTime(), fName, lName, mName, sex, ethnicity);                   
+//                } else {
+//                    con.close();
+//                    return null;
+//                }
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
+//    }
 
     /**
      * For pulling up all the member data and other relevant account info for this person
@@ -279,11 +272,8 @@ public class MemberJdbcDAO implements MemberDAO {
                     String ethnicity = rs.getString("ethnicity");
                     String email = rs.getString("email");
                     Timestamp dob = rs.getTimestamp("date_of_birth");
-
-                    //User fields
-                    String userID = Integer.toString(rs.getInt("user_id"));
-                    String username = rs.getString("user_emai");
                     String password = rs.getString("password");
+                    String phoneNum = rs.getString("phone_num");
 
                     //Role fields
                     String roleId = Integer.toString(rs.getInt("app_role_id"));
@@ -292,9 +282,9 @@ public class MemberJdbcDAO implements MemberDAO {
                     con.close();
 
                     AppRoles role = new AppRoles(roleId, roleName);
-                    User user = new User(userID, username, password, role);
                     
-                    mem.add(new Member(memberId, nzkfId, user, email, dob.toLocalDateTime(), joinDate.toLocalDateTime(), fName, lName, mName, sex, ethnicity));
+                    
+                    mem.add(new Member(memberId,role, nzkfId, email, password, dob.toLocalDateTime(), joinDate.toLocalDateTime(), fName, lName, mName, sex, ethnicity, phoneNum));
                 }
                 
                 con.close();
@@ -312,39 +302,39 @@ public class MemberJdbcDAO implements MemberDAO {
      * @author Lachlan
      * @return return all members without their users and app roles
      */
-    public List<Member> getAllSimple() {
-        List<Member> mem = new ArrayList<Member>();
-        try {
-            DatabaseConnector db = new DatabaseConnector();
-            con = db.connect();
-
-            String sql = "SELECT * FROM public.member WHERE member_id = ?";
-            
-            try (PreparedStatement stmt = con.prepareStatement(sql);) {
-                ResultSet rs = stmt.executeQuery();
-
-                while (rs.next()) {
-                    String memberId = Integer.toString(rs.getInt("member_id"));
-                    String nzkfId = rs.getString("nzkf_membership_id");
-                    Timestamp joinDate = rs.getTimestamp("join_date");
-                    String fName = rs.getString("first_name");
-                    String lName = rs.getString("last_name");
-                    String mName = rs.getString("middle_name");
-                    char sex = rs.getString("sex").charAt(0);
-                    String ethnicity = rs.getString("ethnicity");
-                    String email = rs.getString("email");
-                    Timestamp dob = rs.getTimestamp("date_of_birth");
-                    
-                    
-                     mem.add(new Member(memberId, nzkfId, null, email, dob.toLocalDateTime(), joinDate.toLocalDateTime(), fName, lName, mName, sex, ethnicity));
-                }
-                
-                con.close();
-                return mem;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
+//    public List<Member> getAllSimple() {
+//        List<Member> mem = new ArrayList<Member>();
+//        try {
+//            DatabaseConnector db = new DatabaseConnector();
+//            con = db.connect();
+//
+//            String sql = "SELECT * FROM public.member WHERE member_id = ?";
+//            
+//            try (PreparedStatement stmt = con.prepareStatement(sql);) {
+//                ResultSet rs = stmt.executeQuery();
+//
+//                while (rs.next()) {
+//                    String memberId = Integer.toString(rs.getInt("member_id"));
+//                    String nzkfId = rs.getString("nzkf_membership_id");
+//                    Timestamp joinDate = rs.getTimestamp("join_date");
+//                    String fName = rs.getString("first_name");
+//                    String lName = rs.getString("last_name");
+//                    String mName = rs.getString("middle_name");
+//                    char sex = rs.getString("sex").charAt(0);
+//                    String ethnicity = rs.getString("ethnicity");
+//                    String email = rs.getString("email");
+//                    Timestamp dob = rs.getTimestamp("date_of_birth");
+//                    
+//                    
+//                     mem.add(new Member(memberId, nzkfId, null, email, dob.toLocalDateTime(), joinDate.toLocalDateTime(), fName, lName, mName, sex, ethnicity));
+//                }
+//                
+//                con.close();
+//                return mem;
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return null;
+//    }
 }
