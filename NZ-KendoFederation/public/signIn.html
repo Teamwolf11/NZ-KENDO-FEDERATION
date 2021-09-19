@@ -47,7 +47,7 @@
                 <section>
                     <h2>Sign in</h2>
                     <p>{{membCtrl.signInMessage}}</p>
-                    
+
                     <form ng-submit="membCtrl.signIn(email, password)">
                         <fieldset class="textInputs">
                             <input type="email" ng-model="email" id="email" tabindex="1" required placeholder="Email address">
@@ -60,16 +60,33 @@
 
                 <section>
                     <h2>Create an account</h2>
-                    
+
                     <form ng-submit="membCtrl.registerMember(member)">
                         <fieldset class="textInputs">
-                            <input type="text" ng-model="customer.fName" id="fName" tabindex="1" required pattern="[a-zA-Z '-]+" placeholder="First name">
-                            <input type="text" ng-model="customer.lName" id="lName" tabindex="2" required pattern="[a-zA-Z '-]+" placeholder="Last name">
-                            <input type="email" ng-model="customer.email" id="email" tabindex="3" required placeholder="Email address">
-                            <input type="tel" ng-model="customer.phone" id="phone" tabindex="4" required pattern="[0-9 ()-]+" placeholder="Phone number">
-                            <!-- <input type="text" ng-model="customer.username" id="date" tabindex="5" required placeholder="Birthday" onfocus="(this.type = 'date')">-->
-                            <input type="text" ng-model="customer.address" id="address" tabindex="6" required pattern="[a-zA-Z0-9 '-,]+" placeholder="Address">
-                            <input type="password" ng-model="customer.username" id="password" tabindex="7" required placeholder="Password">
+                            <input type="text" ng-model="member.fName" id="fName" tabindex="1" required pattern="[a-zA-Z '-]+" placeholder="First name">
+                            <input type="text" ng-model="member.lName" id="lName" tabindex="2" required pattern="[a-zA-Z '-]+" placeholder="Last name">
+                            <input type="email" ng-model="member.email" id="email" tabindex="3" required placeholder="Email address">
+                            <input type="tel" ng-model="member.phone" id="phone" tabindex="4" required pattern="[0-9 ()-]+" placeholder="Phone number">
+                            <input type="text" ng-model="member.birthday" id="date" tabindex="5" required placeholder="Birthday" onfocus="(this.type = 'date')">
+                            
+                            <select id="ethnicity" ng-model="member.ethnicity" tabindex="6" required placeholder="Ethnicity">
+                                <option value="" disabled selected hidden>Ethnicity</option>
+                                <option value="volvo">NZ European</option>
+                                <option value="saab">NZ Maori</option>
+                                <option value="fiat">Pacific Peoples</option>
+                                <option value="audi">Asian</option>
+                                <option value="audi">Middle Eastern</option>
+                                <option value="audi">African</option>
+                                <option value="audi">Latin American</option>
+                                <option value="audi">Other</option>
+                            </select>                            
+                            <select id="sex" ng-model="member.sex" tabindex="7" required placeholder="Sex">
+                                <option value="" disabled selected hidden>Sex</option>
+                                <option value="volvo">Male</option>
+                                <option value="saab">Female</option>
+                                <option value="saab">Helicopter</option>
+                            </select>
+                            <input type="password" ng-model="member.password" id="password" tabindex="8" required placeholder="Password">
                             <label><input type="submit" name="submit" value="Create Account"></label>
                         </fieldset>
                     </form>
