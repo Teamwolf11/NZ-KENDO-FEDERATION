@@ -132,7 +132,7 @@ public class MemberJdbcDAO implements MemberDAO {
             LocalDateTime date = member.getJoinDate();
             Timestamp timestamp = Timestamp.valueOf(date);
 
-            String sql = "INSERT INTO public.member (nzkf_membership_id, user_id, email, date_of_birth, join_date, first_name, last_name, middle_name, sex, ethnicity) VALUES (?,?,?,?,?,?,?,?) RETURNING member_id";
+            String sql = "INSERT INTO public.member (nzkf_membership_id, user_id, email, date_of_birth, join_date, first_name, last_name, middle_name, sex, ethnicity) VALUES (?,?,?,?,?,?,?,?,?,?) RETURNING member_id";
 
             try (PreparedStatement insertMemberstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
                 insertMemberstmt.setString(1, member.getNzkfId());
