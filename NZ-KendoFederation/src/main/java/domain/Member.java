@@ -12,6 +12,8 @@ public class Member {
     public String member_id;
     public String nzkfId;
     public User user;
+    private String email;
+    private LocalDateTime dob;
     public LocalDateTime joinDate; 
     public String fName;    //FirstName
     public String lName;    //LastName
@@ -23,10 +25,11 @@ public class Member {
     }
     
     //All info known
-    public Member(String id, String nzkfId, User user, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
+    public Member(String id, String nzkfId, User user, String email, LocalDateTime dob, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
         this.member_id = id;
         this.nzkfId = nzkfId;
         this.user = user;
+        this.email = email;
         this.joinDate = joinDate;
         this.fName = fName;
         this.lName = lName;
@@ -36,9 +39,11 @@ public class Member {
     }
     
     //MemberId from database not known
-        public Member(String nzkfId, User user, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
+        public Member(String nzkfId, User user, String email, LocalDateTime dob, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
         this.nzkfId = nzkfId;
         this.user = user;
+        this.email = email;
+        this.dob = dob;
         this.joinDate = joinDate;
         this.fName = fName;
         this.lName = lName;
@@ -48,9 +53,11 @@ public class Member {
     }
         
     //MemberId and User class not known    
-    public Member(String nzkfId, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
+    public Member(String nzkfId, LocalDateTime dob, LocalDateTime joinDate, String email, String fName, String lName, String mName, char sex, String ethnicity) {
         this.nzkfId = nzkfId;
         this.user = user;
+        this.email = email;
+        this.dob = dob;
         this.joinDate = joinDate;
         this.fName = fName;
         this.lName = lName;
@@ -131,6 +138,30 @@ public class Member {
         this.ethnicity = ethnicity;
     }
 
+       public String getMember_id() {
+        return member_id;
+    }
+
+    public void setMember_id(String member_id) {
+        this.member_id = member_id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public LocalDateTime getDob() {
+        return dob;
+    }
+
+    public void setDob(LocalDateTime dob) {
+        this.dob = dob;
+    }
+    
     @Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
