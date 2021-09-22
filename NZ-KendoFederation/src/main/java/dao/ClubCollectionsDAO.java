@@ -30,11 +30,5 @@ public class ClubCollectionsDAO implements ClubDAO {
     public Club saveClub(Club club) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public Club saveNewClub(Club club) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     
 }

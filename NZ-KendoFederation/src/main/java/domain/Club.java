@@ -17,11 +17,16 @@ public class Club {
     public String contact;
     public int noOfMembers;
     public String location;
-
+    public String description;
+    
+    // what about details of when the club was formed? 
+    // should we have a FK to Member? 
+    
+    
     public Club(){
     }
     
-    public Club(String clubId, String clubLeaderId, String clubName, MartialArt martialArts, String contact, int noOfMembers, String location) {
+    public Club(String clubId, String clubLeaderId, String clubName, MartialArt martialArts, String contact, int noOfMembers, String location, String description) {
         this.clubId = clubId;
         this.clubLeaderId = clubLeaderId;
         this.clubName = clubName;
@@ -29,6 +34,8 @@ public class Club {
         this.contact = contact;
         this.noOfMembers = noOfMembers;
         this.location = location;
+        this.description = description; 
+        
     }
 
     public String getClubId() {
@@ -85,6 +92,14 @@ public class Club {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
     
     

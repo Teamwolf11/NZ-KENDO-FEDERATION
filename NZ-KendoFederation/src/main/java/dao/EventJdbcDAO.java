@@ -33,7 +33,7 @@ public class EventJdbcDAO implements EventDAO {
             DatabaseConnector db = new DatabaseConnector();
             Connection con = db.connect();
 
-            String sql = "SELECT event.*, club_id, name, location, contact_details FROM public.event LEFT JOIN public.club ON event.club_id = club.club_id INNER JOIN public.martial_art ON public.club.martial_art_id = martial_art.martial_art_id WHERE event_id = ?";
+            String sql = "SELECT event.*, club_id, club_leader_id, name, location, contact_details, no_of_members, description FROM public.event LEFT JOIN public.club ON event.club_id = club.club_id INNER JOIN public.martial_art ON public.club.martial_art_id = martial_art.martial_art_id WHERE event_id = ?";
 
             try ( PreparedStatement stmt = con.prepareStatement(sql);) {
                 stmt.setString(1, eventID);
@@ -97,6 +97,7 @@ public class EventJdbcDAO implements EventDAO {
                     String location = rs.getString("location");
                     String contact = rs.getString("contact_details");
                     int noMembers = rs.getInt("no_of_members");
+                    String description = rs.getString("description");
 
                     // Martial Arts details
                     String martialArtId = rs.getString("martial_art_id");
@@ -105,7 +106,7 @@ public class EventJdbcDAO implements EventDAO {
                     Timestamp martialArtsDate = rs.getTimestamp("date");
 
                     MartialArt martialArt = new MartialArt(martialArtId, martialArtName, martialArtsGrade, martialArtsDate);
-                    Club club = new Club(club_id, clubLeaderId, clubName, martialArt, contact, noMembers, location);
+                    Club club = new Club(club_id, clubLeaderId, clubName, martialArt, contact, noMembers, location, description);
 
                     return new Event(event_id, event_name, club, venue, grade, eventDate.toLocalDateTime(), nameOfGradingPanel, headOfGradingPanel, eventDescription, startTime, endTime, createdAt.toLocalDateTime(), lastModified.toLocalDateTime());
                 } else {

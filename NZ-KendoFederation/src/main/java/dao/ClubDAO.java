@@ -12,6 +12,5 @@ public interface ClubDAO {
     void deleteClub(Club club);
     void updateClub(Club club);
     Club saveClub(Club club);
-    Club saveNewClub(Club club); 
-    
+   
 }
