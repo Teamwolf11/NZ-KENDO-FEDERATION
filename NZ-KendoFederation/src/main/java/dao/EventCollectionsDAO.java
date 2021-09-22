@@ -48,7 +48,14 @@ public class EventCollectionsDAO implements EventDAO {
     public Event getEvent(String eventID){
         return events.get(eventID);
     }
-    
-    // delete event
-    // update event
+
+    @Override
+    public void deleteEvent(Event event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updateEvent(Event event) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

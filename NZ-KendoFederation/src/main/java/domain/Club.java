@@ -16,17 +16,19 @@ public class Club {
     public MartialArt martialArts;
     public String contact;
     public int noOfMembers;
+    public String location;
 
     public Club(){
     }
     
-    public Club(String clubId, String clubLeaderId, String clubName, MartialArt martialArts, String contact, int noOfMembers) {
+    public Club(String clubId, String clubLeaderId, String clubName, MartialArt martialArts, String contact, int noOfMembers, String location) {
         this.clubId = clubId;
         this.clubLeaderId = clubLeaderId;
         this.clubName = clubName;
         this.martialArts = martialArts;
         this.contact = contact;
         this.noOfMembers = noOfMembers;
+        this.location = location;
     }
 
     public String getClubId() {
@@ -76,8 +78,14 @@ public class Club {
     public void setNoOfMembers(int noOfMembers) {
         this.noOfMembers = noOfMembers;
     }
-    
-    
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
     
     
 }

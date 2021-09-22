@@ -1,15 +1,17 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package dao;
 
 import domain.Club;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
  * @author Maaha Ahmad
  */
-public class ClubCollectionsDAO implements ClubDAO {
-    private static Map<String, Club> clubs = new HashMap<String, Club>();
+public class ClubJdbcDAO implements ClubDAO{
 
     @Override
     public Club getClub(String clubID) {
@@ -35,6 +37,5 @@ public class ClubCollectionsDAO implements ClubDAO {
     public Club saveNewClub(Club club) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
     
 }

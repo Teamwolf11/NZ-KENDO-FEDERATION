@@ -9,9 +9,8 @@ import domain.Event;
 public interface EventDAO {
 
     Event getEvent(String eventID);
-    // delete event
-    // update event
-
-    void saveEvent(Event event);
+    void deleteEvent(Event event);
+    void updateEvent(Event event);
+    Event saveEvent(Event event);
     
 }
