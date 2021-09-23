@@ -12,7 +12,11 @@ module.factory('adminCreateEvent', function ($resource) {
     return $resource('/api/adminCreateEvent');
 });
 
-module.controller('EventController', function (adminCreateEvent, $window, $sessionStorage) {
+module.factory('viewEvent', function($resource) {
+   return $resource('/api/viewEvent'); 
+});
+
+module.controller('EventController', function (adminCreateEvent, viewEvent, $window, $sessionStorage) {
 // Ben Scobie you can add a thing for client join event above just like what I have done with adminCreateEvenet
     this.eventMessage = "Create a grading event below for members to sign up.";
 
@@ -32,6 +36,11 @@ module.controller('EventController', function (adminCreateEvent, $window, $sessi
             }
         );
     };
-
+    
+    this.events = viewEvent.query();
+    this.selectEvents = function () {
+            this.events = viewEvent.query();
+    };
 
 });
+

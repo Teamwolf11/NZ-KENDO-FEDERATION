@@ -14,6 +14,7 @@ and open the template in the editor.
     <script src="js/angular-resource.js"></script>
     <script src="js/ngStorage.js"></script>
     <script src="js/dropdownList.js"></script>
+    <script src="js/event.js"></script>
 </head>
 
 <body ng-controller="EventController as eventCtrl">
@@ -45,7 +46,26 @@ and open the template in the editor.
 </header>
 
 <main>
-
+    <h2>View Products:</h2>
+				
+	<table ng-controller="EventController as eventCtrl">
+            <thead>
+		<tr>
+                    <th>Venue</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Highest grade available</th>
+                </tr>
+            </thead>
+            <tbody>
+		<tr ng-repeat="event in eventCtrl.events">
+                    <td>{{event.venue}}</td>
+                    <td>{{event.name}}</td>
+                    <td>{{event.start_date}}</td>
+                    <td>{{event.highest_grade_available}}</td>
+                </tr>
+            </tbody>
+	</table>
 </main>
 </body>
 </html>
