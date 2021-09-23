@@ -9,40 +9,29 @@ import java.util.Objects;
  */
 public class Member {
     
-    public String member_id;
-    public String nzkfId;
-    public User user;
+    private String member_id;
+    private String nzkfId;
+    private AppRoles role;
     private String email;
+    private String password;
     private LocalDateTime dob;
-    public LocalDateTime joinDate; 
-    public String fName;    //FirstName
-    public String lName;    //LastName
-    public String mName;    //middleName
-    public char sex;        //Will have to talk to Taasha about how she wants gender to work
-    public String ethnicity;
+    private LocalDateTime joinDate; 
+    private String fName;    //FirstName
+    private String lName;    //LastName
+    private String mName;    //middleName
+    private char sex;        //Will have to talk to Taasha about how she wants gender to work
+    private String ethnicity;
+    private String phoneNum;
 
     public Member() {
     }
-    
-    //All info known
-    public Member(String id, String nzkfId, User user, String email, LocalDateTime dob, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
-        this.member_id = id;
+      
+    public Member(String memberId, AppRoles role, String nzkfId, String email, String password, LocalDateTime dob, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity, String PhoneNum) {
+        this.member_id = memberId;
         this.nzkfId = nzkfId;
-        this.user = user;
+        this.role = role;
         this.email = email;
-        this.joinDate = joinDate;
-        this.fName = fName;
-        this.lName = lName;
-        this.mName = mName;
-        this.sex = sex;
-        this.ethnicity = ethnicity;
-    }
-    
-    //MemberId from database not known
-        public Member(String nzkfId, User user, String email, LocalDateTime dob, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity) {
-        this.nzkfId = nzkfId;
-        this.user = user;
-        this.email = email;
+        this.password = password;
         this.dob = dob;
         this.joinDate = joinDate;
         this.fName = fName;
@@ -50,21 +39,8 @@ public class Member {
         this.mName = mName;
         this.sex = sex;
         this.ethnicity = ethnicity;
+        this.phoneNum = phoneNum;
     }
-        
-    //MemberId and User class not known    
-    public Member(String nzkfId, LocalDateTime dob, LocalDateTime joinDate, String email, String fName, String lName, String mName, char sex, String ethnicity) {
-        this.nzkfId = nzkfId;
-        this.user = user;
-        this.email = email;
-        this.dob = dob;
-        this.joinDate = joinDate;
-        this.fName = fName;
-        this.lName = lName;
-        this.mName = mName;
-        this.sex = sex;
-        this.ethnicity = ethnicity;
-    }    
 
     public String getMemberId() {
         return member_id;
@@ -82,12 +58,20 @@ public class Member {
         this.nzkfId = nzkfId;
     }
 
-    public User getUser() {
-        return user;
+    public AppRoles getRole() {
+        return role;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setRole(AppRoles role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public LocalDateTime getJoinDate() {
@@ -154,6 +138,16 @@ public class Member {
         this.email = email;
     }
 
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+    
+    
+
     public LocalDateTime getDob() {
         return dob;
     }
@@ -179,10 +173,8 @@ public class Member {
 		}
 		return true;
 	}
-    @Override
-    public String toString() {
-        return "Member{" + "member_id=" + member_id + ", nzkfId=" + nzkfId + ", user=" + user + ", joinDate=" + joinDate + ", fName=" + fName + ", lName=" + lName + ", mName=" + mName + ", sex=" + sex + ", ethnicity=" + ethnicity + '}';
-    }
+
+        
 
    
     

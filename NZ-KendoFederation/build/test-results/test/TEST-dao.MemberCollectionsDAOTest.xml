@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dao.MemberCollectionsDAOTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2021-09-19T02:46:10" hostname="DESKTOP-A2FS91R" time="1.369">
+<testsuite name="dao.MemberCollectionsDAOTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2021-09-23T01:23:43" hostname="DESKTOP-A2FS91R" time="2.252">
   <properties/>
-  <testcase name="testSaveNewMember()" classname="dao.MemberCollectionsDAOTest" time="0.66"/>
-  <testcase name="testDeleteMember()" classname="dao.MemberCollectionsDAOTest" time="0.293"/>
-  <testcase name="testSaveMember()" classname="dao.MemberCollectionsDAOTest" time="0.235"/>
-  <testcase name="testGetMember()" classname="dao.MemberCollectionsDAOTest" time="0.176"/>
-  <system-out><![CDATA[
-Member{member_id=47, nzkfId=1234, user=null, joinDate=2021-09-19T14:46:11.160306700, fName=John, lName=Doe, mName=null, sex=F, ethnicity=European}
-
-
+  <testcase name="testDeleteMember()" classname="dao.MemberCollectionsDAOTest" time="1.006"/>
+  <testcase name="testSaveMember()" classname="dao.MemberCollectionsDAOTest" time="0.464"/>
+  <testcase name="testGetMember()" classname="dao.MemberCollectionsDAOTest" time="0.264"/>
+  <testcase name="testSignIn()" classname="dao.MemberCollectionsDAOTest" time="0.506"/>
+  <system-out><![CDATA[domain.Member@59cc6503
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
