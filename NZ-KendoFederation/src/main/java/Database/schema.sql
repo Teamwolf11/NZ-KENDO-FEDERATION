@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS public.member
     nzkf_membership_id character varying NOT NULL,
     app_role_id integer NOT NULL,
     password character varying NOT NULL,
-    email character varying,
+    email character varying UNIQUE,
     date_of_birth timestamp without time zone,
     join_date timestamp without time zone,
     first_name character varying NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS public.member
     middle_name character varying,
     sex character varying,
     ethnicity character varying,
-	phone_num character varying,
+    phone_num character varying,
     PRIMARY KEY (member_id)
 );
 
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS public.grading
 	(
 	grading_id SERIAL NOT NULL,
 	martial_art_id integer NOT NULL,
-	time_in_grade timestamp without time zone,
+	time_in_grade INTERVAL,
 	name character varying NOT NULL,
 	primary key (grading_id)
 );
@@ -147,6 +147,76 @@ ALTER TABLE public.grading
 INSERT INTO app_role (name) VALUES ('Admin');
 INSERT INTO app_role (name) VALUES ('Club Leader');
 INSERT INTO app_role (name) VALUES ('General Member');
+
+INSERT INTO martial_arts (name) VALUES ('Kendo');
+INSERT INTO martial_arts (name) VALUES ('Iaido');
+INSERT INTO martial_arts (name) VALUES ('Jodo');
+INSERT INTO martial_arts (name) VALUES ('Naginata');
+
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,NULL, '7 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,NULL, '6 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,NULL, '5 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,NULL, '4 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,NULL, '3 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,NULL, '2 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,INTERVAL '3 months', '1 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,INTERVAL '1 year', '1 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,INTERVAL '2 year', '2 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,INTERVAL '3 year', '3 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,INTERVAL '4 year', '4 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,INTERVAL '5 year', '5 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,INTERVAL '6 year', '6 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,INTERVAL '10 year', '7 Dan');		
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (1,NULL, '7 Dan');
+
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,NULL, '7 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,NULL, '6 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,NULL, '5 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,NULL, '4 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,NULL, '3 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,NULL, '2 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,INTERVAL '3 months', '1 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,INTERVAL '1 year', '1 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,INTERVAL '2 year', '2 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,INTERVAL '3 year', '3 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,INTERVAL '4 year', '4 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,INTERVAL '5 year', '5 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,INTERVAL '6 year', '6 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,INTERVAL '10 year', '7 Dan');		
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (2,NULL, '7 Dan');
+
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,NULL, '7 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,NULL, '6 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,NULL, '5 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,NULL, '4 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,NULL, '3 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,NULL, '2 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,INTERVAL '3 months', '1 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,INTERVAL '1 year', '1 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,INTERVAL '2 year', '2 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,INTERVAL '3 year', '3 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,INTERVAL '4 year', '4 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,INTERVAL '5 year', '5 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,INTERVAL '6 year', '6 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,INTERVAL '10 year', '7 Dan');		
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (3,NULL, '7 Dan');
+
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,NULL, '7 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,NULL, '6 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,NULL, '5 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,NULL, '4 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,NULL, '3 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,NULL, '2 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,INTERVAL '3 months', '1 Kyu');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,INTERVAL '1 year', '1 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,INTERVAL '2 year', '2 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,INTERVAL '3 year', '3 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,INTERVAL '4 year', '4 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,INTERVAL '5 year', '5 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,INTERVAL '6 year', '6 Dan');
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,INTERVAL '10 year', '7 Dan');		
+INSERT INTO grading (martial_art_id, time_in_grade, name) VALUES (4,NULL, '7 Dan');
+
 
 --CREATE USER javaapp WITH PASSWORD 'D4h/XW57%sw31';
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO javaapp;
