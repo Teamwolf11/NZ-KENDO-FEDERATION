@@ -1,16 +1,44 @@
+domain/MartialArt.java
+ domain.MartialArt
+dao/ClubCollectionsDAO.java
+ dao.ClubCollectionsDAO
+dao/MemberJdbcDAO.java
+ dao.MemberJdbcDAO
+dao/UserJdbcDAO.java
+ dao.UserJdbcDAO
 Database/DatabaseTest.java
  Database.DatabaseTest
+domain/Event.java
+ domain.Event
+dao/EventCollectionsDAO.java
+ dao.EventCollectionsDAO
 domain/AppRoles.java
  domain.AppRoles
+dao/MemberCollectionsDAO.java
+ dao.MemberCollectionsDAO
+dao/UserDAO.java
+ dao.UserDAO
+domain/Club.java
+ domain.Club
+dao/DAOException.java
+ dao.DAOException
+dao/MemberDAO.java
+ dao.MemberDAO
+dao/AppRoleDAO.java
+ dao.AppRoleDAO
 Database/DatabaseConnector.java
  Database.DatabaseConnector
+dao/AppRoleJdbcDAO.java
+ dao.AppRoleJdbcDAO
+dao/EventJdbcDAO.java
+ dao.EventJdbcDAO
 NZ/KendoFederation/Server.java
  NZ.KendoFederation.Server
 web/MemberModule.java
  web.MemberModule
+dao/EventDAO.java
+ dao.EventDAO
 domain/User.java
  domain.User
-dao/MemberDAO.java
- dao.MemberDAO
 domain/Member.java
  domain.Member
