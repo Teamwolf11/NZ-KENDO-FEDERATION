@@ -2,21 +2,22 @@ BEGIN;
 
 DROP TABLE IF EXISTS public.club_role;
 DROP TABLE IF EXISTS public.event_line;
-DROP TABLE IF EXISTS public.member_martial_arts;
+DROP TABLE IF EXISTS public.member_grading;
 DROP TABLE IF EXISTS public.event;
-DROP TABLE IF EXISTS public."user";
 DROP TABLE IF EXISTS public.club;
+DROP TABLE IF EXISTS public.grading;
 DROP TABLE IF EXISTS public.martial_arts;
 DROP TABLE IF EXISTS public.member;
 DROP TABLE IF EXISTS public.app_role;
 
-
 CREATE TABLE IF NOT EXISTS public.club
 (
     club_id SERIAL NOT NULL,
+	mem_num integer,
     name character varying NOT NULL,
     location character varying,
-    contact_details character varying NOT NULL,
+	email character varying,
+	phone character varying,
     PRIMARY KEY (club_id)
 );
 
@@ -35,8 +36,8 @@ CREATE TABLE IF NOT EXISTS public.event
 	start_date timestamp without time zone,
     club_id integer NOT NULL,
     venue character varying,
-    highest_grade_available character varying NOT NULL,
-    grading_id integer NOT NULL,
+	status character NOT NULL,
+    grading_id integer NOT NULL, --highest grade available.
     PRIMARY KEY (event_id)
 );
 
@@ -55,12 +56,13 @@ CREATE TABLE IF NOT EXISTS public.martial_arts
     PRIMARY KEY (martial_art_id)
 );
 
-CREATE TABLE IF NOT EXISTS public.member_martial_arts
+CREATE TABLE IF NOT EXISTS public.member_grading
 (
+	club_id integer NOT NULL,
     member_id integer NOT NULL,
-    martial_art_id integer NOT NULL,
     grading_id integer NOT NULL,
-    PRIMARY KEY (member_id, martial_art_id, grading_id)
+	date_received timestamp without time zone NOT NULL,
+    PRIMARY KEY (member_id, club_id, grading_id)
 );
 
 CREATE TABLE IF NOT EXISTS public.app_role
@@ -88,6 +90,15 @@ CREATE TABLE IF NOT EXISTS public.member
     PRIMARY KEY (member_id)
 );
 
+CREATE TABLE IF NOT EXISTS public.grading
+	(
+	grading_id SERIAL NOT NULL,
+	martial_art_id integer NOT NULL,
+	time_in_grade timestamp without time zone,
+	name character varying NOT NULL,
+	primary key (grading_id)
+);
+
 ALTER TABLE public.club_role
     ADD FOREIGN KEY (member_id)
     REFERENCES public.member (member_id)
@@ -113,19 +124,24 @@ ALTER TABLE public.event_line
     REFERENCES public.event (event_id)
     NOT VALID;
 
-ALTER TABLE public.member_martial_arts
+ALTER TABLE public.member_grading
     ADD FOREIGN KEY (member_id)
     REFERENCES public.member (member_id)
     NOT VALID;
 
-ALTER TABLE public.member_martial_arts
-    ADD FOREIGN KEY (martial_art_id)
-    REFERENCES public.martial_arts (martial_art_id)
+ALTER TABLE public.member_grading
+    ADD FOREIGN KEY (grading_id)
+    REFERENCES public.grading (grading_id)
     NOT VALID;
 
 ALTER TABLE public.member
     ADD FOREIGN KEY (app_role_id)
     REFERENCES public.app_role (app_role_id)
+    NOT VALID;
+	
+ALTER TABLE public.grading
+   	ADD FOREIGN KEY (martial_art_id)
+    REFERENCES public.martial_arts (martial_art_id)
     NOT VALID;
 
 INSERT INTO app_role (name) VALUES ('Admin');
@@ -137,4 +153,4 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO javaapp;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO javaapp;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO javaapp;
 
-END;
+COMMIT;
