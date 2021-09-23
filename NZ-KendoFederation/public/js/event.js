@@ -38,9 +38,6 @@ module.controller('EventController', function (adminCreateEvent, viewEvent, $win
     };
     
     this.events = viewEvent.query();
-    this.selectEvents = function () {
-            this.events = viewEvent.query();
-    };
 
 });
 
