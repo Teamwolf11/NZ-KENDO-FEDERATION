@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.After;
 import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,27 +61,26 @@ public class MemberCollectionsDAOTest {
         member2.setSex('F');
         member2.setEthnicity("Asian");
 
-        member3 = new Member();
-        member3.setRole(role);
-        member3.setPassword("hello");
-        member3.setNzkfId("1234");
-        member3.setEmail("email@test.test3");
-        member3.setDob(dateTime);
-        member3.setfName("John");
-        member3.setmName(null);
-        member3.setlName("Doe");
-        member3.setJoinDate(null);
-        member3.setSex('F');
-        member3.setEthnicity("European");
+//        member3 = new Member();
+//        member3.setRole(role);
+//        member3.setPassword("hello");
+//        member3.setNzkfId("1234");
+//        member3.setEmail("email@test.test3");
+//        member3.setDob(dateTime);
+//        member3.setfName("John");
+//        member3.setmName(null);
+//        member3.setlName("Doe");
+//        member3.setJoinDate(null);
+//        member3.setSex('F');
+//        member3.setEthnicity("European");
 
         member1 = memberJdbc.saveMember(member1);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         memberJdbc.deleteMember(member1);
-        memberJdbc.deleteMember(member2);
-        memberJdbc.deleteMember(member3);
+
 
         //userJdbc.deleteUser(member1.getUser());
         //userJdbc.deleteUser(member2.getUser());
@@ -96,10 +96,11 @@ public class MemberCollectionsDAOTest {
 
     @Test
     public void testSaveMember() {
-        member3 = memberJdbc.saveMember(member3);
-        System.out.println(member3);
-        Member memberCheck = memberJdbc.getMember(member3.getMemberId());  //call member from db
-        assertEquals(member3, memberCheck);  //Member check
+        member3 = memberJdbc.saveMember(member2);
+        System.out.println(member2);
+        Member memberCheck = memberJdbc.getMember(member2.getMemberId());  //call member from db
+        assertEquals(member2, memberCheck);  //Member check
+        memberJdbc.deleteMember(member2);
     }
 
     @Test
@@ -117,7 +118,25 @@ public class MemberCollectionsDAOTest {
         memberJdbc.deleteMember(member1);
 
        Member memberCheck2 = memberJdbc.getMember(member1.getMemberId());
-        assertNull(memberCheck2);
-
+       assertNull(memberCheck2);
+    }
+    
+    @Test
+    public void testSignIn(){
+        //Assert member is returned if valid details are given
+        Member memberCheck1 = memberJdbc.signIn(member1.getEmail(), member1.getPassword());
+        assertEquals(member1, memberCheck1);  //Member check
+        
+        //Assert that nothing returns if email is invalid
+        Member memberCheck2 = memberJdbc.signIn("invalid@test.co.nz", member1.getPassword());
+        assertNull(memberCheck2);  //Member check
+        
+        //Assert that nothing returns if password is invalid
+        Member memberCheck3 = memberJdbc.signIn(member1.getEmail(), "invaldi");
+        assertNull(memberCheck3);  //Member check
+        
+         //Assert that nothing returns if everythings invalid
+        Member memberCheck4 = memberJdbc.signIn("invalid@test.co.nz", "invaldi");
+        assertNull(memberCheck4);  //Member check
     }
 }

@@ -22,5 +22,6 @@ public interface MemberDAO {
     
     List<Member> getAll();
     
+    Member signIn(String email, String password);
     //List<Member> getAllSimple();
 }
