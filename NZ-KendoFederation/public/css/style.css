@@ -213,7 +213,11 @@ input[type=submit]:hover {
 .show {display: block;}
 
 #grades {
-    background-color: red;
+    background-color: #D7D7D7;
+    border: 1px solid black;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #eventTable {
