@@ -211,3 +211,34 @@ input[type=submit]:hover {
 }
 .dropdown-content a:hover {background-color: #ddd;}
 .show {display: block;}
+
+#grades {
+    background-color: red;
+}
+
+#eventTable {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table, td, th {
+  border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+    width: 50%;
+}
+
+th {
+    background-color: #D7D7D7;
+}
+
+th, td {
+  text-align: center;
+  padding: 5px;
+}
+
+td:hover {
+    background-color: yellow;
+}
