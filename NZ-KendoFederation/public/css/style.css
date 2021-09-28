@@ -147,16 +147,20 @@ fieldset {
     box-shadow: 5px 10px 10px #888888;
 }
 
-input {
+input, #sex, #ethnicity {
     width: 70%;
     background-color: #f2f2f2;
-    color: #333333;
+    color: black;
     padding: 8px;
     text-align: center;
     margin-bottom: 6px;
     margin-top: 6px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+#sex, #ethnicity {
+    width: 77%
 }
 
 input[type=submit] {
