@@ -6,7 +6,6 @@ import domain.User;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import org.junit.After;
 import static org.junit.Assert.assertNull;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,9 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MemberCollectionsDAOTest {
 
     private MemberJdbcDAO memberJdbc;
-    private UserJdbcDAO userJdbc;
-    private Member member1, member2, member3;
-    private User user1, user2;
+    private Member member1, member2;
     String str = "1986-04-08 12:30";
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
@@ -31,7 +28,6 @@ public class MemberCollectionsDAOTest {
     public void setUp() throws SQLException, ClassNotFoundException {
 
         memberJdbc = new MemberJdbcDAO();
-        userJdbc = new UserJdbcDAO();
 
         AppRoles role = new AppRoles("3", "General Member");
 
@@ -61,43 +57,18 @@ public class MemberCollectionsDAOTest {
         member2.setSex('F');
         member2.setEthnicity("Asian");
 
-//        member3 = new Member();
-//        member3.setRole(role);
-//        member3.setPassword("hello");
-//        member3.setNzkfId("1234");
-//        member3.setEmail("email@test.test3");
-//        member3.setDob(dateTime);
-//        member3.setfName("John");
-//        member3.setmName(null);
-//        member3.setlName("Doe");
-//        member3.setJoinDate(null);
-//        member3.setSex('F');
-//        member3.setEthnicity("European");
-
         member1 = memberJdbc.saveMember(member1);
     }
 
     @AfterEach
     public void tearDown() {
         memberJdbc.deleteMember(member1);
-
-
-        //userJdbc.deleteUser(member1.getUser());
-        //userJdbc.deleteUser(member2.getUser());
-        //member3 has no user
     }
 
-//    @Test
-//    public void testSaveNewMember() {
-//        member2 = memberJdbc.saveNewMember(member2, user2);
-//        Member memberCheck = memberJdbc.getMember(member2.getMemberId());  //call member from db
-//        assertEquals(member2, memberCheck);  //Member check
-//    }
 
     @Test
     public void testSaveMember() {
-        member3 = memberJdbc.saveMember(member2);
-        System.out.println(member2);
+        member2 = memberJdbc.saveMember(member2);
         Member memberCheck = memberJdbc.getMember(member2.getMemberId());  //call member from db
         assertEquals(member2, memberCheck);  //Member check
         memberJdbc.deleteMember(member2);

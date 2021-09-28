@@ -1,6 +1,7 @@
 package domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -22,8 +23,25 @@ public class Member {
     private char sex;        //Will have to talk to Taasha about how she wants gender to work
     private String ethnicity;
     private String phoneNum;
+    private List<Grade> grades;
 
-    public Member() {
+    public Member(){}
+    
+    public Member(String member_id, String nzkfId, AppRoles role, String email, String password, LocalDateTime dob, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity, String phoneNum, List<Grade> grades) {
+        this.member_id = member_id;
+        this.nzkfId = nzkfId;
+        this.role = role;
+        this.email = email;
+        this.password = password;
+        this.dob = dob;
+        this.joinDate = joinDate;
+        this.fName = fName;
+        this.lName = lName;
+        this.mName = mName;
+        this.sex = sex;
+        this.ethnicity = ethnicity;
+        this.phoneNum = phoneNum;
+        this.grades = grades;
     }
       
     public Member(String memberId, AppRoles role, String nzkfId, String email, String password, LocalDateTime dob, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity, String PhoneNum) {
@@ -41,6 +59,16 @@ public class Member {
         this.ethnicity = ethnicity;
         this.phoneNum = phoneNum;
     }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+    
+    
 
     public String getMemberId() {
         return member_id;
