@@ -1,5 +1,7 @@
 BEGIN;
 
+DROP TRIGGER IF EXISTS mem_grade_next_date_insert ON public.member_grading;
+
 DROP TABLE IF EXISTS public.club_role;
 DROP TABLE IF EXISTS public.event_line;
 DROP TABLE IF EXISTS public.member_grading;
@@ -146,6 +148,19 @@ ALTER TABLE public.grading
    	ADD FOREIGN KEY (martial_art_id)
     REFERENCES public.martial_arts (martial_art_id)
     NOT VALID;
+		
+CREATE OR REPLACE FUNCTION process_member_grading_next_date() RETURNS TRIGGER AS $mem_grade_next_date_insert$
+    BEGIN 
+			NEW.date_next_grade_available := NEW.date_received + g.time_in_grade
+			FROM public.grading g
+			WHERE NEW.grading_id = g.grading_id;
+            RETURN NEW;
+    END;
+$mem_grade_next_date_insert$ LANGUAGE plpgsql;
+
+CREATE TRIGGER mem_grade_next_date_insert
+BEFORE INSERT ON public.member_grading
+    FOR EACH ROW EXECUTE PROCEDURE process_member_grading_next_date();
 
 INSERT INTO app_role (name) VALUES ('Admin');
 INSERT INTO app_role (name) VALUES ('Club Leader');
