@@ -23,11 +23,12 @@ public class MemberModule extends Jooby {
 	public MemberModule(MemberDAO memberDao) {
 		get("/api/members/:email", (req) -> {
 			String email = req.param("email").value();
+                        //String password = req.param("password").value();
 			
-			if (memberDao.getMember(email) == null) {
+			if (memberDao.signInSimple(email) == null) {
 				return new Result().status(Status.NOT_FOUND);
 			} else {
-				return memberDao.getMember(email);
+				return memberDao.signInSimple(email);
 			}
 		});
 		

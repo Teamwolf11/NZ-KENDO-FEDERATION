@@ -105,10 +105,11 @@ public class MemberJdbcDAO implements MemberDAO {
 
             String sql = "INSERT INTO public.member (nzkf_membership_id, app_role_id, email, password, date_of_birth, join_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES (?,?,?,?,?,?,?,?,?,?,?,?) RETURNING member_id";
             try (PreparedStatement insertMemberstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
-                insertMemberstmt.setString(1, member.getNzkfId());
+//                insertMemberstmt.setString(1, member.getNzkfId());
 //                insertMemberstmt.setInt(2, Integer.parseInt(member.getRole().getAppRoleId()));
+                insertMemberstmt.setString(1, "13");
                 insertMemberstmt.setInt(2, temp);
-                insertMemberstmt.setString(3, member.getEmail());
+                insertMemberstmt.setString(3, member.getEmail().toLowerCase());
                 insertMemberstmt.setString(4, member.getPassword());
                 insertMemberstmt.setString(5, member.getDob());
                 insertMemberstmt.setString(6, member.getJoinDate());
@@ -240,7 +241,7 @@ public class MemberJdbcDAO implements MemberDAO {
             String sql = "SELECT member.*, app_role.app_role_id, name FROM public.member INNER JOIN public.app_role ON member.app_role_id = app_role.app_role_id WHERE email = ? AND password = ?";
 
             try (PreparedStatement stmt = con.prepareStatement(sql);) {
-                stmt.setString(1, email);
+                stmt.setString(1, email.toLowerCase());
                 stmt.setString(2, password);
                 ResultSet rs = stmt.executeQuery();
 
@@ -257,6 +258,56 @@ public class MemberJdbcDAO implements MemberDAO {
                     //String email = rs.getString("email");
                     String dob = rs.getString("date_of_birth");
                     //String password = rs.getString("password");
+                    String phoneNum = rs.getString("phone_num");
+
+                    //Role fields
+                    String roleId = Integer.toString(rs.getInt("app_role_id"));
+                    String roleName = rs.getString("name");
+
+                    con.close();
+
+                    AppRoles role = new AppRoles(roleId, roleName);
+                    //User user = new User(userID, username, password, role);
+
+                    return new Member(memberId, role, nzkfId, email, password, dob, joinDate, fName, lName, mName, sex, ethnicity, phoneNum);
+                } else {
+                    con.close();
+                    return null;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    @Override
+    public Member signInSimple(String email) {
+        //Creates a connection to the db
+        try {
+            DatabaseConnector db = new DatabaseConnector();
+            con = db.connect();
+
+            String sql = "SELECT member.*, app_role.app_role_id, name FROM public.member INNER JOIN public.app_role ON member.app_role_id = app_role.app_role_id WHERE email = ?";
+
+            try (PreparedStatement stmt = con.prepareStatement(sql);) {
+                stmt.setString(1, email.toLowerCase());
+                //stmt.setString(2, password);
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    //Member fields
+                    String memberId = Integer.toString(rs.getInt("member_id"));
+                    String nzkfId = rs.getString("nzkf_membership_id");
+                    String joinDate = rs.getString("join_date");
+                    String fName = rs.getString("first_name");
+                    String lName = rs.getString("last_name");
+                    String mName = rs.getString("middle_name");
+                    char sex = rs.getString("sex").charAt(0);
+                    String ethnicity = rs.getString("ethnicity");
+                    //String email = rs.getString("email");
+                    String dob = rs.getString("date_of_birth");
+                    String password = rs.getString("password");
                     String phoneNum = rs.getString("phone_num");
 
                     //Role fields
