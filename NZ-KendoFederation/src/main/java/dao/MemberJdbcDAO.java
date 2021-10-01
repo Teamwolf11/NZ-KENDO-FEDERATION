@@ -2,15 +2,16 @@ package dao;
 
 import domain.AppRoles;
 import domain.Member;
-import domain.User;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Database.DatabaseConnector;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
 
 /**
  *
@@ -279,4 +280,34 @@ public class MemberJdbcDAO implements MemberDAO {
         }
         return null;
     }
+    /**
+     *
+     * @param member
+     * @return
+     */
+     
+    public void email(Member member) {
+            CompletableFuture.runAsync(() -> {
+                String newEmail = member.getEmail();
+                Email email = new SimpleEmail();
+                email.setHostName("smtp.googlemail.com");
+                email.setSmtpPort(465);
+                //email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqax"));
+                email.setSSLOnConnect(true);
+
+                try {
+                    email.setFrom("benjaminm.12184@gmail.com");
+                    email.setSubject("New Member #" + member.getMember_id());
+                    email.setMsg("New Member sign up details for " + member.getfName() + 
+                            " " + member.getlName() + "Your username and password are" + 
+                            member.getPassword() + member.getEmail());
+
+                    email.addTo("benjaminm.12184@gmail.com");
+                    email.send();
+                } catch (EmailException ex) {
+                    Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            });
+	}
 }

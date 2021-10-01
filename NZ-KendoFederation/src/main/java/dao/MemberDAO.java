@@ -16,6 +16,8 @@ public interface MemberDAO {
     
     void deleteMember(Member member);
     
+    void email(Member member);
+    
     //Member saveNewMember(Member member, User user); //When user and member needs to be added.
     
     //Member getSimpleMember(String memberId);  //Used when only the member class is needed - User is NULL
