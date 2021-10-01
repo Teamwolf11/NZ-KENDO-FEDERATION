@@ -6,12 +6,12 @@
 package dao;
 
 import domain.AppRoles;
+import domain.Club;
 import domain.Grade;
 import domain.Member;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +38,7 @@ public class GradeDAOTest {
         gradeJdbc = new GradeJdbcDAO();
 
         AppRoles role = new AppRoles("3", "General Member");
+            
 
         member1 = new Member();
         member1.setRole(role);
@@ -54,6 +55,17 @@ public class GradeDAOTest {
 
         member1 = memberJdbc.saveMember(member1);
         
+        Club club = new Club(member1.getMemberId(), "Test Club");
+                
+                
+            clubLeaderId;
+        this.clubName = clubName;
+        this.martialArts = martialArts;
+        this.contact = contact;
+        this.noOfMembers = noOfMembers;
+        this.location = location;
+        this.description = description; 
+        
         grade1 = new Grade();
         grade1.setArtId("1");
         grade1.setGradeId("1");
@@ -61,7 +73,7 @@ public class GradeDAOTest {
         grade1.setGrade("7 Kyu");
         grade1.setNextGradeDate(dateTime);
         grade1.setDateReceived(dateTime);
-        //grade1.setClub();        
+        grade1.setClub();        
     }
 
     @AfterEach
@@ -74,7 +86,7 @@ public class GradeDAOTest {
     public void testSaveGrade() {
         
     }
-        member2 = memberJdbc.saveMember(member2);
+        member = memberJdbc.saveMember(member2);
         Member memberCheck = memberJdbc.getMember(member2.getMemberId());  //call member from db
         assertEquals(member2, memberCheck);  //Member check
         memberJdbc.deleteMember(member2);

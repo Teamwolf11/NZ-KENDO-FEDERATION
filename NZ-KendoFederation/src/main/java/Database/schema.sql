@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS public.event
 (
     event_id SERIAL NOT NULL UNIQUE,
     name character varying NOT NULL,
-	start_date timestamp without time zone,
+	start_date character varying,  --change from date
     club_id integer NOT NULL,
     venue character varying,
 	status character NOT NULL,
@@ -65,8 +65,9 @@ CREATE TABLE IF NOT EXISTS public.member_grading
     club_id integer NOT NULL,
     member_id integer NOT NULL,
     grading_id integer NOT NULL,
-    date_received timestamp without time zone NOT NULL,
-    date_next_grade_available timestamp without time zone NOT NULL,
+    date_received character varying NOT NULL,  --update date
+    date_next_grade_available character varying NOT NULL,  --update date
+	event_id integer, --Where the grade was received
     PRIMARY KEY (member_id, club_id, grading_id)
 );
 
@@ -84,8 +85,8 @@ CREATE TABLE IF NOT EXISTS public.member
     app_role_id integer NOT NULL,
     password character varying NOT NULL,
     email character varying UNIQUE,
-    date_of_birth timestamp without time zone,
-    join_date timestamp without time zone,
+    date_of_birth character varying,
+    join_date character varying,
     first_name character varying NOT NULL,
     last_name character varying NOT NULL,
     middle_name character varying,
@@ -148,10 +149,12 @@ ALTER TABLE public.grading
    	ADD FOREIGN KEY (martial_art_id)
     REFERENCES public.martial_arts (martial_art_id)
     NOT VALID;
+	
+ALTER TABLE public.member ALTER COLUMN join_date SET DEFAULT TO_CHAR(now(), 'DD/MM/YYYY');
 		
 CREATE OR REPLACE FUNCTION process_member_grading_next_date() RETURNS TRIGGER AS $mem_grade_next_date_insert$
     BEGIN 
-			NEW.date_next_grade_available := NEW.date_received + g.time_in_grade
+			NEW.date_next_grade_available := TO_CHAR(to_date(NEW.date_received, 'DD/MM/YYYY') + g.time_in_grade,'DD/MM/YYYY') 
 			FROM public.grading g
 			WHERE NEW.grading_id = g.grading_id;
             RETURN NEW;

@@ -20,17 +20,29 @@ public class Grade{
     private String gradeId;
     private String artId;
     private Club club;
+    private String eventId;  //event where grade was received
 
     public Grade(){}
-    
-    public Grade(String grade, String martialArt, LocalDateTime timeInGrade, LocalDateTime dateReceived, String gradeId, String artId, Club club) {
+
+    public Grade(String grade, String martialArt, LocalDateTime nextGradeDate, LocalDateTime dateReceived, String gradeId, String artId, Club club, String eventId) {
         this.grade = grade;
         this.martialArt = martialArt;
-        this.nextGradeDate = timeInGrade;
+        this.nextGradeDate = nextGradeDate;
         this.dateReceived = dateReceived;
         this.gradeId = gradeId;
         this.artId = artId;
         this.club = club;
+        this.eventId = eventId;
+    }
+
+    
+    
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 
     public LocalDateTime getDateReceived() {

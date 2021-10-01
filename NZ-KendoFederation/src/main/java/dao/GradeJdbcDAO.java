@@ -35,14 +35,14 @@ public class GradeJdbcDAO implements GradingDAO {
             DatabaseConnector db = new DatabaseConnector();
             Connection con = db.connect();
 
-            String sql = "INSERT INTO public.grading_member (grading_id, date_received, member_id,club_id) VALUES (?,?,?,?)";
+            String sql = "INSERT INTO public.grading_member (grading_id, date_received, member_id,club_id,event_id) VALUES (?,?,?,?,?)";
 
             try (PreparedStatement insertGradestmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
                 insertGradestmt.setString(1, grade.getGradeId());
                 insertGradestmt.setTimestamp(2, Timestamp.valueOf(grade.getDateReceived()));
                 insertGradestmt.setString(3, member.getMemberId());
                 insertGradestmt.setString(4, grade.getClub().getClubId());
-                        
+                insertGradestmt.setString(5, grade.getEventId());      
                         
                 int row = insertGradestmt.executeUpdate();
 
