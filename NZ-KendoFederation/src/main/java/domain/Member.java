@@ -1,5 +1,6 @@
 package domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -14,8 +15,8 @@ public class Member {
     private AppRoles role;
     private String email;
     private String password;
-    private LocalDateTime dob;
-    private LocalDateTime joinDate; 
+    private String dob;
+    private String joinDate; 
     private String fName;    //FirstName
     private String lName;    //LastName
     private String mName;    //middleName
@@ -26,7 +27,7 @@ public class Member {
     public Member() {
     }
       
-    public Member(String memberId, AppRoles role, String nzkfId, String email, String password, LocalDateTime dob, LocalDateTime joinDate, String fName, String lName, String mName, char sex, String ethnicity, String PhoneNum) {
+    public Member(String memberId, AppRoles role, String nzkfId, String email, String password, String dob, String joinDate, String fName, String lName, String mName, char sex, String ethnicity, String phoneNum) {
         this.member_id = memberId;
         this.nzkfId = nzkfId;
         this.role = role;
@@ -74,11 +75,11 @@ public class Member {
         this.password = password;
     }
 
-    public LocalDateTime getJoinDate() {
+    public String getJoinDate() {
         return joinDate;
     }
 
-    public void setJoinDate(LocalDateTime joinDate) {
+    public void setJoinDate(String joinDate) {
         this.joinDate = joinDate;
     }
 
@@ -148,11 +149,11 @@ public class Member {
     
     
 
-    public LocalDateTime getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(LocalDateTime dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
     

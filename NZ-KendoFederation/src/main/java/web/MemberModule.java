@@ -32,6 +32,8 @@ public class MemberModule extends Jooby {
 		});
 		
 		post("/api/register", (req, rsp) -> {
+//                    String json = req.body().to(String.class);
+//                    System.out.println(json);
 			Member member = req.body().to(Member.class);
 			memberDao.saveMember(member);
 			rsp.status(Status.CREATED);

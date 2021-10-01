@@ -33,7 +33,7 @@
                             <a href="">Judo</a>
                         </div>
                     </li>
-                    <li><a href ="">News & Events</a></li>
+                    <li><a href ="grading.html">News & Events</a></li>
                     <li><a href ="">Locations</a></li>
                     <li><a href ="">Contact</a></li>
                 </ul>
@@ -67,24 +67,28 @@
                             <input type="text" ng-model="member.lName" id="lName" tabindex="2" required pattern="[a-zA-Z '-]+" placeholder="Last name">
                             <input type="email" ng-model="member.email" id="email" tabindex="3" required placeholder="Email address">
                             <input type="tel" ng-model="member.phone" id="phone" tabindex="4" required pattern="[0-9 ()-]+" placeholder="Phone number">
-                            <input type="text" ng-model="member.birthday" id="date" tabindex="5" required placeholder="Birthday" onfocus="(this.type = 'date')">
+                            <input type="text" ng-model="member.dob" id="dob" tabindex="5" required placeholder="Birthday" onfocus="(this.type = 'date')">
+
+                            <script>
+                                console.log(document.getElementById("dob").innerHTML);
+                            </script>
                             
                             <select id="ethnicity" ng-model="member.ethnicity" tabindex="6" required placeholder="Ethnicity">
                                 <option value="" disabled selected hidden>Ethnicity</option>
-                                <option value="volvo">NZ European</option>
-                                <option value="saab">NZ Maori</option>
-                                <option value="fiat">Pacific Peoples</option>
-                                <option value="audi">Asian</option>
-                                <option value="audi">Middle Eastern</option>
-                                <option value="audi">African</option>
-                                <option value="audi">Latin American</option>
-                                <option value="audi">Other</option>
+                                <option value="NZ European">NZ European</option>
+                                <option value="NZ Maori">NZ Maori</option>
+                                <option value="Pacific Peoples">Pacific Peoples</option>
+                                <option value="Asian">Asian</option>
+                                <option value="Middle Eastern">Middle Eastern</option>
+                                <option value="African">African</option>
+                                <option value="Latin American">Latin American</option>
+                                <option value="Other">Other</option>
                             </select>                            
                             <select id="sex" ng-model="member.sex" tabindex="7" required placeholder="Sex">
                                 <option value="" disabled selected hidden>Sex</option>
-                                <option value="volvo">Male</option>
-                                <option value="saab">Female</option>
-                                <option value="saab">Helicopter</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="O">Other</option>
                             </select>
                             <input type="password" ng-model="member.password" id="password" tabindex="8" required placeholder="Password">
                             <label><input type="submit" name="submit" value="Create Account"></label>
