@@ -104,6 +104,7 @@ h2 {
     text-align: center;
     /*	text-decoration: underline;*/
     margin: 0;
+    padding: 5px;
 }
 
 footer {
@@ -119,6 +120,10 @@ footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 0px;
+    width: 80%;
+    margin: auto;
+}
+register-grading-events-container {
     width: 80%;
     margin: auto;
 }
@@ -207,3 +212,30 @@ input[type=submit]:hover {
 }
 .dropdown-content a:hover {background-color: #ddd;}
 .show {display: block;}
+
+/* =================================== */
+/* =================================== */
+
+/* Styling for tables */
+
+#eventTable {
+    margin: auto;
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: 50%;   
+}
+th, td {
+    background-color: #D7D7D7;
+    border: 1px solid black;
+    text-align: center;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    width: 100px;
+}
+
+#payments {
+    border: 1px solid black;
+    width: 50%;   
+    margin: auto;
+    margin-top: 10px;
+}

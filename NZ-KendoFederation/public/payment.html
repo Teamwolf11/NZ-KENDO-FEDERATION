@@ -1,30 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en" ng-app="GradingApp">
     <head>
         <title>New Zealand Kendo Federation</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/style.css">
-        <script src="js/dropdownList.js"></script>
         <script src="js/angular.js"></script>
         <script src="js/angular-resource.js"></script>
         <script src="js/ngStorage.js"></script>
+        <script src="js/dropdownList.js"></script>
+        <script src="js/event.js"></script>
     </head>
 
-    <body>
+    <body ng-controller="EventController as eventCtrl">
         <section class="top-box">
             <figure>
                 <!-- divided image size by 4 to set width and height -->
-                <img src="images/kendoLogo.png" alt="Kendo Logo"> 
+                <img src="images/kendoLogo.png" alt="Kendo Logo">
             </figure>
-            <a href ="signIn.html">Login</a>
         </section>
-
 
         <header>
             <nav>
                 <ul>
-                    <li><a>Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="">About</a></li>
                     <li onclick="myFunction()" class="dropbtn">Martial Arts
                         <div id="myDropdown" class="dropdown-content">
@@ -34,32 +38,19 @@
                             <a href="">Judo</a>
                         </div>
                     </li>
-                    <li><a href ="grading.html">News & Events</a></li>
-                    <li><a href ="">Locations</a></li>
-                    <li><a href ="">Contact</a></li>
+                    <li><a>News & Events</a></li>
+                    <li><a href="">Locations</a></li>
+                    <li><a href="">Contact</a></li>
                 </ul>
             </nav>
         </header>
 
-
-        <main>
-            <section class="boxes">
-                <h2>About us:</h2>
-                <figure>
-                    <!-- divided image size by 4 to set width and height -->
-                    <!-- <img src="../images/item.png" alt="Product Image" width="86" height="125"> -->
-                </figure>
-                <p>
-                    Designed for INFO310
-                </p>
-
+        <main>            
+            <section id="payments">
+                <h2>Make payments here:</h2>
+                
+                <p>Put POLI Pay Here</p>
             </section>
         </main>
-
-        <footer class="boxes">
-            <p>stuff...</p>
-        </footer>
-
     </body>
-
 </html>

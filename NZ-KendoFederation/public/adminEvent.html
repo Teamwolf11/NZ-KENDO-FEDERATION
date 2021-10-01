@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="GradingApp">
+    <head>
+        <title>New Zealand Kendo Federation</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/angular.js"></script>
+        <script src="js/angular-resource.js"></script>
+        <script src="js/ngStorage.js"></script>
+        <script src="js/dropdownList.js"></script>
+        <script src="js/event.js"></script>
+    </head>
+
+    <body ng-controller="EventController as eventCtrl">
+        <section class="top-box">
+            <figure>
+                <!-- divided image size by 4 to set width and height -->
+                <img src="images/kendoLogo.png" alt="Kendo Logo"> 
+            </figure>
+        </section>
+
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="">About</a></li>
+                    <li onclick="myFunction()" class="dropbtn">Martial Arts
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="">Kendo</a>
+                            <a href="">Iaido</a>
+                            <a href="">Naginata</a>
+                            <a href="">Judo</a>
+                        </div>
+                    </li>
+                    <li><a href ="grading.html">News & Events</a></li>
+                    <li><a href ="">Locations</a></li>
+                    <li><a href ="">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+
+        <main>
+
+            <div class="register-grading-events-container">
+
+                <p>{{eventCtrl.eventMessage}}</p>
+
+                    <form ng-submit="eventCtrl.registerEvent(gradingEvent)">
+                        <fieldset class="textInputs">
+                            <input type="text" ng-model="gradingEvent.name" id="name" tabindex="1" required pattern="[a-zA-Z '-]+" placeholder="Name of Grading Session">
+                            <input type="text" ng-model="gradingEvent.start_date" id="start_date" tabindex="2" required pattern="[a-zA-Z '-]+" placeholder="Date and Start Time of session" onfocus="(this.type = 'date')">
+                            <input type="text" ng-model="gradingEvent.club_id" id="club_id" tabindex="3" required pattern="[0-9 ()-]+" placeholder="Club ID">
+                            <input type="text" ng-model="gradingEvent.highest_grade_available" id="highest_grade_available" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Highest Grade Available" >
+                            <input type="text" ng-model="gradingEvent.venue" id="venue" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Venue" >
+                            <input type="text" ng-model="gradingEvent.headOfGradingPanel" id="headOfGradingPanel" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Head Of Grading Panel" >
+                            <input type="text" ng-model="gradingEvent.otherMembersOfGradingPanel" id="otherMembersOfGradingPanel" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Members Of Grading Panel" >
+                            <input type="text" ng-model="gradingEvent.grading_id" id="grading_id" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="grading_id" >
+
+                            <label><input type="submit" name="submit" value="Create Grading Event"></label>
+                        </fieldset>
+                    </form>
+            </div>
+        </main>
+    </body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en" ng-app="GradingApp">
+    <head>
+        <title>New Zealand Kendo Federation</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/angular.js"></script>
+        <script src="js/angular-resource.js"></script>
+        <script src="js/ngStorage.js"></script>
+        <script src="js/dropdownList.js"></script>
+        <script src="js/event.js"></script>
+    </head>
+
+    <body ng-controller="EventController as eventCtrl">
+        <section class="top-box">
+            <figure>
+                <!-- divided image size by 4 to set width and height -->
+                <img src="images/kendoLogo.png" alt="Kendo Logo">
+            </figure>
+        </section>
+
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="">About</a></li>
+                    <li onclick="myFunction()" class="dropbtn">Martial Arts
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="">Kendo</a>
+                            <a href="">Iaido</a>
+                            <a href="">Naginata</a>
+                            <a href="">Judo</a>
+                        </div>
+                    </li>
+                    <li><a>News & Events</a></li>
+                    <li><a href="">Locations</a></li>
+                    <li><a href="">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+
+            <h2>View All Grading Events</h2>
+
+            <table id="eventTable" ng-controller="EventController as eventCtrl">
+                <thead>
+                    <tr>
+                        <th>Venue</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Highest grade available</th>
+                        <th>Button</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="event in eventCtrl.events">
+                        <td>{{event.venue}}</td>
+                        <td>{{event.name}}</td>
+                        <td>{{event.start_date}}</td>
+                        <td>{{event.highest_grade_available}}</td>
+                        <td>{{event.headOfGradingPanel}}</td>
+                        <td>{{event.otherMembersOfGradingPanel}}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </body>
+</html>

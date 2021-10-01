@@ -4,6 +4,7 @@ import domain.AppRoles;
 import domain.Member;
 import domain.User;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.After;
@@ -20,18 +21,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MemberCollectionsDAOTest {
 
     private MemberJdbcDAO memberJdbc;
-    private UserJdbcDAO userJdbc;
-    private Member member1, member2, member3;
-    private User user1, user2;
-    String str = "1986-04-08 12:30";
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+    private Member member1, member2;
+    String str = "08/09/2002";
 
     @BeforeEach
     public void setUp() throws SQLException, ClassNotFoundException {
 
         memberJdbc = new MemberJdbcDAO();
-        userJdbc = new UserJdbcDAO();
 
         AppRoles role = new AppRoles("3", "General Member");
 
@@ -40,11 +36,11 @@ public class MemberCollectionsDAOTest {
         member1.setNzkfId("6565");
         member1.setEmail("email@test.test1");
         member1.setPassword("qwerty");
-        member1.setDob(dateTime);
+        member1.setDob(str);
         member1.setfName("Boris");
         member1.setmName("Horis");
         member1.setlName("Doloris");
-        member1.setJoinDate(dateTime);
+        member1.setJoinDate(str);
         member1.setSex('M');
         member1.setEthnicity("Asian");
 
@@ -53,11 +49,11 @@ public class MemberCollectionsDAOTest {
         member2.setNzkfId("6564");
         member2.setPassword("QWERTY");
         member2.setEmail("email@test.test2");
-        member2.setDob(dateTime);
+        member2.setDob(str);
         member2.setfName("Jane");
         member2.setmName(null);
         member2.setlName("Doe");
-        member2.setJoinDate(dateTime);
+        member2.setJoinDate(str);
         member2.setSex('F');
         member2.setEthnicity("Asian");
 
@@ -96,7 +92,7 @@ public class MemberCollectionsDAOTest {
 
     @Test
     public void testSaveMember() {
-        member3 = memberJdbc.saveMember(member2);
+        member2 = memberJdbc.saveMember(member2);
         System.out.println(member2);
         Member memberCheck = memberJdbc.getMember(member2.getMemberId());  //call member from db
         assertEquals(member2, memberCheck);  //Member check
