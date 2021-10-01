@@ -1,54 +1,55 @@
-//package dao;
-//
-//import domain.AppRoles;
-//import domain.Member;
-//import domain.User;
-//import java.sql.SQLException;
-//import java.time.LocalDate;
-//import java.time.LocalDateTime;
-//import java.time.format.DateTimeFormatter;
-//import org.junit.After;
-//import static org.junit.Assert.assertNull;
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import static org.junit.jupiter.api.Assertions.*;
-//
-///**
-// *
-// * @author Maaha Ahmad
-// */
-//public class MemberCollectionsDAOTest {
-//
-//    private MemberJdbcDAO memberJdbc;
-//    private UserJdbcDAO userJdbc;
-//    private Member member1, member2, member3;
-//    private User user1, user2;
-//    String str = "1986-04-08";
-//    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//    LocalDate dateTime = LocalDate.parse(str, formatter);
-//
-//    @BeforeEach
-//    public void setUp() throws SQLException, ClassNotFoundException {
-//
-//        memberJdbc = new MemberJdbcDAO();
-//        userJdbc = new UserJdbcDAO();
-//
-//        AppRoles role = new AppRoles("3", "General Member");
-//
-//        member1 = new Member();
-//        member1.setRole(role);
-//        member1.setNzkfId("6565");
-//        member1.setEmail("email@test.test1");
-//        member1.setPassword("qwerty");
-//        member1.setDob(dateTime);
-//        member1.setfName("Boris");
-//        member1.setmName("Horis");
-//        member1.setlName("Doloris");
-//        member1.setJoinDate(dateTime);
-//        member1.setSex('M');
-//        member1.setEthnicity("Asian");
-//
+package dao;
+
+import domain.AppRoles;
+import domain.Member;
+import domain.User;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+
+
+/**
+ *
+ * @author Maaha Ahmad
+ */
+public class MemberCollectionsDAOTest {
+
+    private MemberJdbcDAO memberJdbc;
+    private UserJdbcDAO userJdbc;
+    private Member member1, member2, member3;
+    private User user1, user2;
+    String str = "1986-04-08";
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDate dateTime = LocalDate.parse(str, formatter);
+
+    @BeforeEach
+    public void setUp() throws SQLException, ClassNotFoundException {
+
+        memberJdbc = new MemberJdbcDAO();
+        userJdbc = new UserJdbcDAO();
+
+        AppRoles role = new AppRoles("3", "General Member");
+        member1 = new Member();
+        
+        member1.setRole(role);
+        member1.setNzkfId("6565");
+        member1.setMember_id("6565");
+        member1.setEmail("email@test.test1");
+        member1.setPassword("qwerty");
+        member1.setDob("01/01/2001");
+        member1.setfName("Boris");
+        member1.setmName("Horis");
+        member1.setlName("Doloris");
+        member1.setJoinDate("01/01/2100");
+        member1.setSex('M');
+        member1.setEthnicity("Asian");
+        member1.setPhoneNum("027123568");
+
 //        member2 = new Member();
 //        member2.setRole(role);
 //        member2.setNzkfId("6564");
@@ -75,18 +76,19 @@
 ////        member3.setSex('F');
 ////        member3.setEthnicity("European");
 //
-//        member1 = memberJdbc.saveMember(member1);
-//    }
-//
-//    @AfterEach
-//    public void tearDown() {
-//        memberJdbc.deleteMember(member1);
-//
-//
-//        //userJdbc.deleteUser(member1.getUser());
-//        //userJdbc.deleteUser(member2.getUser());
-//        //member3 has no user
-//    }
+        
+        member1 = memberJdbc.saveMember(member1);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        memberJdbc.deleteMember(member1);
+
+
+        //userJdbc.deleteUser(member1.getUser());
+        //userJdbc.deleteUser(member2.getUser());
+        //member3 has no user
+    }
 //
 ////    @Test
 ////    public void testSaveNewMember() {
@@ -140,4 +142,9 @@
 //        Member memberCheck4 = memberJdbc.signIn("invalid@test.co.nz", "invaldi");
 //        assertNull(memberCheck4);  //Member check
 //    }
-//}
+    @Test
+    public void testEmail(){
+        memberJdbc.email(member1);
+        assertEquals(1, 1);
+    }
+}
