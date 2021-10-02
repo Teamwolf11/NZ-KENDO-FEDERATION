@@ -120,7 +120,7 @@ footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 0px;
-    width: 80%;
+    width: 50%;
     margin: auto;
 }
 register-grading-events-container {
@@ -131,9 +131,9 @@ register-grading-events-container {
     padding: 10px;
 }
 /* Middle line between sign in and create account */
-.grid-container section:first-child {
+/*.grid-container section:first-child {
     border-right: solid 3px; 
-}
+}*/
 
 form {
     width: 300px;
