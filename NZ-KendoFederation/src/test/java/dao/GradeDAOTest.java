@@ -55,11 +55,9 @@ public class GradeDAOTest {
 
         member1 = memberJdbc.saveMember(member1);
         
-        Club club = new Club(member1.getMemberId(), "Test Club");
+        Club club = new Club(member1.getMemberId(), "Test Club", "1");
                 
                 
-            clubLeaderId;
-        this.clubName = clubName;
         this.martialArts = martialArts;
         this.contact = contact;
         this.noOfMembers = noOfMembers;
