@@ -39,38 +39,6 @@ public class EventJdbcDAO implements EventDAO {
                 stmt.setString(1, eventID);
                 ResultSet rs = stmt.executeQuery();
 
-//    Event details
-//    event_id SERIAL NOT NULL UNIQUE,                      // do we need grading_id? 
-//    name character varying NOT NULL,                      // make event date field
-//    club_id integer NOT NULL,                             // add name of graidng panel
-//    venue character varying,                              // add head of grading panel
-//    highest_grade_available character varying NOT NULL,
-//    grading_id integer NOT NULL,
-
-//    Club schema                                           // add FK to MartialArts
-//    club_id SERIAL NOT NULL,                              // add clubLeaderId field
-//    name character varying NOT NULL,                      // add no_of_members
-//    location character varying,                           
-//    contact_details character varying NOT NULL,
-
-//    Club domain 
-//    public String clubId;
-//    public String clubLeaderId;
-//    public String clubName;
-//    public MartialArt martialArts;
-//    public String contact;
-//    public int noOfMembers;
-
-//    Martial Arts domain                                   // do we need MartialArtsDate here? 
-//    private String martialArtId;
-//    private String name;             
-//    private String grade;             
-//    private Date dateReceived; 
-
-//    Martial Arts schema
-//    martial_art_id SERIAL NOT NULL,                       // add grade
-//    name character varying NOT NULL,                      
-//    "desc" character varying,
 
                 if (rs.next()) {
                     // Event fields
@@ -105,7 +73,7 @@ public class EventJdbcDAO implements EventDAO {
                     String martialArtsGrade = rs.getString("grade");
                     Timestamp martialArtsDate = rs.getTimestamp("date");
 
-                    MartialArt martialArt = new MartialArt(martialArtId, martialArtName, martialArtsGrade, martialArtsDate);
+                    MartialArt martialArt = new MartialArt(martialArtId, martialArtName);
                     Club club = new Club(club_id, clubLeaderId, clubName, martialArt, contact, noMembers, location, description);
 
                     return new Event(event_id, event_name, club, venue, grade, eventDate.toLocalDateTime(), nameOfGradingPanel, headOfGradingPanel, eventDescription, startTime, endTime, createdAt.toLocalDateTime(), lastModified.toLocalDateTime());

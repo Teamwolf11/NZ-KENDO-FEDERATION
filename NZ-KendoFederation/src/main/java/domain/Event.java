@@ -19,29 +19,28 @@ public class Event {
     public String name;                 //Name of the event
     public Club relatedClub;
     public String venue;                //Location of event
-    public String highGrade;            //Highest grade available to be given by this Event
-    public LocalDateTime eventDate, createdAt, lastModified;
+    public Grade grade;
+    public LocalDateTime eventDate;
     public String nameOfGradingPanel;
     public String headOfGradingPanel;
     public String eventDescription;
     public Time startTime, endTime;
+    public String status;
     
     public Event() {
     }
 
-    public Event(String Event_id, String name, Club relatedClub, String venue, String highGrade, LocalDateTime eventDate, String nameOfGradingPanel, String headOfGradingPanel, String eventDescription, Time startTime, Time endTime, LocalDateTime createdAt, LocalDateTime lastModified) {
+    public Event(String Event_id, String name, Club relatedClub, String venue, String highGrade, LocalDateTime eventDate, String nameOfGradingPanel, String headOfGradingPanel, String eventDescription, Time startTime, Time endTime, String status, Grade grade) {
         this.Event_id = Event_id;
         this.name = name;
         this.relatedClub = relatedClub;
         this.venue = venue;
-        this.highGrade = highGrade;
+        this.grade = grade;
         this.eventDate = eventDate;
         this.nameOfGradingPanel = nameOfGradingPanel;
         this.headOfGradingPanel = headOfGradingPanel;
         this.startTime = startTime;
         this.endTime = endTime; 
-        this.createdAt = createdAt;
-        this.lastModified = lastModified; 
         this.eventDescription = eventDescription;
     }
 
@@ -77,12 +76,12 @@ public class Event {
         this.venue = venue;
     }
 
-    public String getHighGrade() {
-        return highGrade;
+    public Grade getGrade() {
+        return grade;
     }
 
-    public void setHighGrade(String highGrade) {
-        this.highGrade = highGrade;
+    public void setGrade(Grade grade) {
+        this.grade = grade;
     }
 
     public LocalDateTime getEventDate() {
@@ -121,14 +120,6 @@ public class Event {
         return endTime;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getLastModified() {
-        return lastModified;
-    }
-
     public void setEventDescription(String eventDescription) {
         this.eventDescription = eventDescription;
     }
@@ -140,16 +131,6 @@ public class Event {
     public void setEndTime(Time endTime) {
         this.endTime = endTime;
     }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setLastModified(LocalDateTime lastModified) {
-        this.lastModified = lastModified;
-    }
-
-    
-   
+  
 
 }

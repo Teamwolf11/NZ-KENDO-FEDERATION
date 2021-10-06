@@ -15,11 +15,12 @@ DROP TABLE IF EXISTS public.app_role;
 CREATE TABLE IF NOT EXISTS public.club
 (
     club_id SERIAL NOT NULL,
-	mem_num integer,
+    mem_num integer,
     name character varying NOT NULL,
     location character varying,
-	email character varying,
-	phone character varying,
+    email character varying,
+    phone character varying,
+    description character varying,                     -- added description 
     PRIMARY KEY (club_id)
 );
 
@@ -27,7 +28,8 @@ CREATE TABLE IF NOT EXISTS public.club_role
 (
     member_id integer NOT NULL,
     club_id integer NOT NULL,
-    name character varying NOT NULL,
+    role_name character varying NOT NULL,               -- added club_role 
+    name character varying NOT NULL,                                 
     PRIMARY KEY (member_id, club_id)
 );
 
@@ -60,10 +62,10 @@ CREATE TABLE IF NOT EXISTS public.martial_arts
 
 CREATE TABLE IF NOT EXISTS public.member_grading
 (
-	club_id integer NOT NULL,
+    club_id integer NOT NULL,
     member_id integer NOT NULL,
     grading_id integer NOT NULL,
-	date_received timestamp without time zone NOT NULL,
+    date_received timestamp without time zone NOT NULL,
     PRIMARY KEY (member_id, club_id, grading_id)
 );
 
