@@ -45,7 +45,7 @@ module.controller('MemberController', function (registerAPI, $window, signInAPI,
             let ctrl = this;
             this.signIn = function (email, password) {
                 // get member from web service
-                signInAPI.get({'email': email},
+                signInAPI.get({'email': email,'password': password},
                         // success callback
                                 function (member) {
                                     // also store the retrieved member
