@@ -49,6 +49,7 @@ public class MemberJdbcDAO implements MemberDAO {
                     //Member fields
                     String nzkfId = rs.getString("nzkf_membership_id");
                     String joinDate = rs.getString("join_date");
+                    String nzkfIdRenewDate = rs.getString("nzkf_membership_renew_date");
                     String fName = rs.getString("first_name");
                     String lName = rs.getString("last_name");
                     String mName = rs.getString("middle_name");
@@ -68,7 +69,7 @@ public class MemberJdbcDAO implements MemberDAO {
                     AppRoles role = new AppRoles(roleId, roleName);
                     //User user = new User(userID, username, password, role);
 
-                    return new Member(memberId, role, nzkfId, email, password, dob, joinDate, fName, lName, mName, sex, ethnicity, phoneNum);
+                    return new Member(memberId, nzkfId, nzkfIdRenewDate, role, email, password, dob, joinDate, fName, lName, mName, sex, ethnicity, phoneNum);
                 } else {
                     con.close();
                     return null;
@@ -95,32 +96,21 @@ public class MemberJdbcDAO implements MemberDAO {
             DatabaseConnector db = new DatabaseConnector();
             con = db.connect();
 
-            // add a date to the member join date if one doesn't already exist
-//            if (member.getJoinDate() == null) {
-//                member.setJoinDate(LocalDate.now());
-//            }
 
-            // convert join date into to java.sql.Timestamp
-            int temp = 2;
 
-            String sql = "INSERT INTO public.member (nzkf_membership_id, app_role_id, email, password, date_of_birth, join_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES (?,?,?,?,?,?,?,?,?,?,?,?) RETURNING member_id";
+            String sql = "INSERT INTO public.member (email, password, date_of_birth, join_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES (?,?,?,?,?,?,?,?,?,?) RETURNING member_id";
             try (PreparedStatement insertMemberstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
-//                insertMemberstmt.setString(1, member.getNzkfId());
-//                insertMemberstmt.setInt(2, Integer.parseInt(member.getRole().getAppRoleId()));
-                insertMemberstmt.setString(1, "13");
-                insertMemberstmt.setInt(2, temp);
-                insertMemberstmt.setString(3, member.getEmail().toLowerCase());
-                insertMemberstmt.setString(4, member.getPassword());
-                insertMemberstmt.setString(5, member.getDob());
-                insertMemberstmt.setString(6, member.getJoinDate());
-                insertMemberstmt.setString(7, member.getfName());
-                insertMemberstmt.setString(8, member.getlName());
-                insertMemberstmt.setString(9, member.getmName());
-                insertMemberstmt.setString(10, String.valueOf(member.getSex()));
-                insertMemberstmt.setString(11, member.getEthnicity());
-                insertMemberstmt.setString(12, member.getPhoneNum());
-                //if (member.getMemberId() != null) insertMemberstmt.setInt(13, Integer.parseInt(member.getMemberId()));
-
+                insertMemberstmt.setString(1, member.getEmail().toLowerCase());
+                insertMemberstmt.setString(2, member.getPassword());
+                insertMemberstmt.setString(3, member.getDob());
+                insertMemberstmt.setString(4, member.getJoinDate());
+                insertMemberstmt.setString(5, member.getfName());
+                insertMemberstmt.setString(6, member.getlName());
+                insertMemberstmt.setString(7, member.getmName());
+                insertMemberstmt.setString(8, String.valueOf(member.getSex()));
+                insertMemberstmt.setString(9, member.getEthnicity());
+                insertMemberstmt.setString(10, member.getPhoneNum());
+                
                 int row = insertMemberstmt.executeUpdate();
 
                 if (row == 0) {
@@ -192,6 +182,7 @@ public class MemberJdbcDAO implements MemberDAO {
                     //Member fields
                     String memberId = Integer.toString(rs.getInt("member_id"));
                     String nzkfId = rs.getString("nzkf_membership_id");
+                    String nzkfIdRenewDate = rs.getString("nzkf_membership_renew_date");
                     String joinDate = rs.getString("join_date");
                     String fName = rs.getString("first_name");
                     String lName = rs.getString("last_name");
@@ -211,7 +202,7 @@ public class MemberJdbcDAO implements MemberDAO {
 
                     AppRoles role = new AppRoles(roleId, roleName);
 
-                    mem.add(new Member(memberId, role, nzkfId, email, password, dob, joinDate, fName, lName, mName, sex, ethnicity, phoneNum));
+                    mem.add(new Member(memberId, nzkfId, nzkfIdRenewDate, role, email, password, dob, joinDate, fName, lName, mName, sex, ethnicity, phoneNum));
                 }
 
                 con.close();
@@ -249,6 +240,7 @@ public class MemberJdbcDAO implements MemberDAO {
                     //Member fields
                     String memberId = Integer.toString(rs.getInt("member_id"));
                     String nzkfId = rs.getString("nzkf_membership_id");
+                    String nzkfIdRenewDate = rs.getString("nzkf_membership_renew_date");
                     String joinDate = rs.getString("join_date");
                     String fName = rs.getString("first_name");
                     String lName = rs.getString("last_name");
@@ -269,7 +261,7 @@ public class MemberJdbcDAO implements MemberDAO {
                     AppRoles role = new AppRoles(roleId, roleName);
                     //User user = new User(userID, username, password, role);
 
-                    return new Member(memberId, role, nzkfId, email, password, dob, joinDate, fName, lName, mName, sex, ethnicity, phoneNum);
+                    return new Member(memberId, nzkfId, nzkfIdRenewDate, role, email, password, dob, joinDate, fName, lName, mName, sex, ethnicity, phoneNum);
                 } else {
                     con.close();
                     return null;
@@ -299,6 +291,7 @@ public class MemberJdbcDAO implements MemberDAO {
                     //Member fields
                     String memberId = Integer.toString(rs.getInt("member_id"));
                     String nzkfId = rs.getString("nzkf_membership_id");
+                    String nzkfIdRenewDate = rs.getString("nzkf_membership_renew_date");
                     String joinDate = rs.getString("join_date");
                     String fName = rs.getString("first_name");
                     String lName = rs.getString("last_name");
@@ -317,9 +310,8 @@ public class MemberJdbcDAO implements MemberDAO {
                     con.close();
 
                     AppRoles role = new AppRoles(roleId, roleName);
-                    //User user = new User(userID, username, password, role);
 
-                    return new Member(memberId, role, nzkfId, email, password, dob, joinDate, fName, lName, mName, sex, ethnicity, phoneNum);
+                    return new Member(memberId, nzkfId, nzkfIdRenewDate, role, email, password, dob, joinDate, fName, lName, mName, sex, ethnicity, phoneNum);
                 } else {
                     con.close();
                     return null;
