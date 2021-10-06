@@ -12,6 +12,7 @@ public class Member {
     
     private String member_id;
     private String nzkfId;
+    private String nzkfRenewDate;
     private AppRoles role;
     private String email;
     private String password;
@@ -26,10 +27,11 @@ public class Member {
 
     public Member() {
     }
-      
-    public Member(String memberId, AppRoles role, String nzkfId, String email, String password, String dob, String joinDate, String fName, String lName, String mName, char sex, String ethnicity, String phoneNum) {
-        this.member_id = memberId;
+
+    public Member(String member_id, String nzkfId, String nzkfRenewDate, AppRoles role, String email, String password, String dob, String joinDate, String fName, String lName, String mName, char sex, String ethnicity, String phoneNum) {
+        this.member_id = member_id;
         this.nzkfId = nzkfId;
+        this.nzkfRenewDate = nzkfRenewDate;
         this.role = role;
         this.email = email;
         this.password = password;
@@ -43,6 +45,16 @@ public class Member {
         this.phoneNum = phoneNum;
     }
 
+    
+    
+    public String getNzkfRenewDate() {
+        return nzkfRenewDate;
+    }
+
+    public void setNzkfRenewDate(String nzkfRenewDate) {
+        this.nzkfRenewDate = nzkfRenewDate;
+    }
+      
     public String getMemberId() {
         return member_id;
     }

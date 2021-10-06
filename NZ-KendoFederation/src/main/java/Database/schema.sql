@@ -82,8 +82,9 @@ CREATE TABLE IF NOT EXISTS public.app_role
 CREATE TABLE IF NOT EXISTS public.member
 (
     member_id SERIAL NOT NULL,
-    nzkf_membership_id character varying NOT NULL,
-    app_role_id integer NOT NULL,
+    nzkf_membership_id SERIAL NOT NULL,
+	nzkf_membership_renew_date character varying DEFAULT TO_CHAR(NOW() + interval '1 year','DD-MM-YYYY'),
+    app_role_id integer DEFAULT 3,
     password character varying NOT NULL,
     email character varying UNIQUE,
     date_of_birth character varying,
@@ -155,18 +156,10 @@ ALTER TABLE public.member ALTER COLUMN join_date SET DEFAULT TO_CHAR(now(), 'DD/
 		
 CREATE OR REPLACE FUNCTION process_member_grading_next_date() RETURNS TRIGGER AS $mem_grade_next_date$
     BEGIN 
-		IF (TG_OP = 'INSERT') THEN
 			NEW.date_next_grade_available := TO_CHAR(to_date(NEW.date_received, 'DD/MM/YYYY') + g.time_in_grade,'DD/MM/YYYY') 
 			FROM public.grading g
 			WHERE NEW.grading_id = g.grading_id;
             RETURN NEW;
-		ELSIF (TG_OP = 'INSERT') THEN
-			NEW.date_next_grade_available := TO_CHAR(to_date(NEW.date_received, 'DD/MM/YYYY') + g.time_in_grade,'DD/MM/YYYY') 
-			FROM public.grading g
-			WHERE NEW.grading_id = g.grading_id;
-            RETURN NEW;
-		END IF;
-		RETURN NULL;
     END;
 $mem_grade_next_date$ LANGUAGE plpgsql;
 
@@ -249,6 +242,7 @@ INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (60
 
 ALTER SEQUENCE grading_grading_id_seq RESTART WITH 61;
 ALTER SEQUENCE martial_arts_martial_art_id_seq RESTART WITH 5;
+ALTER SEQUENCE member_nzkf_membership_id_seq RESTART WITH 10000;
 
 REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM javaapp;
 REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public FROM javaapp;
