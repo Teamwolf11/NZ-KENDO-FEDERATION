@@ -18,7 +18,7 @@ import org.jooby.Status;
  */
 public class MemberModule extends Jooby {
 
-	MemberDAO memberDao = new MemberCollectionsDAO();
+	// MemberDAO memberDao = new MemberCollectionsDAO();
 
 	public MemberModule(MemberDAO memberDao) {
 		get("/api/members/:email", (req) -> {
