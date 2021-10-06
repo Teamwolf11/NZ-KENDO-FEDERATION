@@ -175,6 +175,11 @@ public class Member {
 		return true;
 	}
 
+    @Override
+    public String toString() {
+        return "Member{" + "member_id=" + member_id + ", nzkfId=" + nzkfId + ", role=" + role + ", email=" + email + ", password=" + password + ", dob=" + dob + ", joinDate=" + joinDate + ", fName=" + fName + ", lName=" + lName + ", mName=" + mName + ", sex=" + sex + ", ethnicity=" + ethnicity + ", phoneNum=" + phoneNum + '}';
+    }
+
         
 
    

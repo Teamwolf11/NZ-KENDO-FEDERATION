@@ -9,6 +9,12 @@ import Database.DatabaseConnector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import static java.util.concurrent.TimeUnit.HOURS;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
@@ -20,7 +26,6 @@ import org.apache.commons.mail.SimpleEmail;
 public class MemberJdbcDAO implements MemberDAO {
 
     public Connection con = null;
-
     public MemberJdbcDAO() {
     }
 
@@ -280,34 +285,53 @@ public class MemberJdbcDAO implements MemberDAO {
         }
         return null;
     }
-    /**
-     *
-     * @param member
-     * @return
-     */
-     
+
+    @Override
     public void email(Member member) {
-            CompletableFuture.runAsync(() -> {
-                String newEmail = member.getEmail();
-                Email email = new SimpleEmail();
-                email.setHostName("smtp.googlemail.com");
-                email.setSmtpPort(465);
-                //email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqax"));
-                email.setSSLOnConnect(true);
-
-                try {
-                    email.setFrom("benjaminm.12184@gmail.com");
-                    email.setSubject("New Member #" + member.getMember_id());
-                    email.setMsg("New Member sign up details for " + member.getfName() + 
-                            " " + member.getlName() + "Your username and password are" + 
-                            member.getPassword() + member.getEmail());
-
-                    email.addTo("benjaminm.12184@gmail.com");
-                    email.send();
-                } catch (EmailException ex) {
-                    Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            });
-	}
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
+
+//    /**
+//     *
+//     * @param member
+//     * @return
+//     */
+//     
+//    public void email(Member member) {
+//          //  CompletableFuture.runAsync(() -> {
+//                String newEmail = member.getEmail();
+//                Email email = new SimpleEmail();
+//                email.setHostName("smtp.gmail.com");
+//                email.setSmtpPort(587);
+//                email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqax"));
+//                email.setSSLOnConnect(true);
+//
+//                try {
+//                    email.setFrom("benjaminm.12184@gmail.com");
+//                    email.setSubject("New Member #" + member.getMemberId());
+//                    email.setMsg("New Member sign up details for " + member.getfName() + 
+//                            " " + member.getlName() + "Your username and password are" + 
+//                            member.getPassword() + member.getEmail());
+//
+//                    email.addTo("benjaminm.12184@gmail.com");
+//                    email.send();
+//                } catch (EmailException ex) {
+//                    Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//
+//        //    });
+//	}
+//   
+//    
+//    
+//    public void sendGradingEmail(Email email){
+//        Runnable gradingEmail = () -> {
+//            System.out.println("ben"); 
+//        };
+//        ScheduledFuture<?> emailHandle = scheduler.scheduleAtFixedRate(gradingEmail, 20, 20, SECONDS);
+//        Runnable canceller = () -> emailHandle.cancel(false);
+//        scheduler.schedule(canceller, 1, HOURS);
+//    }
+//    }
+//
