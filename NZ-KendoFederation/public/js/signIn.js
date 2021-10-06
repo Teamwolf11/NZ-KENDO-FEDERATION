@@ -18,8 +18,9 @@ module.factory('signInAPI', function ($resource) {
 });
 
 module.controller('MemberController', function (registerAPI, $window, signInAPI, $sessionStorage) {
-    
-    this.signInMessage = "Please sign in to continue.";
+
+    this.signInMessage = "";
+    this.registerMessage = "";
 
     if ($sessionStorage.member) {
         this.welcome = "Welcome " + $sessionStorage.member.firstName;
@@ -29,11 +30,13 @@ module.controller('MemberController', function (registerAPI, $window, signInAPI,
         registerAPI.save(null, member,
                 // success callback
                         function () {
-                            $window.location = 'index.html';
+                            $window.location = 'signIn.html';
+                            ctrl.registerMessage = 'Account created. Please sign in.';
                         },
                         // error callback
                                 function (error) {
                                     console.log(error);
+                                    ctrl.registerMessage = 'This email is already taken.';
                                 }
                         );
                     };
