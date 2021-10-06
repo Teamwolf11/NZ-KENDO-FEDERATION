@@ -50,14 +50,17 @@
 
                     <form ng-submit="eventCtrl.registerEvent(gradingEvent)">
                         <fieldset class="textInputs">
-                            <input type="text" ng-model="gradingEvent.name" id="name" tabindex="1" required pattern="[a-zA-Z '-]+" placeholder="Name of Grading Session">
-                            <input type="text" ng-model="gradingEvent.start_date" id="start_date" tabindex="2" required pattern="[a-zA-Z '-]+" placeholder="Date and Start Time of session" onfocus="(this.type = 'date')">
-                            <input type="text" ng-model="gradingEvent.club_id" id="club_id" tabindex="3" required pattern="[0-9 ()-]+" placeholder="Club ID">
-                            <input type="text" ng-model="gradingEvent.highest_grade_available" id="highest_grade_available" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Highest Grade Available" >
-                            <input type="text" ng-model="gradingEvent.venue" id="venue" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Venue" >
-                            <input type="text" ng-model="gradingEvent.headOfGradingPanel" id="headOfGradingPanel" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Head Of Grading Panel" >
-                            <input type="text" ng-model="gradingEvent.otherMembersOfGradingPanel" id="otherMembersOfGradingPanel" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Members Of Grading Panel" >
-                            <input type="text" ng-model="gradingEvent.grading_id" id="grading_id" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="grading_id" >
+                            <input type="text" ng-model="gradingEvent.name" id="name"  required pattern="[a-zA-Z '-]+" placeholder="Name of Grading Session">
+                            <input type="text" ng-model="gradingEvent.start_date" id="start_date"  required pattern="[a-zA-Z '-]+" placeholder="Date and Start Time of session" onfocus="(this.type = 'date')">
+                            <input type="text" ng-model="gradingEvent.club" id="club_id"  required pattern="[0-9 ()-]+" placeholder="Club ID">
+                            <input type="text" ng-model="gradingEvent.venue" id="venue"  required pattern="[a-zA-Z '-]+" placeholder="Venue" >
+                            <input type="text" ng-model="gradingEvent.highest_grade_available" id="highest_grade_available" required pattern="[a-zA-Z '-]+" placeholder="Highest Grade Available" >
+                            <input type="text" ng-model="gradingEvent.headOfGradingPanel" id="headOfGradingPanel" required pattern="[a-zA-Z '-]+" placeholder="Head Of Grading Panel" >
+                            <input type="text" ng-model="gradingEvent.otherMembersOfGradingPanel" id="otherMembersOfGradingPanel" required pattern="[a-zA-Z '-]+" placeholder="Members Of Grading Panel" >
+                            <input type="text" ng-model="gradingEvent.event_description" id="event_description"  required pattern="[a-zA-Z '-]+" placeholder="grading_id" >
+                            <input type="text" ng-model="gradingEvent.start_time" id="start_time" required pattern="[a-zA-Z '-]+" placeholder="grading_id" >
+                            <input type="text" ng-model="gradingEvent.end_time" id="end_time" required pattern="[a-zA-Z '-]+" placeholder="grading_id" >
+                            <input type="text" ng-model="gradingEvent.status" id="status" required pattern="[a-zA-Z '-]+" placeholder="grading_id" >
 
                             <label><input type="submit" name="submit" value="Create Grading Event"></label>
                         </fieldset>
