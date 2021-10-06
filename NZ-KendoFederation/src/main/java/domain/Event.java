@@ -15,42 +15,33 @@ public class Event {
 
   private String event_id;
   private String name;                 //Name of the event
-  private Timestamp start_date;
-  private Integer club_id;
+  private String start_date;
+  private Club club;
   private String venue;                //Location of event
-  private String highest_grade_available;            //Highest grade available to be given by this Event
-  private Integer grading_id;
+  private Grade highest_grade_available;            //Highest grade available to be given by this Event
   private String headOfGradingPanel;
   private String otherMembersOfGradingPanel;
+  private String event_description;
+  private String start_time, end_time;
+  private String status;
+
 
   public Event() {
   }
 
-  public Event(String event_id, String name, Timestamp start_date, Integer club_id, String venue, String highest_grade_available, Integer grading_id, String headOfGradingPanel, String otherMembersOfGradingPanel) {
+  public Event(String event_id, String name, String start_date, Club club, String venue, Grade highest_grade_available, String headOfGradingPanel, String otherMembersOfGradingPanel, String event_description, String start_time, String end_time, String status) {
     this.event_id = event_id;
     this.name = name;
     this.start_date = start_date;
-    this.club_id = club_id;
+    this.club = club;
     this.venue = venue;
     this.highest_grade_available = highest_grade_available;
-    this.grading_id = grading_id;
     this.headOfGradingPanel = headOfGradingPanel;
     this.otherMembersOfGradingPanel = otherMembersOfGradingPanel;
-  }
-
-  @Override
-  public String toString() {
-    return "Event{" +
-        "event_id='" + event_id + '\'' +
-        ", name='" + name + '\'' +
-        ", start_date=" + start_date +
-        ", club_id=" + club_id +
-        ", venue='" + venue + '\'' +
-        ", highest_grade_available='" + highest_grade_available + '\'' +
-        ", grading_id=" + grading_id +
-        ", headOfGradingPanel='" + headOfGradingPanel + '\'' +
-        ", otherMembersOfGradingPanel='" + otherMembersOfGradingPanel + '\'' +
-        '}';
+    this.event_description = event_description;
+    this.start_time = start_time;
+    this.end_time = end_time;
+    this.status = status;
   }
 
   public String getEvent_id() {
@@ -71,21 +62,21 @@ public class Event {
     return this;
   }
 
-  public Timestamp getStart_date() {
+  public String getStart_date() {
     return start_date;
   }
 
-  public Event setStart_date(Timestamp start_date) {
+  public Event setStart_date(String start_date) {
     this.start_date = start_date;
     return this;
   }
 
-  public Integer getClub_id() {
-    return club_id;
+  public Club getClub() {
+    return club;
   }
 
-  public Event setClub_id(Integer club_id) {
-    this.club_id = club_id;
+  public Event setClub(Club club) {
+    this.club = club;
     return this;
   }
 
@@ -98,21 +89,12 @@ public class Event {
     return this;
   }
 
-  public String getHighest_grade_available() {
+  public Grade getHighest_grade_available() {
     return highest_grade_available;
   }
 
-  public Event setHighest_grade_available(String highest_grade_available) {
+  public Event setHighest_grade_available(Grade highest_grade_available) {
     this.highest_grade_available = highest_grade_available;
-    return this;
-  }
-
-  public Integer getGrading_id() {
-    return grading_id;
-  }
-
-  public Event setGrading_id(Integer grading_id) {
-    this.grading_id = grading_id;
     return this;
   }
 
@@ -131,6 +113,42 @@ public class Event {
 
   public Event setOtherMembersOfGradingPanel(String otherMembersOfGradingPanel) {
     this.otherMembersOfGradingPanel = otherMembersOfGradingPanel;
+    return this;
+  }
+
+  public String getEvent_description() {
+    return event_description;
+  }
+
+  public Event setEvent_description(String event_description) {
+    this.event_description = event_description;
+    return this;
+  }
+
+  public String getStart_time() {
+    return start_time;
+  }
+
+  public Event setStart_time(String start_time) {
+    this.start_time = start_time;
+    return this;
+  }
+
+  public String getEnd_time() {
+    return end_time;
+  }
+
+  public Event setEnd_time(String end_time) {
+    this.end_time = end_time;
+    return this;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public Event setStatus(String status) {
+    this.status = status;
     return this;
   }
 }
