@@ -112,7 +112,6 @@ public class GradeJdbcDAO implements GradeDAO {
                         member.addGrade(grade);
                         return member;
                     } else {
-                        System.out.println("6");
                         throw new SQLException("Updating nextGradeDate failed.");
                     }
                 }

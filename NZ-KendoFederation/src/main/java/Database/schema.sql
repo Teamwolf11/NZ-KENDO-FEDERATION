@@ -39,10 +39,12 @@ CREATE TABLE IF NOT EXISTS public.event
 (
     event_id SERIAL NOT NULL UNIQUE,
     name character varying NOT NULL,
-    start_date character varying,  --change from date
     club_id integer NOT NULL,
     venue character varying,
-    status character NOT NULL,
+    status character varying NOT NULL DEFAULT 'on going',
+    description character varying,
+    start_date_time character varying NOT NULL,
+    end_date_time character varying,
     grading_id integer NOT NULL, --highest grade available.
     PRIMARY KEY (event_id)
 );
@@ -69,7 +71,7 @@ CREATE TABLE IF NOT EXISTS public.member_grading
     grading_id integer NOT NULL,
     date_received character varying NOT NULL,  --update date
     date_next_grade_available character varying,
-	event_id character varying,
+    event_id character varying,
     PRIMARY KEY (member_id, club_id, grading_id)
 );
 

@@ -5,6 +5,8 @@
  */
 package domain;
 
+import java.util.List;
+
 /**
  * @author Mike
  * @author lachlan
@@ -13,31 +15,29 @@ public class Event {
 
     private String eventId;
     private String name;                 //Name of the event
-    private String startDate;
     private Club club;
     private String venue;                //Location of event
     private Grade highestGradeAvailable;            //Highest grade available to be given by this Event
     private String headOfGradingPanel;
-    private String otherMembersOfGradingPanel;
-    private String event_description;
-    private String start_time, end_time;
+    private List<String> otherMembersOfGradingPanel;
+    private String desc;
+    private String startDateTime, endDateTime;
     private String status;
 
     public Event() {
     }
 
-    public Event(String eventId, String name, String startDate, Club club, String venue, Grade highestGradeAvailable, String headOfGradingPanel, String otherMembersOfGradingPanel, String event_description, String start_time, String end_time, String status) {
+    public Event(String eventId, String name, Club club, String venue, Grade highestGradeAvailable, String headOfGradingPanel, List<String> otherMembersOfGradingPanel, String desc, String startDateTime, String endDateTime, String status) {
         this.eventId = eventId;
         this.name = name;
-        this.startDate = startDate;
         this.club = club;
         this.venue = venue;
         this.highestGradeAvailable = highestGradeAvailable;
         this.headOfGradingPanel = headOfGradingPanel;
         this.otherMembersOfGradingPanel = otherMembersOfGradingPanel;
-        this.event_description = event_description;
-        this.start_time = start_time;
-        this.end_time = end_time;
+        this.desc = desc;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
         this.status = status;
     }
 
@@ -55,14 +55,6 @@ public class Event {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
     }
 
     public Club getClub() {
@@ -97,36 +89,36 @@ public class Event {
         this.headOfGradingPanel = headOfGradingPanel;
     }
 
-    public String getOtherMembersOfGradingPanel() {
+    public List<String> getOtherMembersOfGradingPanel() {
         return otherMembersOfGradingPanel;
     }
 
-    public void setOtherMembersOfGradingPanel(String otherMembersOfGradingPanel) {
+    public void setOtherMembersOfGradingPanel(List<String> otherMembersOfGradingPanel) {
         this.otherMembersOfGradingPanel = otherMembersOfGradingPanel;
     }
 
-    public String getEvent_description() {
-        return event_description;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setEvent_description(String event_description) {
-        this.event_description = event_description;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
-    public String getStart_time() {
-        return start_time;
+    public String getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setStart_time(String start_time) {
-        this.start_time = start_time;
+    public void setStartDateTime(String startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
-    public String getEnd_time() {
-        return end_time;
+    public String getEndDateTime() {
+        return endDateTime;
     }
 
-    public void setEnd_time(String end_time) {
-        this.end_time = end_time;
+    public void setEndDateTime(String endDateTime) {
+        this.endDateTime = endDateTime;
     }
 
     public String getStatus() {
@@ -137,4 +129,8 @@ public class Event {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "Event{" + "eventId=" + eventId + ", name=" + name + ", club=" + club + ", venue=" + venue + ", highestGradeAvailable=" + highestGradeAvailable + ", headOfGradingPanel=" + headOfGradingPanel + ", otherMembersOfGradingPanel=" + otherMembersOfGradingPanel + ", desc=" + desc + ", startDateTime=" + startDateTime + ", endDateTime=" + endDateTime + ", status=" + status + '}';
+    }
 }
