@@ -48,18 +48,20 @@ public class ClubJdbcDAO implements ClubDAO {
                     String email = rs.getString("email");
                     int noMembers = rs.getInt("mem_num");
                     String description = rs.getString("description");                 // fix
-                   
-                    
+                        
                     return new Club(clubID, clubLeaderId, clubName, phone, email, noMembers, location, description);
-                } else {
-                    con.close();
+                }
+                else {
                     return null;
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClubJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return null;
+         finally{
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
     }
 
     @Override
@@ -74,37 +76,42 @@ public class ClubJdbcDAO implements ClubDAO {
                 deleteClubstmt.setInt(1, Integer.parseInt(club.getClubId()));
 
                 deleteClubstmt.executeUpdate();
-                con.close();
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClubJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+        }  
+         finally{
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
     }
 
     @Override
-    public void updateClub(Club club) {
+    public Club updateClub(Club club) {
         try {
             DatabaseConnector db = new DatabaseConnector();
             con = db.connect();
             
            
-            String sql = "UPDATE public.club SET mem_num = ?, name = ?, location = ?, email = ?, phone = ?, dscription = ? WHERE club_id = ?";
+            String sql = "UPDATE public.club SET name = ?, location = ?, email = ?, phone = ?, description = ? WHERE club_id = ?";
 
             try (PreparedStatement updateClubstmt = con.prepareStatement(sql);) {
-                updateClubstmt.setInt(1, club.getNoOfMembers());
-                updateClubstmt.setString(2, club.getClubName());
-                updateClubstmt.setString(3, club.getLocation());
-                updateClubstmt.setString(4, club.getEmail());
-                updateClubstmt.setString(5, club.getPhone());
-                updateClubstmt.setString(6, club.getDescription());      
-                updateClubstmt.setString(7, club.getClubId());
+                updateClubstmt.setString(1, club.getClubName());
+                updateClubstmt.setString(2, club.getLocation());
+                updateClubstmt.setString(3, club.getEmail());
+                updateClubstmt.setString(4, club.getPhone());
+                updateClubstmt.setString(5, club.getDescription());      
+                updateClubstmt.setInt(6, Integer.parseInt(club.getClubId()));
                 
                 updateClubstmt.executeUpdate();
-                con.close();
+                return getClub(club.getClubId());
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClubJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         } 
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ } 
+        }
     }
 
     @Override
@@ -143,9 +150,5 @@ public class ClubJdbcDAO implements ClubDAO {
         finally{
             try { con.close(); } catch (Exception e) { /* Ignored */ }
         }
-    
     }
-
-   
-
 }

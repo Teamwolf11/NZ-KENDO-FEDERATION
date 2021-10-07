@@ -5,6 +5,7 @@ import domain.Club;
 import domain.Member;
 import java.sql.SQLException;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotEquals;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -83,40 +84,30 @@ public class ClubDAOTest {
         clubJdbc.deleteClub(club1);
     }
 
-//    @Test
-//    public void testGetMember() {
-//        Member memberCheck = memberJdbc.getMember(member1.getMemberId());  //call member from db
-//        assertEquals(member1, memberCheck);  //Member check
-//    }
-//
-//    @Test
-//    public void testDeleteMember() {
-//        Member memberCheck1 = memberJdbc.getMember(member1.getMemberId());  //call member from db
-//        assertEquals(member1, memberCheck1);  //Member check
-//
-//        //Remove and check
-//        memberJdbc.deleteMember(member1);
-//
-//       Member memberCheck2 = memberJdbc.getMember(member1.getMemberId());
-//       assertNull(memberCheck2);
-//    }
-//    
-//    @Test
-//    public void testSignIn(){
-//        //Assert member is returned if valid details are given
-//        Member memberCheck1 = memberJdbc.signIn(member1.getEmail(), member1.getPassword());
-//        assertEquals(member1, memberCheck1);  //Member check
-//        
-//        //Assert that nothing returns if email is invalid
-//        Member memberCheck2 = memberJdbc.signIn("invalid@test.co.nz", member1.getPassword());
-//        assertNull(memberCheck2);  //Member check
-//        
-//        //Assert that nothing returns if password is invalid
-//        Member memberCheck3 = memberJdbc.signIn(member1.getEmail(), "invaldi");
-//        assertNull(memberCheck3);  //Member check
-//        
-//         //Assert that nothing returns if everythings invalid
-//        Member memberCheck4 = memberJdbc.signIn("invalid@test.co.nz", "invaldi");
-//        assertNull(memberCheck4);  //Member check
-//    }
+
+    @Test
+    public void testDeleteClub() {
+        club1 = clubJdbc.saveClub(club1);
+        Club clubCheck1 = clubJdbc.getClub(club1.getClubId());  //call club from db
+        assertEquals(club1.toString(), clubCheck1.toString());  //club check
+        clubJdbc.deleteClub(club1);
+
+        Club clubCheck2 = clubJdbc.getClub(club1.getClubId());  //call club from db
+        assertNull(clubCheck2);
+    }
+
+    @Test
+    public void testUpdateClub(){
+        club1 = clubJdbc.saveClub(club1);
+        Club clubCheck1 = clubJdbc.getClub(club1.getClubId());  //call club from db
+        assertEquals(club1.toString(), clubCheck1.toString());  //club check
+        
+        club1.setClubName("update");
+        club1 = clubJdbc.updateClub(club1);
+        Club clubCheck2 = clubJdbc.getClub(club1.getClubId());  //call club from db
+        club1.setClubName("TestClub1");
+        assertNotEquals(club1.toString(), clubCheck2.toString());  //club check
+        
+        clubJdbc.deleteClub(club1);
+    }
 }
