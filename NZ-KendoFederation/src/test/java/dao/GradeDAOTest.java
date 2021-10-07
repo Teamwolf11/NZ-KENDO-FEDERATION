@@ -86,12 +86,8 @@ public class GradeDAOTest {
     public void testSaveGrade() {
         member1 = gradeJdbc.saveGrade(grade1, member1);
         Grade gradeCheck = gradeJdbc.getMemberGrade(grade1.getGradeId(), member1.getMemberId());  //call grade from db
-        
-        System.out.println(gradeCheck.toString());
-        System.out.println(member1.getGrades().toString());
-        
-        assertTrue(member1.getGrades().stream().anyMatch(o -> o.equals(gradeCheck)));
-        gradeJdbc.deleteGrade(grade1);
+        assertTrue(member1.getGrades().stream().anyMatch(o -> o.toString().equals(gradeCheck.toString())));
+        gradeJdbc.deleteGrade(grade1, member1.getMemberId());
 //    }
     }
 }

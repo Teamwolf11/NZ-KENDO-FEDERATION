@@ -14,7 +14,7 @@ public interface GradeDAO {
     
     Member saveGrade(Grade grade, Member member);
     
-    void deleteGrade(Grade grade);
+    void deleteGrade(Grade grade, String memberId);
     
     List<Grade> getAllForMember(Member member);
 }

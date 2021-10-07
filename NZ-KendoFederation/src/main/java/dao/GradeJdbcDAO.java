@@ -28,21 +28,23 @@ public class GradeJdbcDAO implements GradeDAO {
             DatabaseConnector db = new DatabaseConnector();
             Connection con = db.connect();
 
-            String sql = "SELECT member_grading.*, grading.name AS grading_name, martial_arts.martial_art_id, martial_arts.name AS martial_arts_name FROM public.member_grading JOIN public.grading ON grading.grading_id = member_grading.member_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id WHERE member_grading.member_id = ? AND member_grading.grading_id = ?";
+            String sql = "SELECT member_grading.*, grading.name AS grading_name, martial_arts.martial_art_id, martial_arts.name AS martial_arts_name FROM public.member_grading JOIN public.grading ON grading.grading_id = member_grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id WHERE member_grading.member_id = ? AND member_grading.grading_id = ?";
             try (PreparedStatement stmt = con.prepareStatement(sql);) {
                 stmt.setInt(1, Integer.parseInt(memberId));
-                stmt.setInt(2, Integer.parseInt(memberId));
+                stmt.setInt(2, Integer.parseInt(gradeId));
                 ResultSet rs = stmt.executeQuery();
 
                 if (rs.next()) {
                     // grade fields
                     String artId = Integer.toString(rs.getInt("martial_art_id"));
                     String gradeName = rs.getString("grading_name");
-                    String martialArt = rs.getString("martial_arts.name");
+                    String martialArt = rs.getString("martial_arts_name");
                     String dateReceived = rs.getString("date_received");
                     String nextDateAvailable = rs.getString("date_next_grade_available");
                     String eventId = Integer.toString(rs.getInt("event_id"));
+                    if (eventId.equals("0")) eventId = null;
 
+                    //club
                     String clubId = Integer.toString(rs.getInt("club_id"));
                     ClubJdbcDAO clubJdbc = new ClubJdbcDAO();
                     Club club = clubJdbc.getClub(clubId);
@@ -111,8 +113,26 @@ public class GradeJdbcDAO implements GradeDAO {
     }
 
     @Override
-    public void deleteGrade(Grade grade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void deleteGrade(Grade grade, String memberId) {
+        try {
+            DatabaseConnector db = new DatabaseConnector();
+            con = db.connect();
+            
+            String sql = "DELETE FROM public.member_grading WHERE grading_id = ? AND club_id = ? AND member_id = ?";
+            
+            try (PreparedStatement deleteClubstmt = con.prepareStatement(sql);) {
+                deleteClubstmt.setInt(1, Integer.parseInt(grade.getGradeId()));
+                deleteClubstmt.setInt(2, Integer.parseInt(grade.getClub().getClubId()));
+                deleteClubstmt.setInt(3, Integer.parseInt(memberId));
+
+                deleteClubstmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(GradeJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+         finally{
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
     }
 
     @Override
