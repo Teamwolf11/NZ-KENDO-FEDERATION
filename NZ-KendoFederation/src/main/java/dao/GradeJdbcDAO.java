@@ -23,6 +23,12 @@ public class GradeJdbcDAO implements GradeDAO {
 
     private Connection con;
 
+    /** Gets individual grade
+     * 
+     * @param gradeId
+     * @param memberId
+     * @return returns grade
+     */
     @Override
     public Grade getMemberGrade(String gradeId, String memberId) {
         try {
@@ -68,6 +74,13 @@ public class GradeJdbcDAO implements GradeDAO {
         }
     }
 
+    /**Creates a new grade in the DB.
+     * Member object is updated to have this grade object.
+     * 
+     * @param grade
+     * @param member
+     * @return member with the grade added to it's grade list
+     */
     @Override
     public Member saveGrade(Grade grade, Member member) {
         try {
@@ -140,8 +153,14 @@ public class GradeJdbcDAO implements GradeDAO {
         }
     }
 
+    /**
+     * Takes in an object and returns the object with all its corresponding grades
+     * 
+     * @param obj (Member,Club,Event)
+     * @return object (Member,Club,Event)
+     */
     @Override
-    public List getAllForObj(Object obj) {
+    public Object getAllForObj(Object obj) {
         String sql;
         int value;
         List<Club> cList = new ArrayList<>();
@@ -229,7 +248,7 @@ public class GradeJdbcDAO implements GradeDAO {
                         }
                     }
                 }
-                return returnList;
+                return returnList.get(0);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClubJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);

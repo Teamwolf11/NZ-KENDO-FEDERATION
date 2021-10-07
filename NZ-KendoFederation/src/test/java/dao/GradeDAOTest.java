@@ -127,6 +127,9 @@ public class GradeDAOTest {
         gradeJdbc.deleteGrade(grade1, member1.getMemberId());
     }
 
+    /**
+     * Tests getAllForObj with a member object given/returned
+     */
     @Test
     public void testGetAllForObjMem() {
         member1 = gradeJdbc.saveGrade(grade1, member1);
@@ -134,10 +137,10 @@ public class GradeDAOTest {
         member2 = memberJdbc.saveMember(member2);
         member2 = gradeJdbc.saveGrade(grade3, member2);
 
-        List<Member> gradeCheck = gradeJdbc.getAllForObj(member1);  //call grade(s) from db
+        Member gradeCheck = (Member) gradeJdbc.getAllForObj(member1);  //call grade(s) from db
         
-        assertTrue(member1.getGrades().toString().equals(gradeCheck.get(0).getGrades().toString()));
-        assertTrue(gradeCheck.size() == 1); //ensures no member2
+        assertTrue(member1.getGrades().toString().equals(gradeCheck.getGrades().toString()));
+        assertTrue(gradeCheck.getGrades().size() == 2); //ensures no member2
         
         gradeJdbc.deleteGrade(grade1, member1.getMemberId());
         gradeJdbc.deleteGrade(grade2, member1.getMemberId());
@@ -145,6 +148,9 @@ public class GradeDAOTest {
         memberJdbc.deleteMember(member2);
     }
     
+     /**
+     * Tests getAllForObj with a club object given/returned
+     */
     @Test
     public void testGetAllForObjClub() {
         member1 = gradeJdbc.saveGrade(grade1, member1);
@@ -152,10 +158,10 @@ public class GradeDAOTest {
         member2 = memberJdbc.saveMember(member2);
         member2 = gradeJdbc.saveGrade(grade3, member2);
 
-        List<Club> gradeCheck = gradeJdbc.getAllForObj(club1);  //call grade(s) from db
+        Club gradeCheck = (Club) gradeJdbc.getAllForObj(club1);  //call grade(s) from db
         
-        assertTrue(gradeCheck.get(0).getGrades().size() == 2);
-        assertTrue(gradeCheck.size() == 1); //ensures no club2
+        assertTrue(gradeCheck.getGrades().size() == 2);
+        assertTrue(gradeCheck.getGrades().size() == 2); //ensures no club2
         
         gradeJdbc.deleteGrade(grade1, member1.getMemberId());
         gradeJdbc.deleteGrade(grade2, member1.getMemberId());
