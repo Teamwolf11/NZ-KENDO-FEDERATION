@@ -68,8 +68,8 @@ CREATE TABLE IF NOT EXISTS public.member_grading
     member_id integer NOT NULL,
     grading_id integer NOT NULL,
     date_received character varying NOT NULL,  --update date
-    date_next_grade_available character varying NOT NULL,  --update date
-    event_id integer, --Where the grade was received
+    date_next_grade_available character varying,
+	event_id character varying,
     PRIMARY KEY (member_id, club_id, grading_id)
 );
 

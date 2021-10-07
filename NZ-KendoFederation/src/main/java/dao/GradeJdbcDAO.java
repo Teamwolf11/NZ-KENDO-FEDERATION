@@ -195,42 +195,37 @@ public class GradeJdbcDAO implements GradeDAO {
                     Grade grade = new Grade(gradeName, martialArt, nextDateAvailable, dateReceived, gradeId, artId, null, eventId);
 
                     cl: for (int i = 0; i < cList.size() || cList.size() == 0; i++) {
-                        //System.out.println("1  " + grade.toString());
                         if (cList.size() != 0 && cList.get(i).getClubId().equals(clubId)) {  //club already in list
                             grade.setClub(cList.get(i));
                             cList.get(i).addGrade(grade);
                             gList.add(grade);
-                            //System.out.println("2  " + grade.toString());
                             break cl;
                         }
-                        if (i + 1 == cList.size()) {   //If club not in list
+                        if (i + 1 == cList.size() || cList.size() == 0) {   //If club not in list
                             ClubJdbcDAO clubJdbc = new ClubJdbcDAO();
                             Club club = clubJdbc.getClub(clubId);
                             grade.setClub(club);
                             club.addGrade(grade);
                             cList.add(club);
                             gList.add(grade);
-                            //System.out.println("3  " + grade.toString());
                             break cl;
                         }
+                        System.out.println(cList.size() + "   " + i);
                     }
                     /**
                      * Add event here
                      */
-                    //System.out.println("4  " + grade.toString());
                     ml: for (int i = 0; i < mList.size() || mList.size() == 0; i++) {
                         if (mList.size() != 0 && mList.get(i).getMemberId().equals(memberId)) {
-                            mList.get(i).addGrade(grade);
-                            //System.out.println("5  " + grade.toString());
+                            mList.get(i).addGrade(grade);;
                             break ml;
                         }
-                        if (i + 1 == mList.size()) {   //If club not in list
+                        if (i +1 == mList.size() || mList.size() == 0) {   //If club not in list
                             MemberJdbcDAO memberJdbc = new MemberJdbcDAO();
                             Member member = memberJdbc.getMember(memberId);
                             member.addGrade(grade);
                             mList.add(member);
-                            //System.out.println("6  " + grade.toString());
-                            break ml;
+                            break ml;    
                         }
                     }
                 }

@@ -136,16 +136,9 @@ public class GradeDAOTest {
 
         List<Member> gradeCheck = gradeJdbc.getAllForObj(member1);  //call grade(s) from db
         
-        
-        System.out.println(member1.getGrades().toString());
-        System.out.println(gradeCheck.get(0).getGrades().toString());
         assertTrue(member1.getGrades().toString().equals(gradeCheck.get(0).getGrades().toString()));
-        
-        System.out.println("test2");
-        
-        
         assertTrue(gradeCheck.size() == 1); //ensures no member2
-        System.out.println("test3");
+        
         gradeJdbc.deleteGrade(grade1, member1.getMemberId());
         gradeJdbc.deleteGrade(grade2, member1.getMemberId());
         gradeJdbc.deleteGrade(grade3, member2.getMemberId());
@@ -163,6 +156,7 @@ public class GradeDAOTest {
         
         assertTrue(gradeCheck.get(0).getGrades().size() == 2);
         assertTrue(gradeCheck.size() == 1); //ensures no club2
+        
         gradeJdbc.deleteGrade(grade1, member1.getMemberId());
         gradeJdbc.deleteGrade(grade2, member1.getMemberId());
         gradeJdbc.deleteGrade(grade3, member2.getMemberId());
