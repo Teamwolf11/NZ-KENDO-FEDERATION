@@ -5,6 +5,9 @@
  */
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author lachl
@@ -18,11 +21,12 @@ public class Club {
     public int noOfMembers;
     public String location;
     public String description;
+    private List<Grade> grades = new ArrayList<>();
     
     
     public Club(){
     }
-    
+
     public Club(String clubId, String clubLeaderId, String clubName, String phone, String email, int noOfMembers, String location, String description) {
         this.clubId = clubId;
         this.clubLeaderId = clubLeaderId;
@@ -31,8 +35,19 @@ public class Club {
         this.email = email;
         this.noOfMembers = noOfMembers;
         this.location = location;
-        this.description = description; 
-        
+        this.description = description;
+    }
+
+    public void addGrade(Grade grade) {
+        grades.add(grade);
+    }
+    
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
     }
 
     public String getClubId() {

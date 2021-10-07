@@ -2,6 +2,7 @@ package dao;
 
 import Database.DatabaseConnector;
 import domain.Club;
+import domain.Event;
 import domain.Grade;
 import domain.Member;
 import java.sql.Connection;
@@ -140,18 +141,41 @@ public class GradeJdbcDAO implements GradeDAO {
     }
 
     @Override
-    public List<Grade> getAllForMember(Member member) {
+    public List getAllForObj(Object obj) {
+        String sql;
+        int value;
+        List<Club> cList = new ArrayList<>();
+        List<Grade> gList = new ArrayList<>();
+        List<Event> eList = new ArrayList<>();
+        List<Member> mList = new ArrayList<>();
+        List returnList;
+        
+        if (obj instanceof Member) {
+            sql = "SELECT member_grading.*, grading.name AS grading_name, martial_arts.martial_art_id, martial_arts.name AS martial_arts_name FROM public.member_grading JOIN public.grading ON grading.grading_id = member_grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id WHERE member_grading.member_id = ?";
+            Member member = (Member) obj;
+            value = Integer.parseInt(member.getMemberId());
+            returnList = mList;
+        } else if (obj instanceof Club) {
+            sql = "SELECT member_grading.*, grading.name AS grading_name, martial_arts.martial_art_id, martial_arts.name AS martial_arts_name FROM public.member_grading JOIN public.grading ON grading.grading_id = member_grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id WHERE member_grading.club_id = ?";
+            Club club = (Club) obj;
+            value = Integer.parseInt(club.getClubId());
+            returnList = cList;
+        } else if (obj instanceof Event) {
+            sql = "SELECT member_grading.*, grading.name AS grading_name, martial_arts.martial_art_id, martial_arts.name AS martial_arts_name FROM public.member_grading JOIN public.grading ON grading.grading_id = member_grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id WHERE member_grading.event_id = ?";
+            Event event = (Event) obj;
+            value = Integer.parseInt(event.getEventId());
+            returnList = eList;
+        } else {
+            return null;
+        }
+
         try {
             DatabaseConnector db = new DatabaseConnector();
             Connection con = db.connect();
 
-            String sql = "SELECT member_grading.*, grading.name AS grading_name, martial_arts.martial_art_id, martial_arts.name AS martial_arts_name FROM public.member_grading JOIN public.grading ON grading.grading_id = member_grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id WHERE member_grading.member_id = ?";
             try (PreparedStatement stmt = con.prepareStatement(sql);) {
-                stmt.setInt(1, Integer.parseInt(member.getMemberId()));
+                stmt.setInt(1, value);
                 ResultSet rs = stmt.executeQuery();
-
-                List<Club> cList = new ArrayList<>();
-                List<Grade> gList = new ArrayList<>();
 
                 while (rs.next()) {
                     // grade fields
@@ -161,31 +185,56 @@ public class GradeJdbcDAO implements GradeDAO {
                     String martialArt = rs.getString("martial_arts_name");
                     String dateReceived = rs.getString("date_received");
                     String nextDateAvailable = rs.getString("date_next_grade_available");
+                    String clubId = Integer.toString(rs.getInt("club_id"));
+                    String memberId = Integer.toString(rs.getInt("member_id"));
                     String eventId = Integer.toString(rs.getInt("event_id"));
                     if (eventId.equals("0")) {
                         eventId = null;
                     }
 
-                    //club
-                    String clubId = Integer.toString(rs.getInt("club_id"));
-                    for (int i = 0; i < cList.size(); i++) {
-                        if (cList.get(i).getClubId().equals(clubId)) {
-                            //if (cList.stream().anyMatch(o -> o.getClubId().equals(clubId))){
-                            gList.add(new Grade(gradeName, martialArt, nextDateAvailable, dateReceived, gradeId, artId, cList.get(i), eventId));
-                            i = cList.size() + 1;
-                        } else {
+                    Grade grade = new Grade(gradeName, martialArt, nextDateAvailable, dateReceived, gradeId, artId, null, eventId);
+
+                    cl: for (int i = 0; i < cList.size() || cList.size() == 0; i++) {
+                        //System.out.println("1  " + grade.toString());
+                        if (cList.size() != 0 && cList.get(i).getClubId().equals(clubId)) {  //club already in list
+                            grade.setClub(cList.get(i));
+                            cList.get(i).addGrade(grade);
+                            gList.add(grade);
+                            //System.out.println("2  " + grade.toString());
+                            break cl;
+                        }
+                        if (i + 1 == cList.size()) {   //If club not in list
                             ClubJdbcDAO clubJdbc = new ClubJdbcDAO();
                             Club club = clubJdbc.getClub(clubId);
+                            grade.setClub(club);
+                            club.addGrade(grade);
                             cList.add(club);
-                            gList.add(new Grade(gradeName, martialArt, nextDateAvailable, dateReceived, gradeId, artId, club, eventId));
-
+                            gList.add(grade);
+                            //System.out.println("3  " + grade.toString());
+                            break cl;
                         }
                     }
-
-                    //if (cList.getClubName().stream().anyMatch(o -> o.equals(gradeCheck.toString())));)
-                    //return new Grade(gradeName, martialArt, nextDateAvailable, dateReceived, gradeId, artId, club, eventId);
+                    /**
+                     * Add event here
+                     */
+                    //System.out.println("4  " + grade.toString());
+                    ml: for (int i = 0; i < mList.size() || mList.size() == 0; i++) {
+                        if (mList.size() != 0 && mList.get(i).getMemberId().equals(memberId)) {
+                            mList.get(i).addGrade(grade);
+                            //System.out.println("5  " + grade.toString());
+                            break ml;
+                        }
+                        if (i + 1 == mList.size()) {   //If club not in list
+                            MemberJdbcDAO memberJdbc = new MemberJdbcDAO();
+                            Member member = memberJdbc.getMember(memberId);
+                            member.addGrade(grade);
+                            mList.add(member);
+                            //System.out.println("6  " + grade.toString());
+                            break ml;
+                        }
+                    }
                 }
-                return gList;
+                return returnList;
             }
         } catch (SQLException ex) {
             Logger.getLogger(ClubJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -197,5 +246,4 @@ public class GradeJdbcDAO implements GradeDAO {
                 /* Ignored */ }
         }
     }
-
 }

@@ -16,5 +16,5 @@ public interface GradeDAO {
     
     void deleteGrade(Grade grade, String memberId);
     
-    List<Grade> getAllForMember(Member member);
+    List getAllForObj(Object obj);
 }
