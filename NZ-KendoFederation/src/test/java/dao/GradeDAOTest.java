@@ -10,6 +10,7 @@ import domain.Club;
 import domain.Grade;
 import domain.Member;
 import java.sql.SQLException;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -25,8 +26,8 @@ public class GradeDAOTest {
     private MemberJdbcDAO memberJdbc;
     private GradeJdbcDAO gradeJdbc;
     private ClubJdbcDAO clubJdbc;
-    private Member member1;
-    private Grade grade1;
+    private Member member1, member2;
+    private Grade grade1, grade2, grade3;
     private Club club1;
     String str = "08/09/2002";
 
@@ -54,6 +55,20 @@ public class GradeDAOTest {
         member1.setJoinDate(str);
         member1.setSex('M');
         member1.setEthnicity("Asian");
+        
+        member2 = new Member();
+        member2.setRole(role);
+        member2.setNzkfId("6564");
+        member2.setNzkfRenewDate(str);
+        member2.setPassword("QWERTY");
+        member2.setEmail("email@test.test2");
+        member2.setDob(str);
+        member2.setfName("Jane");
+        member2.setmName(null);
+        member2.setlName("Doe");
+        member2.setJoinDate(str);
+        member2.setSex('F');
+        member2.setEthnicity("Asian");
 
         member1 = memberJdbc.saveMember(member1);
         
@@ -72,7 +87,23 @@ public class GradeDAOTest {
         grade1.setMartialArt("Kendo");
         grade1.setGrade("7 Kyu");
         grade1.setDateReceived(str);
-        grade1.setClub(club1);        
+        grade1.setClub(club1);
+
+        grade2 = new Grade();
+        grade2.setArtId("1");
+        grade2.setGradeId("9");
+        grade2.setMartialArt("Kendo");
+        grade2.setGrade("2 Dan");
+        grade2.setDateReceived(str);
+        grade2.setClub(club1);  
+        
+        grade3 = new Grade();
+        grade3.setArtId("1");
+        grade3.setGradeId("9");
+        grade3.setMartialArt("Kendo");
+        grade3.setGrade("2 Dan");
+        grade3.setDateReceived(str);
+        grade3.setClub(club1); 
     }
 
     @AfterEach
@@ -81,7 +112,6 @@ public class GradeDAOTest {
         clubJdbc.deleteClub(club1);
     }
 
-
     @Test
     public void testSaveGrade() {
         member1 = gradeJdbc.saveGrade(grade1, member1);
@@ -89,5 +119,20 @@ public class GradeDAOTest {
         assertTrue(member1.getGrades().stream().anyMatch(o -> o.toString().equals(gradeCheck.toString())));
         gradeJdbc.deleteGrade(grade1, member1.getMemberId());
 //    }
+    }
+    
+    public void testGetAllForMember(){
+        member1 = gradeJdbc.saveGrade(grade1, member1);
+        member1 = gradeJdbc.saveGrade(grade2, member1);
+        
+        member2 = memberJdbc.saveMember(member2);
+        member2 = gradeJdbc.saveGrade(grade3, member1);
+         
+        List<Grade> gradeCheck = gradeJdbc.getAllForMember(member1);  //call grade(s) from db
+        assertTrue(member1.getGrades().stream().allMatch(o -> o.toString().equals(gradeCheck.toString())));
+        assertTrue(member2.getGrades().stream().noneMatch(o -> o.toString().equals(gradeCheck.toString())));
+        gradeJdbc.deleteGrade(grade1, member1.getMemberId());
+        gradeJdbc.deleteGrade(grade2, member1.getMemberId());
+        gradeJdbc.deleteGrade(grade3, member2.getMemberId());
     }
 }
