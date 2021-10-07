@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS public.club
     location character varying,
     email character varying,
     phone character varying,
+    description character varying,                     -- added description 
     PRIMARY KEY (club_id)
 );
 
@@ -30,7 +31,8 @@ CREATE TABLE IF NOT EXISTS public.club_role
 (
     member_id integer NOT NULL,
     club_id integer NOT NULL,
-    name character varying NOT NULL,
+    role_name character varying NOT NULL,               -- added club_role 
+    name character varying NOT NULL,                                 
     PRIMARY KEY (member_id, club_id)
 );
 
