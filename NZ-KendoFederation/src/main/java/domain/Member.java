@@ -1,7 +1,7 @@
 package domain;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -24,6 +24,7 @@ public class Member {
     private char sex;        //Will have to talk to Taasha about how she wants gender to work
     private String ethnicity;
     private String phoneNum;
+    private List<Grade> grades;
 
     public Member() {
     }
@@ -43,6 +44,14 @@ public class Member {
         this.sex = sex;
         this.ethnicity = ethnicity;
         this.phoneNum = phoneNum;
+    }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
     }
 
     
