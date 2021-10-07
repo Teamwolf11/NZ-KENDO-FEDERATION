@@ -15,8 +15,8 @@ public class Grade{
     
     private String grade;
     private String martialArt;
-    private LocalDateTime nextGradeDate;
-    private LocalDateTime dateReceived;
+    private String nextGradeDate;
+    private String dateReceived;
     private String gradeId;
     private String artId;
     private Club club;
@@ -24,7 +24,7 @@ public class Grade{
 
     public Grade(){}
 
-    public Grade(String grade, String martialArt, LocalDateTime nextGradeDate, LocalDateTime dateReceived, String gradeId, String artId, Club club, String eventId) {
+    public Grade(String grade, String martialArt, String nextGradeDate, String dateReceived, String gradeId, String artId, Club club, String eventId) {
         this.grade = grade;
         this.martialArt = martialArt;
         this.nextGradeDate = nextGradeDate;
@@ -45,11 +45,11 @@ public class Grade{
         this.eventId = eventId;
     }
 
-    public LocalDateTime getDateReceived() {
+    public String getDateReceived() {
         return dateReceived;
     }
 
-    public void setDateReceived(LocalDateTime dateReceived) {
+    public void setDateReceived(String dateReceived) {
         this.dateReceived = dateReceived;
     }
 
@@ -60,9 +60,6 @@ public class Grade{
     public void setClub(Club club) {
         this.club = club;
     }
-    
-
-
 
     public String getGradeId() {
         return gradeId;
@@ -96,14 +93,16 @@ public class Grade{
         this.martialArt = martialArt;
     }
 
-    public LocalDateTime getNextGradeDate() {
+    public String getNextGradeDate() {
         return nextGradeDate;
     }
 
-    public void setNextGradeDate(LocalDateTime timeInGrade) {
+    public void setNextGradeDate(String timeInGrade) {
         this.nextGradeDate = timeInGrade;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Grade{" + "grade=" + grade + ", martialArt=" + martialArt + ", nextGradeDate=" + nextGradeDate + ", dateReceived=" + dateReceived + ", gradeId=" + gradeId + ", artId=" + artId + ", club=" + club + ", eventId=" + eventId + '}';
+    } 
 }

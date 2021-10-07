@@ -10,9 +10,9 @@ import java.util.List;
  */
 public interface GradeDAO {
     
-    Grade getGrade(String gradeId);
+    Grade getMemberGrade(String gradeId, String memberId);
     
-    void saveGrade(Grade grade, Member member);
+    Member saveGrade(Grade grade, Member member);
     
     void deleteGrade(Grade grade);
     

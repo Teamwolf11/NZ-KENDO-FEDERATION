@@ -1,6 +1,7 @@
 package domain;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +25,7 @@ public class Member {
     private char sex;        //Will have to talk to Taasha about how she wants gender to work
     private String ethnicity;
     private String phoneNum;
-    private List<Grade> grades;
+    private List<Grade> grades = new ArrayList<>();
 
     public Member() {
     }
@@ -46,6 +47,11 @@ public class Member {
         this.phoneNum = phoneNum;
     }
 
+    public void addGrade(Grade grade) {
+        grades.add(grade);
+    }
+    
+    
     public List<Grade> getGrades() {
         return grades;
     }
@@ -188,8 +194,8 @@ public class Member {
 		return true;
 	}
 
-        
-
-   
-    
+    @Override
+    public String toString() {
+        return "Member{" + "member_id=" + member_id + ", nzkfId=" + nzkfId + ", nzkfRenewDate=" + nzkfRenewDate + ", role=" + role + ", email=" + email + ", password=" + password + ", dob=" + dob + ", joinDate=" + joinDate + ", fName=" + fName + ", lName=" + lName + ", mName=" + mName + ", sex=" + sex + ", ethnicity=" + ethnicity + ", phoneNum=" + phoneNum + ", grades=" + grades + '}';
+    }  
 }
