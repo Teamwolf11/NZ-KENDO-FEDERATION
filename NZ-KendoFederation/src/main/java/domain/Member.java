@@ -144,14 +144,6 @@ public class Member {
         this.ethnicity = ethnicity;
     }
 
-       public String getMember_id() {
-        return member_id;
-    }
-
-    public void setMember_id(String member_id) {
-        this.member_id = member_id;
-    }
-
     public String getEmail() {
         return email;
     }

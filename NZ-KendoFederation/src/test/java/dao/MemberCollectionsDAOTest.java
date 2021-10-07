@@ -65,7 +65,6 @@ public class MemberCollectionsDAOTest {
     @Test
     public void testSaveMember() {
         member2 = memberJdbc.saveMember(member2);
-        System.out.println(member2);
         Member memberCheck = memberJdbc.getMember(member2.getMemberId());  //call member from db
         assertEquals(member2, memberCheck);  //Member check
         memberJdbc.deleteMember(member2);

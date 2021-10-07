@@ -2,13 +2,10 @@ package dao;
 
 import domain.AppRoles;
 import domain.Member;
-import domain.User;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Database.DatabaseConnector;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,8 +92,6 @@ public class MemberJdbcDAO implements MemberDAO {
         try {
             DatabaseConnector db = new DatabaseConnector();
             con = db.connect();
-
-
 
             String sql = "INSERT INTO public.member (email, password, date_of_birth, join_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES (?,?,?,?,?,?,?,?,?,?) RETURNING member_id";
             try (PreparedStatement insertMemberstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {

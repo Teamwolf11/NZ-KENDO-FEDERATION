@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS public.club
 (
     club_id SERIAL NOT NULL,
     mem_num integer,
-    name character varying NOT NULL,
+    name character varying NOT NULL UNIQUE,
     location character varying,
     email character varying,
     phone character varying,
@@ -31,8 +31,7 @@ CREATE TABLE IF NOT EXISTS public.club_role
 (
     member_id integer NOT NULL,
     club_id integer NOT NULL,
-    role_name character varying NOT NULL,               -- added club_role 
-    name character varying NOT NULL,                                 
+    role_name character varying NOT NULL,               -- added club_role   general, leader, etc...                             
     PRIMARY KEY (member_id, club_id)
 );
 
@@ -85,7 +84,7 @@ CREATE TABLE IF NOT EXISTS public.member
 (
     member_id SERIAL NOT NULL,
     nzkf_membership_id SERIAL NOT NULL,
-	nzkf_membership_renew_date character varying DEFAULT TO_CHAR(NOW() + interval '1 year','DD-MM-YYYY'),
+    nzkf_membership_renew_date character varying DEFAULT TO_CHAR(NOW() + interval '1 year','DD-MM-YYYY'),
     app_role_id integer DEFAULT 3,
     password character varying NOT NULL,
     email character varying UNIQUE,

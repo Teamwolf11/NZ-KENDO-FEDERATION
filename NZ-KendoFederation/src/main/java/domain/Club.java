@@ -13,29 +13,20 @@ public class Club {
     public String clubId;
     public String clubLeaderId;
     public String clubName;
-    public MartialArt martialArts;
     public String phone;
     public String email;
     public int noOfMembers;
     public String location;
     public String description;
     
-    // schema has the following
-//    club_id SERIAL NOT NULL,
-//    mem_num integer,
-//    name character varying NOT NULL,
-//    location character varying,
-//    email character varying,
-//    phone character varying,
     
     public Club(){
     }
     
-    public Club(String clubId, String clubLeaderId, String clubName, MartialArt martialArts, String phone, String email, int noOfMembers, String location, String description) {
+    public Club(String clubId, String clubLeaderId, String clubName, String phone, String email, int noOfMembers, String location, String description) {
         this.clubId = clubId;
         this.clubLeaderId = clubLeaderId;
         this.clubName = clubName;
-        this.martialArts = martialArts;
         this.phone = phone;
         this.email = email;
         this.noOfMembers = noOfMembers;
@@ -56,11 +47,6 @@ public class Club {
         return clubName;
     }
 
-    public MartialArt getMartialArts() {
-        return martialArts;
-    }
-
-
     public int getNoOfMembers() {
         return noOfMembers;
     }
@@ -75,10 +61,6 @@ public class Club {
 
     public void setClubName(String clubName) {
         this.clubName = clubName;
-    }
-
-    public void setMartialArts(MartialArt martialArts) {
-        this.martialArts = martialArts;
     }
 
     public void setNoOfMembers(int noOfMembers) {
@@ -116,6 +98,9 @@ public class Club {
     public String getEmail() {
         return email;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Club{" + "clubId=" + clubId + ", clubLeaderId=" + clubLeaderId + ", clubName=" + clubName + ", phone=" + phone + ", email=" + email + ", noOfMembers=" + noOfMembers + ", location=" + location + ", description=" + description + '}';
+    }
 }
