@@ -5,6 +5,7 @@
  */
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,7 @@ public class Event {
     private String desc;
     private String startDateTime, endDateTime;
     private String status;
+    private List<Grade> grades = new ArrayList<>();
 
     public Event() {
     }
@@ -41,6 +43,18 @@ public class Event {
         this.status = status;
     }
 
+    public void addGrade(Grade grade){
+        grades.add(grade);
+    }
+    
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+    
     public String getEventId() {
         return eventId;
     }

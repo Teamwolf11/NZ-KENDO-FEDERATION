@@ -20,9 +20,8 @@ import java.util.logging.Logger;
 public class EventJdbcDAO implements EventDAO {
 
     Connection con = null;
-    DatabaseConnector obj = new DatabaseConnector();
 
-    public EventJdbcDAO() throws SQLException, ClassNotFoundException {
+    public EventJdbcDAO() {
     }
 
        @Override
@@ -42,7 +41,7 @@ public class EventJdbcDAO implements EventDAO {
                     String artId = Integer.toString(rs.getInt("martial_art_id"));
                     String gradeName = rs.getString("g_name");
                     String martialArt = rs.getString("ma_name");
-                    Grade grade = new Grade(gradeName, martialArt, null, null, gradeId, artId, null, eventId);
+                    Grade grade = new Grade(gradeName, martialArt, null, null, gradeId, artId, null, null, null);
 
                     //club
                     String clubId = rs.getString("club_id");
@@ -63,7 +62,10 @@ public class EventJdbcDAO implements EventDAO {
                     String startDateTime =  rs.getString("start_date_time");
                     String endDateTime =  rs.getString("end_date_time");
                     
-                    return new Event(eventId, eName, club, venue, grade, null, null, desc, startDateTime, endDateTime, status);
+                    Event event = new Event(eventId, eName, club, venue, grade, null, null, desc, startDateTime, endDateTime, status);
+                    grade.setEventId(event.getEventId());
+                    grade.setEventName(event.getName());
+                    return event;
                 } else {
                     return null;
                 }
