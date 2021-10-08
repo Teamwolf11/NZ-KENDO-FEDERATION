@@ -16,7 +16,6 @@ import java.util.List;
 public class MemberJdbcDAO implements MemberDAO {
 
     public Connection con = null;
-
     public MemberJdbcDAO() {
     }
 
@@ -318,3 +317,47 @@ public class MemberJdbcDAO implements MemberDAO {
         return null;
     }
 }
+
+//    /**
+//     *
+//     * @param member
+//     * @return
+//     */
+//     
+//    public void email(Member member) {
+//          //  CompletableFuture.runAsync(() -> {
+//                String newEmail = member.getEmail();
+//                Email email = new SimpleEmail();
+//                email.setHostName("smtp.gmail.com");
+//                email.setSmtpPort(587);
+//                email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqax"));
+//                email.setSSLOnConnect(true);
+//
+//                try {
+//                    email.setFrom("benjaminm.12184@gmail.com");
+//                    email.setSubject("New Member #" + member.getMemberId());
+//                    email.setMsg("New Member sign up details for " + member.getfName() + 
+//                            " " + member.getlName() + "Your username and password are" + 
+//                            member.getPassword() + member.getEmail());
+//
+//                    email.addTo("benjaminm.12184@gmail.com");
+//                    email.send();
+//                } catch (EmailException ex) {
+//                    Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//
+//        //    });
+//	}
+//   
+//    
+//    
+//    public void sendGradingEmail(Email email){
+//        Runnable gradingEmail = () -> {
+//            System.out.println("ben"); 
+//        };
+//        ScheduledFuture<?> emailHandle = scheduler.scheduleAtFixedRate(gradingEmail, 20, 20, SECONDS);
+//        Runnable canceller = () -> emailHandle.cancel(false);
+//        scheduler.schedule(canceller, 1, HOURS);
+//    }
+//    }
+//

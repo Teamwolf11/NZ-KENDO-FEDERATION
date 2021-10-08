@@ -26,8 +26,8 @@ DROP TABLE IF EXISTS audit.app_role_audit;
 
 CREATE TABLE IF NOT EXISTS audit.member_audit
 (
-	operation char(1) NOT NULL,
-	stamp timestamp NOT NULL,
+    operation char(1) NOT NULL,
+    stamp timestamp NOT NULL,
     member_id SERIAL NOT NULL,
     nzkf_membership_id character varying NOT NULL,
     app_role_id integer NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS audit.member_audit
     middle_name character varying,
     sex character varying,
     ethnicity character varying,
-	phone_num character varying,
+    phone_num character varying,
     PRIMARY KEY (member_id, stamp, operation)
 );
 
@@ -313,12 +313,9 @@ AFTER INSERT OR UPDATE OR DELETE ON grading
     FOR EACH ROW EXECUTE PROCEDURE process_grading_audit();
 
 
---GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO javaapp;
---GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA audit TO javaapp;
+
 GRANT TRIGGER ON ALL TABLES IN SCHEMA audit TO javaapp;
 GRANT INSERT ON ALL TABLES IN SCHEMA audit TO javaapp;
---GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA audit TO javaapp;
---GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA audit TO javaapp;
 GRANT USAGE ON SCHEMA audit TO javaapp;
 
 COMMIT;

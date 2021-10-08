@@ -2,7 +2,9 @@ BEGIN;
 
 DROP TRIGGER IF EXISTS mem_grade_next_date_insert ON public.member_grading;
 DROP TRIGGER IF EXISTS mem_grade_next_date ON public.member_grading;
+DROP TRIGGER IF EXISTS mem_grade_current_grade ON public.member_grading;
 
+DROP VIEW IF EXISTS vw_member_grading;
 DROP TABLE IF EXISTS public.club_role;
 DROP TABLE IF EXISTS public.event_line;
 DROP TABLE IF EXISTS public.member_grading;
@@ -107,6 +109,7 @@ CREATE TABLE IF NOT EXISTS public.grading
 	martial_art_id integer NOT NULL,
 	time_in_grade INTERVAL,
 	name character varying NOT NULL,
+	grade_level int NOT NULL,	
 	primary key (grading_id)
 );
 
@@ -179,69 +182,69 @@ INSERT INTO martial_arts (name,martial_art_id) VALUES ('Iaido',2);
 INSERT INTO martial_arts (name,martial_art_id) VALUES ('Jodo',3);
 INSERT INTO martial_arts (name,martial_art_id) VALUES ('Naginata',4);
 
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (1,1,NULL, '7 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (2,1,NULL, '6 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (3,1,NULL, '5 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (4,1,NULL, '4 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (5,1,NULL, '3 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (6,1,NULL, '2 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (7,1,INTERVAL '3 months', '1 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (8,1,INTERVAL '1 year', '1 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (9,1,INTERVAL '2 year', '2 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (10,1,INTERVAL '3 year', '3 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (11,1,INTERVAL '4 year', '4 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (12,1,INTERVAL '5 year', '5 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (13,1,INTERVAL '6 year', '6 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (14,1,INTERVAL '10 year', '7 Dan');		
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (15,1,NULL, '8 Dan');
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (1,1,NULL, '7 Kyu',1);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (2,1,NULL, '6 Kyu',2);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (3,1,NULL, '5 Kyu',3);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (4,1,NULL, '4 Kyu',4);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (5,1,NULL, '3 Kyu',5);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (6,1,NULL, '2 Kyu',6);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (7,1,INTERVAL '3 months', '1 Kyu',7);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (8,1,INTERVAL '1 year', '1 Dan',8);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (9,1,INTERVAL '2 year', '2 Dan',9);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (10,1,INTERVAL '3 year', '3 Dan',10);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (11,1,INTERVAL '4 year', '4 Dan',11);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (12,1,INTERVAL '5 year', '5 Dan',12);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (13,1,INTERVAL '6 year', '6 Dan',13);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (14,1,INTERVAL '10 year', '7 Dan',14);		
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (15,1,NULL, '8 Dan',15);
 
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (16,2,NULL, '7 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (17,2,NULL, '6 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (18,2,NULL, '5 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (19,2,NULL, '4 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (20,2,NULL, '3 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (21,2,NULL, '2 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (22,2,INTERVAL '3 months', '1 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (23,2,INTERVAL '1 year', '1 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (24,2,INTERVAL '2 year', '2 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (25,2,INTERVAL '3 year', '3 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (26,2,INTERVAL '4 year', '4 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (27,2,INTERVAL '5 year', '5 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (28,2,INTERVAL '6 year', '6 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (29,2,INTERVAL '10 year', '7 Dan');		
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (30,2,NULL, '8 Dan');
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (16,2,NULL, '7 Kyu',1);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (17,2,NULL, '6 Kyu',2);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (18,2,NULL, '5 Kyu',3);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (19,2,NULL, '4 Kyu',4);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (20,2,NULL, '3 Kyu',5);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (21,2,NULL, '2 Kyu',6);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (22,2,INTERVAL '3 months', '1 Kyu',7);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (23,2,INTERVAL '1 year', '1 Dan',8);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (24,2,INTERVAL '2 year', '2 Dan',9);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (25,2,INTERVAL '3 year', '3 Dan',10);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (26,2,INTERVAL '4 year', '4 Dan',11);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (27,2,INTERVAL '5 year', '5 Dan',12);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (28,2,INTERVAL '6 year', '6 Dan',13);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (29,2,INTERVAL '10 year', '7 Dan',14);		
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (30,2,NULL, '8 Dan',15);
 
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (31,3,NULL, '7 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (32,3,NULL, '6 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (33,3,NULL, '5 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (34,3,NULL, '4 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (35,3,NULL, '3 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (36,3,NULL, '2 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (37,3,INTERVAL '3 months', '1 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (38,3,INTERVAL '1 year', '1 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (39,3,INTERVAL '2 year', '2 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (40,3,INTERVAL '3 year', '3 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (41,3,INTERVAL '4 year', '4 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (42,3,INTERVAL '5 year', '5 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (43,3,INTERVAL '6 year', '6 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (44,3,INTERVAL '10 year', '7 Dan');		
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (45,3,NULL, '8 Dan');
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (31,3,NULL, '7 Kyu',1);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (32,3,NULL, '6 Kyu',2);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (33,3,NULL, '5 Kyu',3);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (34,3,NULL, '4 Kyu',4);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (35,3,NULL, '3 Kyu',5);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (36,3,NULL, '2 Kyu',6);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (37,3,INTERVAL '3 months', '1 Kyu',7);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (38,3,INTERVAL '1 year', '1 Dan',8);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (39,3,INTERVAL '2 year', '2 Dan',9);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (40,3,INTERVAL '3 year', '3 Dan',10);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (41,3,INTERVAL '4 year', '4 Dan',11);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (42,3,INTERVAL '5 year', '5 Dan',12);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (43,3,INTERVAL '6 year', '6 Dan',13);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (44,3,INTERVAL '10 year', '7 Dan',14);		
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (45,3,NULL, '8 Dan',15);
 
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (46,4,NULL, '7 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (47,4,NULL, '6 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (48,4,NULL, '5 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (49,4,NULL, '4 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (50,4,NULL, '3 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (51,4,NULL, '2 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (52,4,INTERVAL '3 months', '1 Kyu');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (53,4,INTERVAL '1 year', '1 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (54,4,INTERVAL '2 year', '2 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (55,4,INTERVAL '3 year', '3 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (56,4,INTERVAL '4 year', '4 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (57,4,INTERVAL '5 year', '5 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (58,4,INTERVAL '6 year', '6 Dan');
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (59,4,INTERVAL '10 year', '7 Dan');		
-INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name) VALUES (60,4,NULL, '8 Dan');
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (46,4,NULL, '7 Kyu',1);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (47,4,NULL, '6 Kyu',2);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (48,4,NULL, '5 Kyu',3);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (49,4,NULL, '4 Kyu',4);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (50,4,NULL, '3 Kyu',5);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (51,4,NULL, '2 Kyu',6);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (52,4,INTERVAL '3 months', '1 Kyu',7);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (53,4,INTERVAL '1 year', '1 Dan',8);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (54,4,INTERVAL '2 year', '2 Dan',9);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (55,4,INTERVAL '3 year', '3 Dan',10);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (56,4,INTERVAL '4 year', '4 Dan',11);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (57,4,INTERVAL '5 year', '5 Dan',12);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (58,4,INTERVAL '6 year', '6 Dan',13);
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (59,4,INTERVAL '10 year', '7 Dan',14);		
+INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (60,4,NULL, '8 Dan',15);
 
 ALTER SEQUENCE grading_grading_id_seq RESTART WITH 61;
 ALTER SEQUENCE martial_arts_martial_art_id_seq RESTART WITH 5;
@@ -254,6 +257,10 @@ REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA audit FROM javaapp;
 REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA audit FROM javaapp;
 REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA audit FROM javaapp;
 REVOKE ALL PRIVILEGES ON SCHEMA audit FROM javaapp;
+REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA email FROM javaapp;
+REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA email FROM javaapp;
+REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA email FROM javaapp;
+REVOKE ALL PRIVILEGES ON SCHEMA email FROM javaapp;
 DROP USER javaapp;
 
 
