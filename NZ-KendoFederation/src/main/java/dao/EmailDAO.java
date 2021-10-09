@@ -6,6 +6,7 @@ package dao;
 
 import domain.Event;
     import domain.Member;
+import java.util.List;
     import java.util.concurrent.ScheduledFuture;
     import java.util.concurrent.ScheduledExecutorService;
     import java.util.concurrent.Executors;
@@ -23,7 +24,7 @@ import domain.Event;
  *
  * @author benmcmahon
  */
-public  class EmailDAO {
+public  class EmailDAO extends EmailJdbcDAO{
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     
     public static void main(String[]args){
@@ -60,9 +61,10 @@ public  class EmailDAO {
             });
 	}
     
-    public void gradingEmail(Event event, Member member){
+    public void gradingEmail(Event event, Member member, List mList){
          CompletableFuture.runAsync(() -> {
-                String newEmail = member.getEmail();
+                
+                String newEmail = mList.toString();
                 Email email = new SimpleEmail();
                 email.setHostName("smtp.gmail.com");
                 email.setSmtpPort(587);
@@ -71,10 +73,10 @@ public  class EmailDAO {
 
                 try {
                     email.setFrom("benjaminm.12184@gmail.com");
-                    email.setSubject("Upcoming Grading Event" + event.getEventId());
+                    email.setSubject("Upcoming Grading Event" + event.getStartDateTime());
                     email.setMsg("New grading event: " + event.getName()+ 
                             " is being held on " + event.getStartDateTime()+ "." + 
-                            " You are eligible to participate in this grading event");
+                            " You are eligible to participate in this grading event as your current grade is " + mList.toString());
                     email.addTo(newEmail);
                     email.send();
                 } catch (EmailException ex) {
@@ -127,7 +129,7 @@ public  class EmailDAO {
         newEmailGrading.email(member);
             //System.out.println("ben"); 
         };
-        ScheduledFuture<?> emailHandle = scheduler.scheduleAtFixedRate(gradingEmail, 0, 1, SECONDS);
+        ScheduledFuture<?> emailHandle = scheduler.scheduleAtFixedRate(gradingEmail, 0, 10, SECONDS);
         Runnable canceller = () -> emailHandle.cancel(false);
         scheduler.schedule(canceller, 1, HOURS);
     }

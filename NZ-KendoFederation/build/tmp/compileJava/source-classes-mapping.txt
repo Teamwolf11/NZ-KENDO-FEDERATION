@@ -1,5 +1,5 @@
-dao/MemberJdbcDAO.java
- dao.MemberJdbcDAO
+web/MemberModule.java
+ web.MemberModule
 dao/GradeDAO.java
  dao.GradeDAO
 domain/Club.java
@@ -32,8 +32,8 @@ domain/AppRoles.java
  domain.AppRoles
 dao/MemberCollectionsDAO.java
  dao.MemberCollectionsDAO
-dao/EmailJdbcDAO.java
- dao.EmailJdbcDAO
+domain/Member.java
+ domain.Member
 domain/Grade.java
  domain.Grade
 dao/ClubDAO.java
@@ -44,9 +44,9 @@ dao/AppRoleJdbcDAO.java
  dao.AppRoleJdbcDAO
 dao/EventJdbcDAO.java
  dao.EventJdbcDAO
-web/MemberModule.java
- web.MemberModule
-domain/Member.java
- domain.Member
+dao/MemberJdbcDAO.java
+ dao.MemberJdbcDAO
+dao/EmailJdbcDAO.java
+ dao.EmailJdbcDAO
 dao/EmailDAO.java
  dao.EmailDAO
