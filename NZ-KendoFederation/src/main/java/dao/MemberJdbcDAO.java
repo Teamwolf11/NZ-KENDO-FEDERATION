@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import Database.DatabaseConnector;
 import java.util.ArrayList;
 import java.util.List;
+import dao.*;
 
 /**
  *
@@ -88,6 +89,7 @@ public class MemberJdbcDAO implements MemberDAO {
      */
     @Override
     public Member saveMember(Member member) {
+        
         try {
             DatabaseConnector db = new DatabaseConnector();
             con = db.connect();
@@ -116,13 +118,26 @@ public class MemberJdbcDAO implements MemberDAO {
                     if (generatedKeys.next()) {
                         member.setMemberId(Integer.toString(generatedKeys.getInt(1)));
                         con.close();
+                        
+                        EmailDAO emailDao = new EmailDAO();
+                        emailDao.sendConfirmationEmail(member);
+                        
                         return member;
+                       
                     } else {
                         con.close();
                         throw new SQLException("Updating id failed, no ID obtained.");
                     }
+                    
+                    
+            
+                    
                 }
+                
+                
             }
+            
+          
 
         } catch (SQLException ex) {
             Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
