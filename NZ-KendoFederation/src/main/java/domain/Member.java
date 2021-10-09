@@ -1,7 +1,8 @@
 package domain;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -24,6 +25,7 @@ public class Member {
     private char sex;        //Will have to talk to Taasha about how she wants gender to work
     private String ethnicity;
     private String phoneNum;
+    private List<Grade> grades = new ArrayList<>();
 
     public Member() {
     }
@@ -43,6 +45,19 @@ public class Member {
         this.sex = sex;
         this.ethnicity = ethnicity;
         this.phoneNum = phoneNum;
+    }
+
+    public void addGrade(Grade grade) {
+        grades.add(grade);
+    }
+    
+    
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
     }
 
     
@@ -135,14 +150,6 @@ public class Member {
         this.ethnicity = ethnicity;
     }
 
-       public String getMember_id() {
-        return member_id;
-    }
-
-    public void setMember_id(String member_id) {
-        this.member_id = member_id;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -187,8 +194,8 @@ public class Member {
 		return true;
 	}
 
-        
-
-   
-    
+    @Override
+    public String toString() {
+        return "Member{" + "member_id=" + member_id + ", nzkfId=" + nzkfId + ", nzkfRenewDate=" + nzkfRenewDate + ", role=" + role + ", email=" + email + ", password=" + password + ", dob=" + dob + ", joinDate=" + joinDate + ", fName=" + fName + ", lName=" + lName + ", mName=" + mName + ", sex=" + sex + ", ethnicity=" + ethnicity + ", phoneNum=" + phoneNum + ", grades=" + grades + '}';
+    }  
 }

@@ -1,6 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package domain;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Mike
@@ -8,142 +14,137 @@ import java.sql.Timestamp;
  */
 public class Event {
 
-  private String event_id;
-  private String name;                 //Name of the event
-  private String start_date;
-  private Club club;
-  private String venue;                //Location of event
-  private Grade highest_grade_available;            //Highest grade available to be given by this Event
-  private String headOfGradingPanel;
-  private String otherMembersOfGradingPanel;
-  private String event_description;
-  private String start_time, end_time;
-  private String status;
+    private String eventId;
+    private String name;                 //Name of the event
+    private Club club;
+    private String venue;                //Location of event
+    private Grade highestGradeAvailable;            //Highest grade available to be given by this Event
+    private String headOfGradingPanel;
+    private List<String> otherMembersOfGradingPanel;
+    private String desc;
+    private String startDateTime, endDateTime;
+    private String status;
+    private List<Grade> grades = new ArrayList<>();
 
+    public Event() {
+    }
 
-  public Event() {
-  }
+    public Event(String eventId, String name, Club club, String venue, Grade highestGradeAvailable, String headOfGradingPanel, List<String> otherMembersOfGradingPanel, String desc, String startDateTime, String endDateTime, String status) {
+        this.eventId = eventId;
+        this.name = name;
+        this.club = club;
+        this.venue = venue;
+        this.highestGradeAvailable = highestGradeAvailable;
+        this.headOfGradingPanel = headOfGradingPanel;
+        this.otherMembersOfGradingPanel = otherMembersOfGradingPanel;
+        this.desc = desc;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.status = status;
+    }
 
-  public Event(String event_id, String name, String start_date, Club club, String venue, Grade highest_grade_available, String headOfGradingPanel, String otherMembersOfGradingPanel, String event_description, String start_time, String end_time, String status) {
-    this.event_id = event_id;
-    this.name = name;
-    this.start_date = start_date;
-    this.club = club;
-    this.venue = venue;
-    this.highest_grade_available = highest_grade_available;
-    this.headOfGradingPanel = headOfGradingPanel;
-    this.otherMembersOfGradingPanel = otherMembersOfGradingPanel;
-    this.event_description = event_description;
-    this.start_time = start_time;
-    this.end_time = end_time;
-    this.status = status;
-  }
+    public void addGrade(Grade grade){
+        grades.add(grade);
+    }
 
-  public String getEvent_id() {
-    return event_id;
-  }
+    public List<Grade> getGrades() {
+        return grades;
+    }
 
-  public Event setEvent_id(String event_id) {
-    this.event_id = event_id;
-    return this;
-  }
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getEventId() {
+        return eventId;
+    }
 
-  public Event setName(String name) {
-    this.name = name;
-    return this;
-  }
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
 
-  public String getStart_date() {
-    return start_date;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public Event setStart_date(String start_date) {
-    this.start_date = start_date;
-    return this;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public Club getClub() {
-    return club;
-  }
+    public Club getClub() {
+        return club;
+    }
 
-  public Event setClub(Club club) {
-    this.club = club;
-    return this;
-  }
+    public void setClub(Club club) {
+        this.club = club;
+    }
 
-  public String getVenue() {
-    return venue;
-  }
+    public String getVenue() {
+        return venue;
+    }
 
-  public Event setVenue(String venue) {
-    this.venue = venue;
-    return this;
-  }
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
 
-  public Grade getHighest_grade_available() {
-    return highest_grade_available;
-  }
+    public Grade getHighestGradeAvailable() {
+        return highestGradeAvailable;
+    }
 
-  public Event setHighest_grade_available(Grade highest_grade_available) {
-    this.highest_grade_available = highest_grade_available;
-    return this;
-  }
+    public void setHighestGradeAvailable(Grade highestGradeAvailable) {
+        this.highestGradeAvailable = highestGradeAvailable;
+    }
 
-  public String getHeadOfGradingPanel() {
-    return headOfGradingPanel;
-  }
+    public String getHeadOfGradingPanel() {
+        return headOfGradingPanel;
+    }
 
-  public Event setHeadOfGradingPanel(String headOfGradingPanel) {
-    this.headOfGradingPanel = headOfGradingPanel;
-    return this;
-  }
+    public void setHeadOfGradingPanel(String headOfGradingPanel) {
+        this.headOfGradingPanel = headOfGradingPanel;
+    }
 
-  public String getOtherMembersOfGradingPanel() {
-    return otherMembersOfGradingPanel;
-  }
+    public List<String> getOtherMembersOfGradingPanel() {
+        return otherMembersOfGradingPanel;
+    }
 
-  public Event setOtherMembersOfGradingPanel(String otherMembersOfGradingPanel) {
-    this.otherMembersOfGradingPanel = otherMembersOfGradingPanel;
-    return this;
-  }
+    public void setOtherMembersOfGradingPanel(List<String> otherMembersOfGradingPanel) {
+        this.otherMembersOfGradingPanel = otherMembersOfGradingPanel;
+    }
 
-  public String getEvent_description() {
-    return event_description;
-  }
+    public String getDesc() {
+        return desc;
+    }
 
-  public Event setEvent_description(String event_description) {
-    this.event_description = event_description;
-    return this;
-  }
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
-  public String getStart_time() {
-    return start_time;
-  }
+    public String getStartDateTime() {
+        return startDateTime;
+    }
 
-  public Event setStart_time(String start_time) {
-    this.start_time = start_time;
-    return this;
-  }
+    public void setStartDateTime(String startDateTime) {
+        this.startDateTime = startDateTime;
+    }
 
-  public String getEnd_time() {
-    return end_time;
-  }
+    public String getEndDateTime() {
+        return endDateTime;
+    }
 
-  public Event setEnd_time(String end_time) {
-    this.end_time = end_time;
-    return this;
-  }
+    public void setEndDateTime(String endDateTime) {
+        this.endDateTime = endDateTime;
+    }
 
-  public String getStatus() {
-    return status;
-  }
+    public String getStatus() {
+        return status;
+    }
 
-  public Event setStatus(String status) {
-    this.status = status;
-    return this;
-  }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" + "eventId=" + eventId + ", name=" + name + ", club=" + club + ", venue=" + venue + ", highestGradeAvailable=" + highestGradeAvailable + ", headOfGradingPanel=" + headOfGradingPanel + ", otherMembersOfGradingPanel=" + otherMembersOfGradingPanel + ", desc=" + desc + ", startDateTime=" + startDateTime + ", endDateTime=" + endDateTime + ", status=" + status + '}';
+    }
 }

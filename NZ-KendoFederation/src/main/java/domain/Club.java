@@ -1,5 +1,8 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author lachl
@@ -8,20 +11,38 @@ public class Club {
     public String clubId;
     public String clubLeaderId;
     public String clubName;
-    public MartialArt martialArts;
-    public String contact;
+    public String phone;
+    public String email;
     public int noOfMembers;
-
+    public String location;
+    public String description;
+    private List<Grade> grades = new ArrayList<>();
+    
+    
     public Club(){
     }
-    
-    public Club(String clubId, String clubLeaderId, String clubName, MartialArt martialArts, String contact, int noOfMembers) {
+
+    public Club(String clubId, String clubLeaderId, String clubName, String phone, String email, int noOfMembers, String location, String description) {
         this.clubId = clubId;
         this.clubLeaderId = clubLeaderId;
         this.clubName = clubName;
-        this.martialArts = martialArts;
-        this.contact = contact;
+        this.phone = phone;
+        this.email = email;
         this.noOfMembers = noOfMembers;
+        this.location = location;
+        this.description = description;
+    }
+
+    public void addGrade(Grade grade) {
+        grades.add(grade);
+    }
+    
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
     }
 
     public String getClubId() {
@@ -34,14 +55,6 @@ public class Club {
 
     public String getClubName() {
         return clubName;
-    }
-
-    public MartialArt getMartialArts() {
-        return martialArts;
-    }
-
-    public String getContact() {
-        return contact;
     }
 
     public int getNoOfMembers() {
@@ -60,19 +73,44 @@ public class Club {
         this.clubName = clubName;
     }
 
-    public void setMartialArts(MartialArt martialArts) {
-        this.martialArts = martialArts;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
     public void setNoOfMembers(int noOfMembers) {
         this.noOfMembers = noOfMembers;
     }
-    
-    
-    
-    
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public String toString() {
+        return "Club{" + "clubId=" + clubId + ", clubLeaderId=" + clubLeaderId + ", clubName=" + clubName + ", phone=" + phone + ", email=" + email + ", noOfMembers=" + noOfMembers + ", location=" + location + ", description=" + description + '}';
+    }
 }
