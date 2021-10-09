@@ -107,6 +107,7 @@ public class MemberJdbcDAO implements MemberDAO {
                 insertMemberstmt.setString(9, member.getEthnicity());
                 insertMemberstmt.setString(10, member.getPhoneNum());
                 
+                
                 int row = insertMemberstmt.executeUpdate();
 
                 if (row == 0) {

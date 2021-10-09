@@ -25,7 +25,7 @@ public class EmailDAOTest {
     private Event event1;
     private Grade grade1, grade2;
     private Club club1;
-    private Member member1;
+    private Member member1, member2;
     String str = "08/09/2002";
 
     @BeforeEach
@@ -51,6 +51,20 @@ public class EmailDAOTest {
         
         member1 = memberJdbc.saveMember(member1);
         
+        member2 = new Member();
+        member2.setNzkfId("6564");
+        member2.setPassword("QWERTY");
+        member2.setEmail("email@test.test2");
+        member2.setDob(str);
+        member2.setfName("Jane");
+        member2.setmName("hmm");
+        member2.setlName("Doe");
+        member2.setJoinDate(str);
+        member2.setSex('F');
+        member2.setEthnicity("Asian");
+
+        member2 = memberJdbc.saveMember(member2);
+        
         club1 = new Club();
         club1.setClubName("TestClub1");
         club1.setLocation("Location");
@@ -71,11 +85,15 @@ public class EmailDAOTest {
         member1 = gradeJdbc.saveGrade(grade1, member1);
         
         grade2 = new Grade();
-        //grade2.setClub(club1);
+        grade2.setClub(club1);
         grade2.setArtId("1");
         grade2.setGradeId("3");
         grade2.setMartialArt("Kendo");
-        grade2.setGrade("7 Kyu");
+        grade2.setGrade("5 Kyu");
+        grade2.setDateReceived(str);
+        
+        member2 = gradeJdbc.saveGrade(grade1, member2);
+        //member2 = gradeJdbc.saveGrade(grade2, member2);
        
         event1 = new Event();
         event1.setName("EventName");
@@ -95,12 +113,15 @@ public class EmailDAOTest {
         eventJdbc.deleteEvent(event1);
         clubJdbc.deleteClub(club1);
         gradeJdbc.deleteGrade(grade1, member1.getMemberId());
+        gradeJdbc.deleteGrade(grade1, member2.getMemberId());
+        gradeJdbc.deleteGrade(grade2, member2.getMemberId());
         memberJdbc.deleteMember(member1);
+        memberJdbc.deleteMember(member2);
     }
 
     @Test
     public void testSaveEvent() {
         List<Member> mList = emailJdbc.getPotentialMembers(event1);
-        System.out.println(mList);
+        assertTrue(mList.size() == 2);
     }
 }
