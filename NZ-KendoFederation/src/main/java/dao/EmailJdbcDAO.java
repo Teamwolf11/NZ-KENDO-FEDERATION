@@ -41,8 +41,6 @@ public class EmailJdbcDAO {
                 stmt.setInt(1, Integer.parseInt(event.getHighestGradeAvailable().getGradeId()));
                 stmt.setInt(2, Integer.parseInt(event.getHighestGradeAvailable().getArtId()));
                 ResultSet rs = stmt.executeQuery();
-                
-                System.out.println(stmt);
 
                 List<Member> mList = new ArrayList<>();
                 
@@ -58,7 +56,6 @@ public class EmailJdbcDAO {
                     if (eventId.equals("0"))  eventId = null;
 
                     Grade grade = new Grade(gradeName, martialArt, nextDateAvailable, dateReceived, gradeId, artId, null, null, eventId);
-
                     
                     String memberId = Integer.toString(rs.getInt("m_id"));
                     String nzkfId = rs.getString("nzkf_membership_id");
@@ -67,14 +64,14 @@ public class EmailJdbcDAO {
                     String fName = rs.getString("first_name");
                     String lName = rs.getString("last_name");
                     String mName = rs.getString("middle_name");
-                    char sex = rs.getString("sex").charAt(0);
+                    //char sex = rs.getString("sex").charAt(0);
                     String ethnicity = rs.getString("ethnicity");
                     String email = rs.getString("email");
                     String dob = rs.getString("date_of_birth");
                     String password = rs.getString("password");
                     String phoneNum = rs.getString("phone_num");
                     
-                    Member member =  new Member(memberId, nzkfId, nzkfIdRenewDate, null, email, password, dob, joinDate, fName, lName, mName, sex, ethnicity, phoneNum);
+                    Member member =  new Member(memberId, nzkfId, nzkfIdRenewDate, null, email, password, dob, joinDate, fName, lName, mName, (char) 0, ethnicity, phoneNum);
                     member.addGrade(grade);
                     mList.add(member);
                 }
