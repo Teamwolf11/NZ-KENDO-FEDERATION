@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author Maaha Ahmad
+ * @author Lachlan Campbell
  */
 public class EventJdbcDAO implements EventDAO {
 

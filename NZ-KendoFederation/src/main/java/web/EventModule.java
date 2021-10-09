@@ -14,8 +14,7 @@ public class EventModule extends Jooby {
 //            return eventDao.getEvent(id);
 //        });
       post("/api/adminCreateEvent", (req, rsp) -> {
-//        String json = req.body().to(String.class);
-//        System.out.println(json);
+
         Event event = req.body().to(Event.class);
         eventDao.saveEvent(event);
         rsp.status(Status.CREATED);
