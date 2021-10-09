@@ -11,7 +11,7 @@
 //public class EventModule extends Jooby {
 //    
 //    public EventModule(EventDAO eventDao){
-//        get("/api/viewEvents", () -> eventDao.getEvents());
+//        //get("/api/viewEvents", () -> eventDao.getEvents());
 //        
 //        get("/api/events/:id", (req) -> {
 //            String id = req.param("event_id").value();
