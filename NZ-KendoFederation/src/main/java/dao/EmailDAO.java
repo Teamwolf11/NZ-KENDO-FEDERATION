@@ -4,6 +4,7 @@
  */
 package dao;
 
+import domain.Event;
     import domain.Member;
     import java.util.concurrent.ScheduledFuture;
     import java.util.concurrent.ScheduledExecutorService;
@@ -58,10 +59,62 @@ public  class EmailDAO {
 
             });
 	}
+    
+    public void gradingEmail(Event event, Member member){
+         CompletableFuture.runAsync(() -> {
+                String newEmail = member.getEmail();
+                Email email = new SimpleEmail();
+                email.setHostName("smtp.gmail.com");
+                email.setSmtpPort(587);
+                email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqax"));
+                email.setSSLOnConnect(true);
+
+                try {
+                    email.setFrom("benjaminm.12184@gmail.com");
+                    email.setSubject("Upcoming Grading Event" + event.getEventId());
+                    email.setMsg("New grading event: " + event.getName()+ 
+                            " is being held on " + event.getStartDateTime()+ "." + 
+                            " You are eligible to participate in this grading event");
+                    email.addTo(newEmail);
+                    email.send();
+                } catch (EmailException ex) {
+                    Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            });
+    }
+    
+    public void expiryEmail(Member member){
+        CompletableFuture.runAsync(() -> {
+                String newEmail = member.getEmail();
+                Email email = new SimpleEmail();
+                email.setHostName("smtp.gmail.com");
+                email.setSmtpPort(587);
+                email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqax"));
+                email.setSSLOnConnect(true);
+
+                try {
+                    email.setFrom("benjaminm.12184@gmail.com");
+                    email.setSubject("Membership expiry for " + member.getfName() +" "+ member.getlName());
+                    email.setMsg("Your membership for NZ Kendo federation is set to expire on " + member.getJoinDate());
+
+                    email.addTo(newEmail);
+                    email.send();
+                } catch (EmailException ex) {
+                    Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            });
+    }
    
     public void sendConfirmationEmail(Member member){
     EmailDAO newEmailConfirmation = new EmailDAO();
     newEmailConfirmation.email(member);
+    }
+    
+    public void sendExpiryEmail(Member member){
+        EmailDAO newExpiryEmail = new EmailDAO();
+        newExpiryEmail.expiryEmail(member);
     }
     
     public void sendGradingEmail(Member member){
@@ -74,7 +127,7 @@ public  class EmailDAO {
         newEmailGrading.email(member);
             //System.out.println("ben"); 
         };
-        ScheduledFuture<?> emailHandle = scheduler.scheduleAtFixedRate(gradingEmail, 0, 10, SECONDS);
+        ScheduledFuture<?> emailHandle = scheduler.scheduleAtFixedRate(gradingEmail, 0, 1, SECONDS);
         Runnable canceller = () -> emailHandle.cancel(false);
         scheduler.schedule(canceller, 1, HOURS);
     }
