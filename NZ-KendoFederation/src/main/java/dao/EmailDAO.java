@@ -11,5 +11,9 @@ import java.util.List;
 public interface EmailDAO {
 
     List<Member> getPotentialMembers(Event event);
+    void sendConfirmationEmail(Member member);
+    void sendGradingEmail(Event event, List<Member> mList);
+    void sendExpiryEmail(Member member);
+    
 }
 

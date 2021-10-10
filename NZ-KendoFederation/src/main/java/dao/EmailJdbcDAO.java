@@ -92,7 +92,7 @@ public class EmailJdbcDAO {
                     mList.add(member);
                 }
                 
-                gradingEmail(event, mList);
+                sendGradingEmail(event, mList);
                 return mList;
             }
         } catch (SQLException ex) {
@@ -132,7 +132,7 @@ public class EmailJdbcDAO {
     }
 
     
-    public void gradingEmail(Event event, List<Member> mList){
+    public void sendGradingEmail(Event event, List<Member> mList){
     CompletableFuture.runAsync(() -> {
            
                String newEmail = mList.toString();
