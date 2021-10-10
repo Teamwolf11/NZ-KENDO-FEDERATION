@@ -120,7 +120,7 @@ public class MemberJdbcDAO implements MemberDAO {
                         member.setMemberId(Integer.toString(generatedKeys.getInt(1)));
                         con.close();
                         
-                        EmailDAO emailDao = new EmailDAO();
+                        EmailJdbcDAO emailDao = new EmailJdbcDAO();
                         emailDao.sendConfirmationEmail(member);
                         
                         return member;
