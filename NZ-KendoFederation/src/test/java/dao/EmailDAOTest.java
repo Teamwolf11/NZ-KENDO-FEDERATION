@@ -124,4 +124,9 @@ public class EmailDAOTest {
         List<Member> mList = emailJdbc.getPotentialMembers(event1);
         assertTrue(mList.size() == 2);
     }
+    
+    @Test
+    public void testGradingEmail(){
+        
+    }
 }
