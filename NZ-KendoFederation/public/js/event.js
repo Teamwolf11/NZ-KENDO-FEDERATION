@@ -24,7 +24,7 @@ module.controller('EventController', function (adminCreateEvent, eventAPI, $wind
         adminCreateEvent.save(null, event,
             // success callback
             function () {
-                $window.location = 'adminEvent.html';
+                $window.location = 'grading.html';
             },
             // error callback
             function (error) {
