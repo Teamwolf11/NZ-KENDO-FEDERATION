@@ -4,8 +4,17 @@ import domain.Club;
 import domain.Event;
 import domain.Grade;
 import domain.Member;
+import static java.lang.ProcessBuilder.Redirect.from;
+import static java.lang.ProcessBuilder.Redirect.to;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.MimeMessage;
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.SimpleEmail;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
@@ -106,7 +115,22 @@ public class EmailDAOTest {
         event1.setHighestGradeAvailable(grade2);
         
         event1 = eventJdbc.saveEvent(event1);
+        
     }
+    
+//    @BeforeEach
+//    public void sendMessageSetup() throws SQLException, ClassNotFoundException {
+//        String newEmail = member.getEmail();
+//        Email email = new SimpleEmail();
+//        email.setHostName("smtp.gmail.com");
+//        email.setSmtpPort(587);
+//        email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqax"));
+//        email.setSSLOnConnect(true);
+//
+//            MimeMessage msg = createMessage(session, from, to, subject, body);
+//            Transport.send(msg);
+//    }
+//    
 
     @AfterEach
     public void tearDown() {
@@ -124,6 +148,55 @@ public class EmailDAOTest {
         List<Member> mList = emailJdbc.getPotentialMembers(event1);
         assertTrue(mList.size() == 2);
     }
+    
+    
+    
+    @Test
+    public void testConfirmationEmail(){
+        
+    }
+    
+    
+//    @Test
+// public void testSendInRegualarJavaMail() throws MessagingException, IOException, EmailException {
+//
+//  String subject = "Test1";
+//  String body = "Test Message1";
+//  mailSender.sendMail("test.dest@nutpan.com", "test.src@nutpan.com", subject, body);
+//  
+//  Session session = Session.getDefaultInstance(new Properties());
+//  Store store = session.getStore("pop3");
+//  store.connect("nutpan.com", "test.dest", "password");
+//
+//  Folder folder = store.getFolder("inbox");
+//
+//  folder.open(Folder.READ_ONLY);
+//  Message[] msg = folder.getMessages();
+//
+//  assertTrue(msg.length == 1);
+//  assertEquals(subject, msg[0].getSubject());
+//  assertEquals(body, msg[0].getContent());
+//  folder.close(true);
+//  store.close();
+// }
+//
+// @Test
+// public void testSendInMockWay() throws MessagingException, IOException, EmailException {
+//
+//  String subject = "Test2";
+//  String body = "Test Message2";
+//  
+//  mailSender.sendMail("test.dest@nutpan.com", "test.src@nutpan.com", subject, body);
+//  
+//  List<Message> inbox = Mailbox.get("test.dest@nutpan.com");
+//  
+//  assertTrue(inbox.size() == 1);  
+//  assertEquals(subject, inbox.get(0).getSubject());
+//  assertEquals(body, inbox.get(0).getContent());
+//
+// }
+//}
+//    
     
     @Test
     public void testGradingEmail(){
