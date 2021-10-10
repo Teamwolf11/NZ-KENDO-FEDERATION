@@ -18,7 +18,8 @@ module.factory('eventAPI', function($resource) {
 
 module.controller('EventController', function (adminCreateEvent, eventAPI, $window) {
 // Ben Scobie you can add a thing for client join event above just like what I have done with adminCreateEvenet
-
+    this.events = eventAPI.query();
+    
     this.registerEvent = function (event) {
         adminCreateEvent.save(null, event,
             // success callback
@@ -32,7 +33,6 @@ module.controller('EventController', function (adminCreateEvent, eventAPI, $wind
         );
     };
     
-    this.events = eventAPI.query();
     this.selectAll = function () {
         this.events = eventAPI.query();
     };
