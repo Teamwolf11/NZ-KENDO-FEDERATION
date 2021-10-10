@@ -14,11 +14,13 @@ import org.jooby.json.Gzon;
  */
 public class Server extends Jooby{
     MemberDAO studentDao = new MemberJdbcDAO();    
-  
+    EventDAO eventDao = new EventJdbcDAO();    
+    
     Server(){
         port(8080);
         use(new Gzon());
         use(new MemberModule(studentDao));
+        use(new EventModule(eventDao));
         assets("/", "index.html");
         assets("*");
     }
