@@ -1,22 +1,27 @@
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
-//package web;
-//import dao.EventDAO;
-//import org.jooby.Jooby;
-//import org.jooby.Status;
-//
-//public class EventModule extends Jooby {
-//    
-//    public EventModule(EventDAO eventDao){
-//        get("/api/viewEvents", () -> eventDao.getEvents());
-//        
-//        get("/api/events/:id", (req) -> {
-//            String id = req.param("event_id").value();
-//            return eventDao.getEvent(id);
-//        });
-//    }
-//    
-//}
+package web;
+import dao.EventDAO;
+import dao.EventJdbcDAO;
+import domain.Event;
+import org.jooby.Jooby;
+import org.jooby.Status;
+ 
+public class EventModule extends Jooby {
+    EventDAO eventDao = new EventJdbcDAO();
+ 
+    public EventModule(EventDAO eventDao){
+        get("/api/events", () -> eventDao.getEvents());
+ 
+        get("/api/events/:id", (req) -> {
+            String id = req.param("event_id").value();
+            return eventDao.getEvent(id);
+        });
+      
+        post("/api/adminCreateEvent", (req, rsp) -> {
+ 
+        Event event = req.body().to(Event.class);
+        eventDao.saveEvent(event);
+        rsp.status(Status.CREATED);
+      });
+    }
+ 
+}
