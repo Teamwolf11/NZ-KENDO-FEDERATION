@@ -36,23 +36,30 @@ public class EventModule extends Jooby {
 
         post("/api/bookEvents", (req, rsp) -> {
             String event = req.body().to(String.class);
-    
-//            System.out.println(id);
+            //System.out.println(event);
             
-//            event = event.replaceAll("[\\[\\](){}\"]", "");
-//            System.out.println(event);
-//            String[] bodyArray = event.split("\\s*,\\s*");
-//            
-//            List<String> listBody = Arrays.asList(bodyArray);
-//            ArrayList<String> listOfString = new ArrayList<>(listBody);
-//            ArrayList<String> parameters = new ArrayList<>();
-//            System.out.println(listOfString);
-//            
-//            for (String valuePair : listOfString) {
-//                String[] elements = valuePair.split(":");
-//                System.out.println(elements.toString());
-//                parameters.add(elements[2]);
+            event = event.replaceAll("[\\[\\](){}\"]", "");
+            System.out.println(event);
+            String[] eventArr = event.split("\\s*,\\s*");
+//            for(int i = 0; i < eventArr.length; i++) {
+//                System.out.print(eventArr[i] + " ");
 //            }
+//            
+            List<String> listBody = Arrays.asList(event);
+            ArrayList<String> listOfString = new ArrayList<>(listBody);
+            ArrayList<String> parameters = new ArrayList<>();
+            System.out.println(listOfString);
+            
+            for (String valuePair : listOfString) {
+                String[] elements = valuePair.split(":");
+                parameters.add(elements[elements.length-1]);
+                System.out.println(parameters);
+            }
+//            for (int i = 1; i < elements.length; i++){
+//                if (elements[i].contains("eventId")){
+//               System.out.println(elements[i]);
+ //           }
+      
 //            
             
             //String member = req.body().to(String.class);
