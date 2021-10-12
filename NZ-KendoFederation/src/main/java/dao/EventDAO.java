@@ -11,7 +11,6 @@ import java.util.Collection;
 public interface EventDAO {
 
     Event getEvent(String eventID);
-    Collection<Event> getEvents();
     void deleteEvent(Event event);
     Event updateEvent(Event event);
     Event saveEvent(Event event);
