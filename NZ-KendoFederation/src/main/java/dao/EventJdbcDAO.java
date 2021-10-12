@@ -109,6 +109,9 @@ public class EventJdbcDAO implements EventDAO {
                 try (ResultSet generatedKeys = insertEventstmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         event.setEventId(Integer.toString(generatedKeys.getInt(1)));
+                        
+                        setGraderEvent(event.getHeadOfGradingPanel(), "Head", event);
+                        
                         return event;
                     } else {
                         throw new SQLException("Updating nextGradeDate failed.");

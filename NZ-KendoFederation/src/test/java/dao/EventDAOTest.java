@@ -21,6 +21,7 @@ public class EventDAOTest {
     private Event event1;
     private Grade grade1;
     private Club club1;
+    private String headGrad = "head";
     String str = "08/09/2002";
 
     @BeforeEach
@@ -53,10 +54,12 @@ public class EventDAOTest {
         event1.setStartDateTime(str);
         event1.setEndDateTime(str);
         event1.setHighestGradeAvailable(grade1);
+        event1.setHeadOfGradingPanel(headGrad);
     }
 
     @AfterEach
     public void tearDown() {
+        eventJdbc.deleteGraderEvent(event1, headGrad);
         eventJdbc.deleteEvent(event1);
         clubJdbc.deleteClub(club1);      
     }
@@ -73,17 +76,15 @@ public class EventDAOTest {
     
      @Test
     public void testSetGraderEvent(){
-        String headGrad = "head";
         String secondGrad = "2nd";
         event1 = eventJdbc.saveEvent(event1);
-        eventJdbc.setGraderEvent(headGrad, "Head", event1);
+        //eventJdbc.setGraderEvent(headGrad, "Head", event1);
         eventJdbc.setGraderEvent(secondGrad, "general Grader", event1);
         
         Event eventCheck = eventJdbc.getEvent(event1.getEventId());
 
         assertTrue(headGrad.equals(eventCheck.getHeadOfGradingPanel()));
         
-        eventJdbc.deleteGraderEvent(event1, headGrad);
         eventJdbc.deleteGraderEvent(event1, secondGrad);
     }
 }
