@@ -10,7 +10,7 @@
         <script src="js/angular.js"></script>
         <script src="js/angular-resource.js"></script>
         <script src="js/ngStorage.js"></script>
-        <script src="js/signIn.js"></script>
+        <script src="js/kendoApp.js"></script>
     </head>
 
     <body ng-controller="MemberController as membCtrl">
@@ -30,9 +30,9 @@
 
             <div class="grid-container">
                 <section>
-                    <h2>Sign in</h2>
                     <form ng-submit="membCtrl.signIn(email, password)">
                         <fieldset class="textInputs">
+                            <h2>Sign in</h2>
                             <p>{{membCtrl.signInMessage}}</p>
                             <input type="email" ng-model="email" id="email" tabindex="1" required placeholder="Email address">
                             <input type="password" ng-model="password" id="password" tabindex="2" required placeholder="Password">
@@ -43,10 +43,9 @@
                 </section>
 
                 <section>
-                    <h2>Create an account</h2>
-
                     <form ng-submit="membCtrl.registerMember(member)">
                         <fieldset class="textInputs">
+                            <h2>Create an account</h2>
                             <p>{{membCtrl.registerMessage}}</p>
                             <input type="text" ng-model="member.fName" id="fName" tabindex="3" required pattern="[a-zA-Z '-]+" placeholder="First name">
                             <input type="text" ng-model="member.lName" id="lName" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Last name">

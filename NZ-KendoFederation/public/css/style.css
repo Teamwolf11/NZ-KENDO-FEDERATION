@@ -132,17 +132,13 @@ footer {
     width: 50%;
     margin: auto;
 }
-register-grading-events-container {
-    width: 80%;
+.register-grading-events-container {
+    width: 50%;
     margin: auto;
 }
 .grid-container section{
     padding: 10px;
 }
-/* Middle line between sign in and create account */
-/*.grid-container section:first-child {
-    border-right: solid 3px; 
-}*/
 
 form {
     width: 300px;
@@ -161,7 +157,7 @@ fieldset {
     box-shadow: 5px 10px 10px #888888;
 }
 
-input, #sex, #ethnicity {
+input, #sex, #ethnicity, #highestGradeAvailable {
     width: 70%;
     background-color: #f2f2f2;
     color: black;
@@ -173,7 +169,7 @@ input, #sex, #ethnicity {
     border-radius: 4px;
 }
 
-#sex, #ethnicity {
+#sex, #ethnicity, #highestGradeAvailable {
     width: 77%
 }
 
