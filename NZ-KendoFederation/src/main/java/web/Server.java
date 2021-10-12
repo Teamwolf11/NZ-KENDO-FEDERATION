@@ -31,9 +31,9 @@ public class Server extends Jooby {
         // prevent 404 errors due to browsers requesting favicons
         //get("/favicon.ico", () -> Results.noContent());
         assets("/*.html");
-        //assets("/member/*.html");
-        //assets("/clubLeader/*.html");
-        //assets("/fedLeader/*.html");
+        assets("/member/*.html");
+        assets("/clubLeader/*.html");
+        assets("/fedLeader/*.html");
         assets("/css/*.css");
         assets("/js/*.js");
         assets("/images/*.png");

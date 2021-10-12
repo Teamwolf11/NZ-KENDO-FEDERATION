@@ -74,11 +74,13 @@ module.controller('MemberController', function (registerAPI, $window, signInAPI,
                                 // redirect to home
                                 // $window.location = 'index.html';
                                 console.log("Role Id: " + $sessionStorage.member.role.appRoleId)
-                                if ($sessionStorage.member.role.appRoleId == 3) {
-                                    $window.location = 'about.html';
-                                } else {
-                                    $window.location = 'locations.html';
-                                }
+//                                if ($sessionStorage.member.role.appRoleId == 3) {
+//                                    $window.location = 'index.html';
+//                                } else {
+//                                    $window.location = 'locations.html';
+//                                }
+                                $window.location = 'index.html';
+
 
                             },
                             // fail callback
