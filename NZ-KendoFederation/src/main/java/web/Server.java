@@ -8,6 +8,8 @@ package web;
 import com.google.gson.Gson;
 import dao.*;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import org.jooby.Jooby;
 import org.jooby.json.Gzon;
@@ -17,14 +19,26 @@ import org.jooby.json.Gzon;
  * @author Will
  */
 public class Server extends Jooby{
-    MemberDAO studentDao = new MemberJdbcDAO();    
+    MemberDAO memberDao = new MemberJdbcDAO();    
   
     Server(){
         port(8080);
-        use(new Gzon());
-        use(new MemberModule(studentDao));
+        assets("/*.html");
+        assets("/css/*.css");
+        assets("/js/*.js");
+        assets("/images/*.png");
+        assets("/images/*.jpg");
+        // make index.html the default page
         assets("/", "index.html");
-        assets("*");
+        // prevent 404 errors due to browsers requesting favicons
+        // get("/favicon.ico", () -> Results.noContent());
+        
+        List<String> noAuth = Arrays.asList("/api/register");
+        use(new BasicHttpAuthenticator(memberDao, noAuth));        
+        
+        use(new Gzon());
+        use(new MemberModule(memberDao));
+        
     }
     
     

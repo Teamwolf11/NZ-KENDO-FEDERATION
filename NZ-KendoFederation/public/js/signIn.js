@@ -17,13 +17,24 @@ module.factory('signInAPI', function ($resource) {
     return $resource('/api/members/:email');
 });
 
-module.controller('MemberController', function (registerAPI, $window, signInAPI, $sessionStorage) {
+module.config(function ($sessionStorageProvider, $httpProvider) {
+   // get the auth token from the session storage
+   let authToken = $sessionStorageProvider.get('authToken');
+
+   // does the auth token actually exist?
+   if (authToken) {
+      // add the token to all HTTP requests
+      $httpProvider.defaults.headers.common.Authorization = 'Basic ' + authToken;
+   }
+});
+
+module.controller('MemberController', function (registerAPI, $window, signInAPI, $sessionStorage, $http) {
 
     this.signInMessage = "";
     this.registerMessage = "";
 
     if ($sessionStorage.member) {
-        this.welcome = "Welcome " + $sessionStorage.member.firstName;
+        this.welcome = "Welcome " + $sessionStorage.member.fName;
     }
 
     this.registerMember = function (member) {
@@ -44,8 +55,17 @@ module.controller('MemberController', function (registerAPI, $window, signInAPI,
             // alias 'this' so that we can access it inside callback functions
             let ctrl = this;
             this.signIn = function (email, password) {
+                // generate authentication token
+                let authToken = $window.btoa(email + ":" + password);
+
+                // store token
+                $sessionStorage.authToken = authToken;
+
+                // add token to the HTTP request headers
+                $http.defaults.headers.common.Authorization = 'Basic ' + authToken;
+                
                 // get member from web service
-                signInAPI.get({'email': email,'password': password},
+                signInAPI.get({'email': email},
                         // success callback
                                 function (member) {
                                     // also store the retrieved member
@@ -70,7 +90,7 @@ module.controller('MemberController', function (registerAPI, $window, signInAPI,
                         // has the member been added to the session?
                         if ($sessionStorage.member) {
                             this.signedIn = true;
-                            this.welcome = "Welcome " + $sessionStorage.member.firstName;
+                            this.welcome = "Welcome " + $sessionStorage.member.fName;
                         } else {
                             this.signedIn = false;
                         }

@@ -2,6 +2,8 @@ package web;
 
 import com.google.inject.Binder;
 import com.typesafe.config.Config;
+import domain.AppRoles;
+import domain.Member;
 import web.CredentialsValidator;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -58,11 +60,13 @@ public class BasicHttpAuthenticator implements Jooby.Module {
 
 				String userName = matcher.group("userName");
 				String password = matcher.group("password");
+                                
+                                Member member = validator.signIn(userName, password);
 
-				if (validator.validateCredentials(userName, password)) {
+				if (member != null) {
 					// add userName to request
 					req.set("userName", userName);
-                                        
+                                        AppRoles role = member.getRole();
                                         
                                         // query database to determine role of user
                                         // check what role is required for path requesting
