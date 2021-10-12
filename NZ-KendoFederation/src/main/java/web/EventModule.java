@@ -18,12 +18,13 @@ import java.util.List;
 public class EventModule extends Jooby {
 
   public EventModule(EventDAO eventDao) {
-//        get("/api/viewEvents", () -> eventDao.getEvents());
-//
-//        get("/api/events/:id", (req) -> {
-//            String id = req.param("event_id").value();
-//            return eventDao.getEvent(id);
-//        });
+        get("/api/events", () -> eventDao.getEvents());
+
+        get("/api/events/:id", (req) -> {
+            String id = req.param("event_id").value();
+            return eventDao.getEvent(id);
+        });
+        
     post("/api/adminCreateEvent", (req, rsp) -> {
       String body = req.body().to(String.class);
       System.out.println(body);
