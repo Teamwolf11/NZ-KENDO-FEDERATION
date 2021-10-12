@@ -135,6 +135,7 @@ public class EventJdbcDAO implements EventDAO {
                 grade.setEventName(event.getName());
 
                 events.add(event);
+                return events; 
             }
             return events;
         } catch (SQLException ex) {

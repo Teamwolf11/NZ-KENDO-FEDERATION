@@ -40,6 +40,11 @@ module.controller('EventController', function (adminCreateEvent, eventAPI, $wind
     this.selectAll = function () {
         this.events = eventAPI.query();
     };
+    
+    this.getAllEvents = getEvents.query();
+    this.selectAll = function () {
+        this.events = getEvents.query();
+    };
 });
 
 
