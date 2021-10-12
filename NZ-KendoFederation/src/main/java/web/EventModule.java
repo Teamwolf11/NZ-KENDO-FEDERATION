@@ -5,6 +5,9 @@ import domain.Club;
 import dao.EventJdbcDAO;
 import domain.Event;
 import domain.Grade;
+import domain.Member;
+import dao.MemberDAO;
+import dao.MemberJdbcDAO;
 import org.jooby.Jooby;
 import org.jooby.Status;
 
@@ -23,6 +26,16 @@ public class EventModule extends Jooby {
         get("/api/events/:id", (req) -> {
             String id = req.param("event_id").value();
             return eventDao.getEvent(id);
+        });
+        
+        post("/api/bookEvents", (req, rsp) -> {
+            String member = req.param("memberId").value();
+            String event = req.param("eventId").value();
+            System.out.println("Hello");
+            MemberDAO mem = new MemberJdbcDAO();
+            eventDao.registerForEvent(eventDao.getEvent(event), mem.getMember(member));
+            
+            rsp.status(Status.CREATED);
         });
         
     post("/api/adminCreateEvent", (req, rsp) -> {
