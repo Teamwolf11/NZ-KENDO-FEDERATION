@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,7 +26,7 @@ public class EventJdbcDAO implements EventDAO {
     public EventJdbcDAO() {
     }
 
-       @Override
+    @Override
     public Event getEvent(String eventId) {
         try {
             DatabaseConnector db = new DatabaseConnector();
@@ -62,8 +64,9 @@ public class EventJdbcDAO implements EventDAO {
                     String startDateTime =  rs.getString("start_date_time");
                     String endDateTime =  rs.getString("end_date_time");
                     String headPanel = rs.getString("grading_member_name");
+                    List<String> otherMembersOfGradingPanel = get2ndEventGrader(eventId);
                     
-                    Event event = new Event(eventId, eName, club, venue, grade, headPanel, null, desc, startDateTime, endDateTime, status);
+                    Event event = new Event(eventId, eName, club, venue, grade, headPanel, otherMembersOfGradingPanel, desc, startDateTime, endDateTime, status);
                     grade.setEventId(event.getEventId());
                     grade.setEventName(event.getName());
                     return event;
@@ -111,6 +114,9 @@ public class EventJdbcDAO implements EventDAO {
                         event.setEventId(Integer.toString(generatedKeys.getInt(1)));
                         
                         setGraderEvent(event.getHeadOfGradingPanel(), "Head", event);
+                        for(int i = 0; i < event.getOtherMembersOfGradingPanel().size(); i++){
+                          setGraderEvent(event.getOtherMembersOfGradingPanel().get(i), "Secondary Grader", event);  
+                        }
                         
                         return event;
                     } else {
@@ -196,6 +202,35 @@ public class EventJdbcDAO implements EventDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(EventJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* Ignored */ }
+        }
+    }
+    
+    public List<String> get2ndEventGrader(String eventId) {
+        List<String> graderList = new ArrayList<>();
+        try {
+            DatabaseConnector db = new DatabaseConnector();
+            Connection con = db.connect();
+
+            String sql = "SELECT grading_member_name FROM public.grading_panel WHERE event_id = ? AND grading_role != 'Head'";           
+            try (PreparedStatement stmt = con.prepareStatement(sql);) {
+                stmt.setInt(1, Integer.parseInt(eventId));
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    graderList.add(rs.getString("grading_member_name"));
+                }
+                   
+            return graderList;
+
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(EventJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         } finally {
             try {
                 con.close();
