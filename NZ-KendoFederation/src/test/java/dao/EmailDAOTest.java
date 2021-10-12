@@ -99,6 +99,8 @@ public class EmailDAOTest {
         grade1.setGrade("7 Kyu");
         grade1.setDateReceived(str);
         
+        System.out.println(member1);
+        System.out.println(grade1);
         member1 = gradeJdbc.saveGrade(grade1, member1);
         
         grade2 = new Grade();
@@ -160,15 +162,16 @@ public class EmailDAOTest {
     @Test
     public void testSaveEvent() {
         List<Member> mList = emailJdbc.getPotentialMembers(event1);
+        System.out.println(mList);
         assertTrue(mList.size() == 2);
     }
     
     
     
-    @Test
-    public void testConfirmationEmail(){
-        
-    }
+//    @Test
+//    public void testConfirmationEmail(){
+//        
+//    }
     
     
 //    @Test

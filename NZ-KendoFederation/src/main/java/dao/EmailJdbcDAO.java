@@ -163,27 +163,79 @@ public class EmailJdbcDAO {
     }
     
     
-    public void sendExpiryEmail(Member member){
+public void sendExpiryEmail(List<Member> mList) throws Exception {
+ 
         CompletableFuture.runAsync(() -> {
-                String newEmail = member.getEmail();
-                Email email = new SimpleEmail();
-                email.setHostName("smtp.gmail.com");
-                email.setSmtpPort(587);
-                email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqax"));
-                email.setSSLOnConnect(true);
-
-                try {
+ 
+            String newEmail = mList.toString();
+            Email email = new SimpleEmail();
+            email.setHostName("smtp.gmail.com");
+            email.setSmtpPort(587);
+            email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqax"));
+            email.setSSLOnConnect(true);
+            try {
+                for (Member member : mList) {
+ 
                     email.setFrom("benjaminm.12184@gmail.com");
-                    email.setSubject("Membership expiry for " + member.getfName() +" "+ member.getlName());
-                    email.setMsg("Your membership for NZ Kendo federation is set to expire on " + member.getNzkfId());
-
+                    email.setSubject("Membership expiry for " + member.getfName() + " " + member.getlName());
+                    email.setMsg("Your membership for NZ Kendo federation is set to expire on " + member.getNzkfRenewDate());
                     email.addTo(newEmail);
                     email.send();
-                } catch (EmailException ex) {
-                    Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-            });
+ 
+            } catch (EmailException ex) {
+                Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+ 
+            }
+ 
+        });
+    }
+    
+    public List<Member> getExpiredMembershipMembers() throws Exception {
+        try {
+            DatabaseConnector db = new DatabaseConnector();
+            Connection con = db.connect();
+ 
+            String sql = "SELECT * FROM member WHERE TO_DATE(nzkf_membership_renew_date, 'DD-MM-YYYY') <= NOW() + interval '20 days'";
+ 
+            try ( PreparedStatement stmt = con.prepareStatement(sql);) {
+ 
+                ResultSet rs = stmt.executeQuery();
+                Member member;
+                List<Member> mList = new ArrayList<>();
+ 
+                while (rs.next()) {
+ 
+                    String memberId = Integer.toString(rs.getInt("m_id"));
+                    String nzkfId = rs.getString("nzkf_membership_id");
+                    String joinDate = rs.getString("join_date");
+                    String nzkfIdRenewDate = rs.getString("nzkf_membership_renew_date");
+                    String fName = rs.getString("first_name");
+                    String lName = rs.getString("last_name");
+                    String mName = rs.getString("middle_name");
+                    //char sex = rs.getString("sex").charAt(0);
+                    String ethnicity = rs.getString("ethnicity");
+                    String email = rs.getString("email");
+                    String dob = rs.getString("date_of_birth");
+                    String password = rs.getString("password");
+                    String phoneNum = rs.getString("phone_num");
+ 
+                    member = new Member(memberId, nzkfId, nzkfIdRenewDate, null, email, password, dob, joinDate, fName, lName, mName, (char) 0, ethnicity, phoneNum);
+                    mList.add(member);
+                }
+ 
+                sendExpiryEmail(mList);
+                return mList;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClubJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* Ignored */ }
+        }
     }
     
 }
