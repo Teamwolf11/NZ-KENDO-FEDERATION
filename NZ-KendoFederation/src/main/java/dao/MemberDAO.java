@@ -2,12 +2,13 @@ package dao;
 
 import domain.Member;
 import java.util.List;
+import web.*;
 
 /**
  *
  * @author Maaha Ahmad
  */
-public interface MemberDAO {
+public interface MemberDAO extends CredentialsValidator {
 
     Member getMember(String memberId);
     
@@ -17,7 +18,7 @@ public interface MemberDAO {
     
     List<Member> getAll();
     
-    Member signIn(String email, String password);
+    // Member signIn(String email, String password);
 
     Member signInSimple(String email);
 }

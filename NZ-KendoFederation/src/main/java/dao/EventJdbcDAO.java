@@ -28,7 +28,7 @@ public class EventJdbcDAO implements EventDAO {
     public EventJdbcDAO() {
     }
 
-       @Override
+    @Override
     public Event getEvent(String eventId) {
         try {
             DatabaseConnector db = new DatabaseConnector();
@@ -175,6 +175,12 @@ public class EventJdbcDAO implements EventDAO {
                 try ( ResultSet generatedKeys = insertEventstmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         event.setEventId(Integer.toString(generatedKeys.getInt(1)));
+                        
+                        setGraderEvent(event.getHeadOfGradingPanel(), "Head", event);
+                        for(int i = 0; i < event.getOtherMembersOfGradingPanel().size(); i++){
+                          setGraderEvent(event.getOtherMembersOfGradingPanel().get(i), "Secondary Grader", event);  
+                        }
+                        
                         return event;
                     } else {
                         throw new SQLException("Updating nextGradeDate failed.");
@@ -209,6 +215,85 @@ public class EventJdbcDAO implements EventDAO {
             }
         } catch (SQLException ex) {
             Logger.getLogger(EventJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* Ignored */ }
+        }
+    }
+    
+    public void setGraderEvent(String name, String role, Event event){
+       try {
+            DatabaseConnector db = new DatabaseConnector();
+            con = db.connect();
+
+            String sql = "INSERT INTO public.grading_panel (event_id, grading_member_name,grading_role) VALUES (?,?,?)";
+            try (PreparedStatement insertEventstmt = con.prepareStatement(sql);) {
+                insertEventstmt.setInt(1, Integer.parseInt(event.getEventId()));
+                insertEventstmt.setString(2, name);
+                insertEventstmt.setString(3, role);
+                
+                int row = insertEventstmt.executeUpdate();
+
+                if (row == 0) {
+                    throw new SQLException("Creating grade failed, no rows affected.");
+                    }
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(EventJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* Ignored */ }
+        }
+    }
+    
+    public void deleteGraderEvent(Event event, String name) {
+       try {
+            DatabaseConnector db = new DatabaseConnector();
+            con = db.connect();
+
+           String sql = "DELETE FROM public.grading_panel WHERE event_id = ? AND grading_member_name = ?";
+
+            try (PreparedStatement deleteEventstmt = con.prepareStatement(sql);) {
+                deleteEventstmt.setInt(1, Integer.parseInt(event.getEventId()));
+                deleteEventstmt.setString(2, name);
+
+                deleteEventstmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EventJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* Ignored */ }
+        }
+    }
+    
+    public List<String> get2ndEventGrader(String eventId) {
+        List<String> graderList = new ArrayList<>();
+        try {
+            DatabaseConnector db = new DatabaseConnector();
+            Connection con = db.connect();
+
+            String sql = "SELECT grading_member_name FROM public.grading_panel WHERE event_id = ? AND grading_role != 'Head'";           
+            try (PreparedStatement stmt = con.prepareStatement(sql);) {
+                stmt.setInt(1, Integer.parseInt(eventId));
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    graderList.add(rs.getString("grading_member_name"));
+                }
+                   
+            return graderList;
+
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(EventJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         } finally {
             try {
                 con.close();
