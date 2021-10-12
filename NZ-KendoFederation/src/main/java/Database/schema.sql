@@ -5,6 +5,7 @@ DROP TRIGGER IF EXISTS mem_grade_next_date ON public.member_grading;
 DROP TRIGGER IF EXISTS mem_grade_current_grade ON public.member_grading;
 
 DROP VIEW IF EXISTS vw_member_grading;
+DROP TABLE IF EXISTS public.grading_panel;
 DROP TABLE IF EXISTS public.club_role;
 DROP TABLE IF EXISTS public.event_line;
 DROP TABLE IF EXISTS public.member_grading;
@@ -18,12 +19,22 @@ DROP TABLE IF EXISTS public.user;
 DROP TABLE IF EXISTS public.role_path;
 DROP TABLE IF EXISTS public.app_role;
 
+CREATE TABLE IF NOT EXISTS public.grading_panel
+(
+	gp_row_num SERIAL NOT NULL,
+	event_id integer NOT NULL,
+	grading_member_name character varying NOT NULL,
+	grading_role character varying NOT NULL,
+	PRIMARY KEY (event_id, grading_member_name, grading_role)
+);
+
 CREATE TABLE IF NOT EXISTS public.role_path
 (
 	row_id SERIAL NOT NULL,
-	app_role_id integer,
-	path character varying,
-	PRIMARY KEY (row_id)
+	app_role_id integer NOT NULL,
+	path character varying NOT NULL,
+	method character varying NOT NULL,
+	PRIMARY KEY (app_role_id,path)
 );
 
 
@@ -172,6 +183,11 @@ ALTER TABLE public.role_path
    	ADD FOREIGN KEY (app_role_id)
     REFERENCES public.app_role (app_role_id)
     NOT VALID;
+	
+ALTER TABLE public.grading_panel
+	ADD FOREIGN KEY (event_id)
+	REFERENCES public.event (event_id)
+	NOT VALID;
 	
 ALTER TABLE public.member ALTER COLUMN join_date SET DEFAULT TO_CHAR(now(), 'DD/MM/YYYY');
 		

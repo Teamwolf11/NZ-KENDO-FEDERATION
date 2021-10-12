@@ -30,8 +30,8 @@ public class EventJdbcDAO implements EventDAO {
             DatabaseConnector db = new DatabaseConnector();
             Connection con = db.connect();
 
-            String sql = "SELECT event.event_id,event.name AS e_name, club_role.member_id, event.club_id, event.venue, event.status, event.description AS e_desc, event.start_date_time, event.end_date_time, event.grading_id, club.mem_num, club.name AS c_name, club.location, club.email, club.phone, club.description AS c_desc, grading.name as g_name, martial_arts.martial_art_id, martial_arts.name AS ma_name FROM public.event JOIN public.club ON event.club_id = club.club_id JOIN public.grading ON event.grading_id = grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id LEFT JOIN public.club_role ON club.club_id = club_role.club_id AND role_name = 'leader' WHERE event_id = ?";   
-             try (PreparedStatement stmt = con.prepareStatement(sql);) {
+            String sql = "SELECT event.event_id,event.name AS e_name, club_role.member_id, event.club_id, event.venue, event.status, event.description AS e_desc, event.start_date_time, event.end_date_time, event.grading_id, club.mem_num, club.name AS c_name, club.location, club.email, club.phone, club.description AS c_desc, grading.name as g_name, martial_arts.martial_art_id, martial_arts.name AS ma_name, grading_panel.grading_member_name FROM public.event JOIN public.club ON event.club_id = club.club_id JOIN public.grading ON event.grading_id = grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id LEFT JOIN public.club_role ON club.club_id = club_role.club_id AND role_name = 'leader' LEFT JOIN public.grading_panel ON grading_panel.event_id = event.event_id AND grading_panel.grading_role = 'Head' WHERE event.event_id = ?";                
+            try (PreparedStatement stmt = con.prepareStatement(sql);) {
                 stmt.setInt(1, Integer.parseInt(eventId));
                 ResultSet rs = stmt.executeQuery();
 
@@ -61,8 +61,9 @@ public class EventJdbcDAO implements EventDAO {
                     String desc =  rs.getString("e_desc");
                     String startDateTime =  rs.getString("start_date_time");
                     String endDateTime =  rs.getString("end_date_time");
+                    String headPanel = rs.getString("grading_member_name");
                     
-                    Event event = new Event(eventId, eName, club, venue, grade, null, null, desc, startDateTime, endDateTime, status);
+                    Event event = new Event(eventId, eName, club, venue, grade, headPanel, null, desc, startDateTime, endDateTime, status);
                     grade.setEventId(event.getEventId());
                     grade.setEventName(event.getName());
                     return event;
@@ -137,6 +138,56 @@ public class EventJdbcDAO implements EventDAO {
 
             try (PreparedStatement deleteEventstmt = con.prepareStatement(sql);) {
                 deleteEventstmt.setInt(1, Integer.parseInt(event.getEventId()));
+
+                deleteEventstmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EventJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* Ignored */ }
+        }
+    }
+    
+    public void setGraderEvent(String name, String role, Event event){
+       try {
+            DatabaseConnector db = new DatabaseConnector();
+            con = db.connect();
+
+            String sql = "INSERT INTO public.grading_panel (event_id, grading_member_name,grading_role) VALUES (?,?,?)";
+            try (PreparedStatement insertEventstmt = con.prepareStatement(sql);) {
+                insertEventstmt.setInt(1, Integer.parseInt(event.getEventId()));
+                insertEventstmt.setString(2, name);
+                insertEventstmt.setString(3, role);
+                
+                int row = insertEventstmt.executeUpdate();
+
+                if (row == 0) {
+                    throw new SQLException("Creating grade failed, no rows affected.");
+                    }
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(EventJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* Ignored */ }
+        }
+    }
+    
+    public void deleteGraderEvent(Event event, String name) {
+       try {
+            DatabaseConnector db = new DatabaseConnector();
+            con = db.connect();
+
+           String sql = "DELETE FROM public.grading_panel WHERE event_id = ? AND grading_member_name = ?";
+
+            try (PreparedStatement deleteEventstmt = con.prepareStatement(sql);) {
+                deleteEventstmt.setInt(1, Integer.parseInt(event.getEventId()));
+                deleteEventstmt.setString(2, name);
 
                 deleteEventstmt.executeUpdate();
             }

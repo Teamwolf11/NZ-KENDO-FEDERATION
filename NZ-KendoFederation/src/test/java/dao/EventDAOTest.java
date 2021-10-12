@@ -6,6 +6,7 @@ import domain.Grade;
 import java.sql.SQLException;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -68,5 +69,21 @@ public class EventDAOTest {
         grade1.setEventId(event1.getEventId());
         
         assertTrue(event1.toString().equals(eventCheck.toString()));
+    }
+    
+     @Test
+    public void testSetGraderEvent(){
+        String headGrad = "head";
+        String secondGrad = "2nd";
+        event1 = eventJdbc.saveEvent(event1);
+        eventJdbc.setGraderEvent(headGrad, "Head", event1);
+        eventJdbc.setGraderEvent(secondGrad, "general Grader", event1);
+        
+        Event eventCheck = eventJdbc.getEvent(event1.getEventId());
+
+        assertTrue(headGrad.equals(eventCheck.getHeadOfGradingPanel()));
+        
+        eventJdbc.deleteGraderEvent(event1, headGrad);
+        eventJdbc.deleteGraderEvent(event1, secondGrad);
     }
 }
