@@ -21,7 +21,6 @@ module.factory('getEventsAPI', function($resource) {
 });
 
 module.controller('EventController', function (adminCreateEventAPI, eventAPI, getEventsAPI, $window) {
-// Ben Scobie you can add a thing for client join event above just like what I have done with adminCreateEvenet
     this.events = eventAPI.query();
 
     this.registerEvent = function (event) {
