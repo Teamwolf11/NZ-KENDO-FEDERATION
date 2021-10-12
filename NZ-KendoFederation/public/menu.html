@@ -1,38 +1,5 @@
 <nav id="menu" ng-controller="MemberController as membCtrl" ng-init="membCtrl.checkSignIn()">
-    
-<!--    <ul ng-if="!membCtrl.signedIn">
-        <li><a>Home</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li onclick="myFunction()" class="dropbtn">Martial Arts
-            <div id="myDropdown" class="dropdown-content">
-                <a href="kendo.html">Kendo</a>
-                <a href="iaido.html">Iaido</a>
-                <a href="naginata.html">Naginata</a>
-                <a href="jodo.html">Jodo</a>
-            </div>
-        </li>
-        <li><a href ="locations.html">Locations</a></li>
-        <li><a href ="contact.html">Contact</a></li>
-    </ul>-->
-    
-<!--    <ul ng-if="membCtrl.isMemb()">
-        <li><a>Home</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li onclick="myFunction()" class="dropbtn">Martial Arts
-            <div id="myDropdown" class="dropdown-content">
-                <a href="kendo.html">Kendo</a>
-                <a href="iaido.html">Iaido</a>
-                <a href="naginata.html">Naginata</a>
-                <a href="jodo.html">Jodo</a>
-            </div>
-        </li>
-        <li><a href ="grading.html">News & Events</a></li>
-        <li><a href ="locations.html">Locations</a></li>
-        <li><a href ="contact.html">Contact</a></li>
-        <li><a href="#" ng-if="membCtrl.signedIn" ng-click="membCtrl.signOut()">Sign Out</a></li>
-    </ul>-->
-
-    <ul>
+   <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About Us</a></li>
         <li onclick="myFunction()" class="dropbtn">Martial Arts
@@ -47,18 +14,8 @@
         <li><a href ="contact.html">Contact</a></li>
         
         <li ng-if="membCtrl.signedIn"><a href ="grading.html">Grading Events</a></li>
-        <li ng-if="membCtrl.isMemb()"><a href ="/member/payment.html">Payments</a></li>
-        <li ng-if="membCtrl.isClubLead()"><a href ="/clubLeader/adminEvent.html">Create Events</a></li>
+        <li ng-if="membCtrl.isMemb()"><a href ="payment.html">Payments</a></li>
+        <li ng-if="membCtrl.isClubLead()"><a href ="adminEvent.html">Create Events</a></li>
     </ul>
 </nav>
 
-<!--<li><a href="#" ng-if="membCtrl.signedIn" ng-click="membCtrl.signOut()">Sign Out</a></li>-->
-
-<!--<div id="menu" ng-controller="MemberController as membCtrl" ng-init="membCtrl.checkSignIn()">
-   <div id="welcome">{{membCtrl.welcome}}</div>
-   <a href=".">Home</a>
-   <a href="products.html" ng-if="membCtrl.signedIn">Browse Products</a>
-   <a href="cart.html" ng-if="membCtrl.signedIn">View Cart</a>
-   <a href="#" ng-if="membCtrl.signedIn" ng-click="membCtrl.signOut()">Sign Out</a>
-   <a href="signin.html" ng-if="!membCtrl.signedIn">Sign In</a>
-</div>-->

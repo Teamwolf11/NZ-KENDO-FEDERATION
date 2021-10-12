@@ -1,45 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="MemberApp">
     <head>
         <title>New Zealand Kendo Federation</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+        <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <script src="js/dropdownList.js"></script>
         <script src="js/angular.js"></script>
         <script src="js/angular-resource.js"></script>
         <script src="js/ngStorage.js"></script>
+        <script src="js/signIn.js"></script>
     </head>
 
-    <body>
+    <body ng-controller="MemberController as membCtrl">
         <section class="top-box">
             <figure>
                 <!-- divided image size by 4 to set width and height -->
                 <img src="images/kendoLogo.png" alt="Kendo Logo"> 
             </figure>
-            <a href ="signIn.html">Login</a>
+            
+            <div id="logInBox" ng-include="'logInOutButton.html'" ng-init="membCtrl.checkSignIn()"></div>
         </section>
 
-
         <header>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a>About Us</a></li>
-                    <li onclick="myFunction()" class="dropbtn">Martial Arts
-                        <div id="myDropdown" class="dropdown-content">
-                            <a href="kendo.html">Kendo</a>
-                            <a href="iaido.html">Iaido</a>
-                            <a href="naginata.html">Naginata</a>
-                            <a href="jodo.html">Jodo</a>
-                        </div>
-                    </li>
-                    <li><a href ="grading.html">News & Events</a></li>
-                    <li><a>Locations</a></li>
-                    <li><a href ="contact.html">Contact</a></li>
-                </ul>
-            </nav>
+            <div ng-include="'menu.html'" ></div>
         </header>
 
 

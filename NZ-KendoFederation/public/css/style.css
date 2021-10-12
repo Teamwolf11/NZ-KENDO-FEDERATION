@@ -241,10 +241,3 @@ th, td {
     padding-bottom: 3px;
     width: 100px;
 }
-
-#payments {
-    border: 1px solid black;
-    width: 50%;   
-    margin: auto;
-    margin-top: 10px;
-}

@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/dropdownList.js"></script>
         <script src="js/angular.js"></script>
         <script src="js/angular-resource.js"></script>
         <script src="js/ngStorage.js"></script>
-        <script src="js/dropdownList.js"></script>
         <script src="js/signIn.js"></script>
     </head>
 
@@ -22,23 +22,7 @@
         </section>
 
         <header>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="">About</a></li>
-                    <li onclick="myFunction()" class="dropbtn">Martial Arts
-                        <div id="myDropdown" class="dropdown-content">
-                            <a href="">Kendo</a>
-                            <a href="">Iaido</a>
-                            <a href="">Naginata</a>
-                            <a href="">Judo</a>
-                        </div>
-                    </li>
-                    <li><a href ="grading.html">News & Events</a></li>
-                    <li><a href ="">Locations</a></li>
-                    <li><a href ="">Contact</a></li>
-                </ul>
-            </nav>
+            <div ng-include="'menu.html'" ></div>
         </header>
 
 
