@@ -155,7 +155,6 @@ module.controller('MemberController', function (registerAPI, $window, signInAPI,
                 });
 
 module.controller('EventController', function (adminCreateEventAPI, eventAPI, getEventsAPI, bookEventAPI, $window, $sessionStorage) {
-            let ctrl = this;
             this.events = eventAPI.query();
 
 

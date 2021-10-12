@@ -45,6 +45,8 @@ public class Server extends Jooby {
         List<String> noAuth = new ArrayList<>();
         noAuth.add("/api/register");
         noAuth.add("/api/events");
+        noAuth.add("/api/adminCreateEvent");
+        noAuth.add("/api/bookEvents");
         // Add auth filter
         use(new BasicHttpAuthenticator(memberDao, noAuth));
 
