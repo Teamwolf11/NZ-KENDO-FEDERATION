@@ -5,14 +5,18 @@
  */
 package web;
 
+import domain.Member;
+
 /**
  *
  * @author william
  */
-class CredentialsValidator {
+public interface CredentialsValidator {
 
-    boolean validateCredentials(String userName, String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    Member signIn(String email, String password);
+    
+//    boolean validateCredentials(String userName, String password) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
     
 }

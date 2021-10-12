@@ -8,31 +8,54 @@ package web;
 import com.google.gson.Gson;
 import dao.*;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import org.jooby.Jooby;
+import org.jooby.Results;
 import org.jooby.json.Gzon;
 
 /**
  *
  * @author Will
  */
-public class Server extends Jooby{
-    MemberDAO studentDao = new MemberJdbcDAO();    
-  
-    Server(){
+public class Server extends Jooby {
+
+    MemberDAO memberDao = new MemberJdbcDAO();
+
+    Server() {
         port(8080);
-        use(new Gzon());
-        use(new MemberModule(studentDao));
+//        assets("/", "index.html");
+//        assets("*");
+
+        // prevent 404 errors due to browsers requesting favicons
+        //get("/favicon.ico", () -> Results.noContent());
+        assets("/*.html");
+        assets("/member/*.html");
+        assets("/clubLeader/*.html");
+        assets("/fedLeader/*.html");
+        assets("/css/*.css");
+        assets("/js/*.js");
+        assets("/images/*.png");
+        assets("/favicon.png");
+        assets("/images/*.jpg");
+        // make index.html the default page
         assets("/", "index.html");
-        assets("*");
+
+        // List of paths that should not be protected
+        List<String> noAuth = Arrays.asList("/api/register");
+        // Add auth filter
+        use(new BasicHttpAuthenticator(memberDao, noAuth));
+
+        use(new Gzon());
+        use(new MemberModule(memberDao));
     }
-    
-    
+
     public static void main(String[] args) throws Exception {
-        
+
         Gson bob = new Gson();
         System.out.println(bob.toJson(LocalDate.now()));
-        
+
         System.out.println("\nStarting Server.");
 
         Server server = new Server();
@@ -50,6 +73,4 @@ public class Server extends Jooby{
         System.exit(0);
     }
 
-
-    
 }

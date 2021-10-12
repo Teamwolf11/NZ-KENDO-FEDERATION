@@ -18,8 +18,8 @@ html {
     /*    background-image: linear-gradient(to bottom, #29323c, #485563);*/
 
     /* Light grey gradient */
-    background-image: linear-gradient(to bottom, white, #d9d9d9);
-    background-color: white;
+/*    background-image: linear-gradient(to bottom, white, #d9d9d9);*/
+    background-color: #d9d9d9;
     height: 100%;
 }
 
@@ -35,8 +35,13 @@ body {
     color: inherit;
     background-image: linear-gradient(to bottom, #f5f7fa, #c3cfe2);
 }
-.top-box a {
+
+#logInBox {
     margin: auto 5% auto auto;
+}
+
+#logInBox a {
+    
     border: black solid;
     border-radius: 80px;
     background: white;
@@ -85,7 +90,11 @@ nav ul li, select {
     box-shadow: 5px 10px 10px #888888;
     padding: 20px;    
     margin: 20px auto 20px auto;
-    text-align: center;
+    text-align: left;
+}
+
+iframe {
+    align-self: center;
 }
 
 h1 {
@@ -231,11 +240,4 @@ th, td {
     padding-top: 3px;
     padding-bottom: 3px;
     width: 100px;
-}
-
-#payments {
-    border: 1px solid black;
-    width: 50%;   
-    margin: auto;
-    margin-top: 10px;
 }

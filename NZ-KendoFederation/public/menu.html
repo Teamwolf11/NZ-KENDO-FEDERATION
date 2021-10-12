@@ -1,0 +1,21 @@
+<nav id="menu" ng-controller="MemberController as membCtrl" ng-init="membCtrl.checkSignIn()">
+   <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li onclick="myFunction()" class="dropbtn">Martial Arts
+            <div id="myDropdown" class="dropdown-content">
+                <a href="kendo.html">Kendo</a>
+                <a href="iaido.html">Iaido</a>
+                <a href="naginata.html">Naginata</a>
+                <a href="jodo.html">Jodo</a>
+            </div>
+        </li>
+        <li><a href ="locations.html">Locations</a></li>
+        <li><a href ="contact.html">Contact</a></li>
+        
+        <li ng-if="membCtrl.signedIn"><a href ="grading.html">Grading Events</a></li>
+        <li ng-if="membCtrl.isMemb()"><a href ="payment.html">Payments</a></li>
+        <li ng-if="membCtrl.isClubLead()"><a href ="adminEvent.html">Create Events</a></li>
+    </ul>
+</nav>
+
