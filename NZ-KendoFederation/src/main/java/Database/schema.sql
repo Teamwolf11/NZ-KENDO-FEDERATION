@@ -5,6 +5,7 @@ DROP TRIGGER IF EXISTS mem_grade_next_date ON public.member_grading;
 DROP TRIGGER IF EXISTS mem_grade_current_grade ON public.member_grading;
  
 DROP VIEW IF EXISTS vw_member_grading;
+DROP TABLE IF EXISTS public.expiry_email_store;
 DROP TABLE IF EXISTS public.grading_panel;
 DROP TABLE IF EXISTS public.club_role;
 DROP TABLE IF EXISTS public.event_line;
@@ -18,6 +19,15 @@ DROP TABLE IF EXISTS public.member;
 DROP TABLE IF EXISTS public.user;
 DROP TABLE IF EXISTS public.role_path;
 DROP TABLE IF EXISTS public.app_role;
+
+CREATE TABLE IF NOT EXISTS public.expiry_email_store
+(
+	expire_row SERIAL NOT NULL,
+	member_id integer NOT NULL,
+	nzkf_membership_renew_date character varying NOT NULL,
+	status character varying NOT NULL,
+	primary key(member_id, nzkf_membership_renew_date)
+);
 
 CREATE TABLE IF NOT EXISTS public.grading_panel
 (
@@ -150,6 +160,11 @@ ALTER TABLE public.event
     NOT VALID;
  
 ALTER TABLE public.event_line
+    ADD FOREIGN KEY (member_id)
+    REFERENCES public.member (member_id)
+    NOT VALID;
+	
+ALTER TABLE public.expiry_email_store
     ADD FOREIGN KEY (member_id)
     REFERENCES public.member (member_id)
     NOT VALID;
