@@ -9,6 +9,8 @@ import java.util.List;
  */
 public interface MemberDAO {
 
+    
+    
     Member getMember(String memberId);
     
     Member saveMember(Member member);

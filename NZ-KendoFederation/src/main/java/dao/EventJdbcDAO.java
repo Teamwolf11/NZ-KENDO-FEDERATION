@@ -28,7 +28,7 @@ public class EventJdbcDAO implements EventDAO {
     public EventJdbcDAO() {
     }
 
-    @Override
+       @Override
     public Event getEvent(String eventId) {
         try {
             DatabaseConnector db = new DatabaseConnector();
@@ -91,7 +91,7 @@ public class EventJdbcDAO implements EventDAO {
     public Collection<Event> getEvents() {
         String sql = "SELECT event.event_id, event.name AS e_name, event.club_id, event.venue, event.status, event.description AS e_desc, event.start_date_time, event.end_date_time, event.grading_id, club_role.member_id AS club_leader_id, club.mem_num, club.name AS c_name, club.location, club.email, club.phone, club.description AS c_desc, grading.name as g_name, grading.grading_id AS g_id, grading.martial_art_id AS gm_id, martial_arts.martial_art_id as marts_id, martial_arts.name AS ma_name FROM public.event JOIN public.club ON event.club_id = club.club_id JOIN public.grading ON event.grading_id = grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id LEFT JOIN public.club_role ON club.club_id = club_role.club_id AND role_name = 'Club Leader';";
 //                + "SELECT event.event_id, event.name AS e_name, club_role.member_id AS club_leader_id, event.club_id, event.venue, event.status, event.description AS e_desc, event.start_date_time, event.end_date_time, event.grading_id, club.mem_num, club.name AS c_name, club.location, club.email, club.phone, club.description AS c_desc, grading.name AS g_name, martial_arts.martial_art_id AS marts_id, martial_arts.name AS ma_name FROM public.event JOIN public.club ON event.club_id = club.club_id JOIN public.grading ON event.grading_id = grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id LEFT JOIN public.club_role ON club.club_id = club_role.club_id AND role_name = 'leader'";
-          
+
         try {
             DatabaseConnector db = new DatabaseConnector();
             Connection con = db.connect();
@@ -194,6 +194,7 @@ public class EventJdbcDAO implements EventDAO {
         }
     }
 
+    
     @Override
     public void deleteEvent(Event event) {
         try {
@@ -222,9 +223,9 @@ public class EventJdbcDAO implements EventDAO {
        try {
             DatabaseConnector db = new DatabaseConnector();
             con = db.connect();
- 
+
             String sql = "UPDATE FROM public.event SET event_id = ?, name = ?, club_id = ?, status = ?, , description = ? ,start_date_time = ?, end_date_time = ?, grading_id = ?";
-            
+
             try (PreparedStatement updateEventstmt = con.prepareStatement(sql);) {
                 updateEventstmt.setString(1, event.getName());
                 updateEventstmt.setInt(2, Integer.parseInt(event.getClub().getClubId()));
@@ -234,10 +235,10 @@ public class EventJdbcDAO implements EventDAO {
                 updateEventstmt.setString(6, event.getEndDateTime());
                 updateEventstmt.setInt(7, Integer.parseInt(event.getHighestGradeAvailable().getGradeId()));
                 updateEventstmt.setString(8, event.getStatus());
-                
+
                 updateEventstmt.executeUpdate();
                 con.close();
-                
+
                 int row = updateEventstmt.executeUpdate();
 
                 if (row == 0) {
@@ -253,7 +254,7 @@ public class EventJdbcDAO implements EventDAO {
                     }
                 }
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(EventJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -288,7 +289,7 @@ public class EventJdbcDAO implements EventDAO {
                 /* Ignored */ }
         }
     }
-    
+
     @Override
     public void withdrawFromEvent(Event event, Member member) {
         try {
@@ -313,13 +314,10 @@ public class EventJdbcDAO implements EventDAO {
                 /* Ignored */ }
         }
     }
-    
+
 //     @Override
 //    public void assignGradesToStudent (Event event, Member member) {
-//        
+//
 //    }
-    
+
 }
-
-
-

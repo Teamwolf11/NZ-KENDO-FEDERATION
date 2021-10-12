@@ -50,14 +50,29 @@
 
                     <form ng-submit="eventCtrl.registerEvent(gradingEvent)">
                         <fieldset class="textInputs">
-                            <input type="text" ng-model="gradingEvent.name" id="name" tabindex="1" required pattern="[a-zA-Z '-]+" placeholder="Name of Grading Session">
-                            <input type="text" ng-model="gradingEvent.start_date" id="start_date" tabindex="2" required pattern="[a-zA-Z '-]+" placeholder="Date and Start Time of session" onfocus="(this.type = 'date')">
-                            <input type="text" ng-model="gradingEvent.club_id" id="club_id" tabindex="3" required pattern="[0-9 ()-]+" placeholder="Club ID">
-                            <input type="text" ng-model="gradingEvent.highest_grade_available" id="highest_grade_available" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Highest Grade Available" >
-                            <input type="text" ng-model="gradingEvent.venue" id="venue" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Venue" >
-                            <input type="text" ng-model="gradingEvent.headOfGradingPanel" id="headOfGradingPanel" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Head Of Grading Panel" >
-                            <input type="text" ng-model="gradingEvent.otherMembersOfGradingPanel" id="otherMembersOfGradingPanel" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Members Of Grading Panel" >
-                            <input type="text" ng-model="gradingEvent.grading_id" id="grading_id" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="grading_id" >
+                            <input type="text" ng-model="gradingEvent.name" id="name"  required pattern="[a-zA-Z '-]+" placeholder="Name of Grading Session">
+                            <input type="text" ng-model="gradingEvent.clubId" id="clubId" required pattern="[0-9 ()-]+" placeholder="Club">
+                            <input type="text" ng-model="gradingEvent.venue" id="venue" required pattern="[a-zA-Z '-]+" placeholder="Venue" >
+                            <input type="text" ng-model="gradingEvent.headOfGradingPanel" id="headOfGradingPanel" required pattern="[a-zA-Z '-]+" placeholder="Head Of Grading Panel" >
+                            <input type="text" ng-model="gradingEvent.otherMembersOfGradingPanel" id="otherMembersOfGradingPanel" required pattern="[a-zA-Z '-]+" placeholder="Members Of Grading Panel" >
+                            <input type="text" ng-model="gradingEvent.desc" id="desc" required pattern="[a-zA-Z '-]+" placeholder="Description" >
+                            <input type="text" ng-model="gradingEvent.startDateTime" id="startDateTime" placeholder="Date and Start Time of session">
+                            <input type="text" ng-model="gradingEvent.endDateTime" id="endDateTime" placeholder="Date and End Time of session">
+                            <select type="text" style="width: 200px" ng-model="gradingEvent.highestGradeAvailable" id="highestGradeAvailable" required placeholder="Highest Grade Available">
+                                <option value="" disabled selected hidden>Highest Grade Available</option>
+                               <script>
+                                   var count = 0;
+                                   const grades = ['7 Kyu', '6 Kyu', '5 Kyu', '4 Kyu', '3 Kyu', '2 Kyu', '1 Kyu', '1 Dan', '2 Dan', '3 Dan', '4 Dan', '5 Dan', '6 Dan', '7 Dan', '8 Dan'];
+                                   const martialArts= ['Kendo', 'Iaido', 'Jodo', 'Naginata'];
+                                   var dropDownItems = "";
+                                   for (var h=0; h<4; h++) {
+                                       for (var i = 0; i < 15; i++) {
+                                           dropDownItems += "<option value='" + ++count + "'>" + grades[i] + " " + martialArts[h] + "</option>";
+                                       }
+                                   }
+                                   document.write(dropDownItems);
+                               </script>
+                            </select>
 
                             <label><input type="submit" name="submit" value="Create Grading Event"></label>
                         </fieldset>

@@ -14,6 +14,7 @@ public interface EmailDAO {
     void sendConfirmationEmail(Member member);
     void sendGradingEmail(Event event, List<Member> mList);
     void sendExpiryEmail(Member member);
+    List<Member> getExpiredMembershipMembers();
     
 }
 

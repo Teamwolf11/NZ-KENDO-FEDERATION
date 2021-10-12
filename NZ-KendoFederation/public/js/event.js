@@ -4,30 +4,30 @@
  * and open the template in the editor.
  */
 "use strict";
-
+ 
 // create a new module, and load the other pluggable modules
 var module = angular.module('GradingApp', ['ngResource', 'ngStorage']);
-
-module.factory('adminCreateEvent', function ($resource) {
+ 
+module.factory('adminCreateEventAPI', function ($resource) {
     return $resource('/api/adminCreateEvent');
 });
-
+ 
 module.factory('eventAPI', function($resource) {
    return $resource('/api/events/:id'); 
 });
-
-module.factory('getEvents', function($resource) {            // dont know if this will work
-   return $resource('/api/events'); 
+ 
+module.factory('getEventsAPI', function($resource) {
+    return $resource('/api/events');
 });
-
-module.controller('EventController', function (adminCreateEvent, eventAPI, $window) {
-// Ben Scobie you can add a thing for client join event above just like what I have done with adminCreateEvenet
-
+ 
+module.controller('EventController', function (adminCreateEventAPI, eventAPI, getEventsAPI, $window) {
+    this.events = eventAPI.query();
+ 
     this.registerEvent = function (event) {
-        adminCreateEvent.save(null, event,
+        adminCreateEventAPI.save(null, event,
             // success callback
             function () {
-                $window.location = 'adminEvent.html';
+                $window.location = 'grading.html';
             },
             // error callback
             function (error) {
@@ -36,15 +36,8 @@ module.controller('EventController', function (adminCreateEvent, eventAPI, $wind
         );
     };
     
-    this.events = eventAPI.query();
     this.selectAll = function () {
-        this.events = eventAPI.query();
-    };
-    
-    this.getAllEvents = getEvents.query();
-    this.selectAll = function () {
-        this.events = getEvents.query();
+        this.events = getEventsAPI.query();
     };
 });
-
 
