@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import dao.*;
 import java.time.LocalDate;
 import java.util.concurrent.CompletableFuture;
+
+import domain.Event;
 import org.jooby.Jooby;
 import org.jooby.json.Gzon;
 
@@ -14,13 +16,12 @@ import org.jooby.json.Gzon;
  */
 public class Server extends Jooby{
     MemberDAO studentDao = new MemberJdbcDAO();    
-    EventDAO eventDao = new EventJdbcDAO();    
-    
+    EventDAO eventDAO = new EventJdbcDAO();
     Server(){
         port(8080);
         use(new Gzon());
         use(new MemberModule(studentDao));
-        use(new EventModule(eventDao));
+        use(new EventModule(eventDAO));
         assets("/", "index.html");
         assets("*");
     }
