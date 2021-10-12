@@ -18,8 +18,9 @@ import org.jooby.json.Gzon;
  * @author Will
  */
 public class Server extends Jooby{
-    MemberDAO studentDao = new MemberJdbcDAO();    
-    EventDAO eventDAO = new EventJdbcDAO();
+    MemberDAO memberDao = new MemberJdbcDAO();    
+    EventDAO eventDao = new EventJdbcDAO();
+    
     Server(){
         port(8080);
 //        assets("/", "index.html");
@@ -46,6 +47,7 @@ public class Server extends Jooby{
 
         use(new Gzon());
         use(new MemberModule(memberDao));
+        use(new EventModule(eventDao, memberDao));
     }
 
     public static void main(String[] args) throws Exception {
