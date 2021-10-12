@@ -1,6 +1,7 @@
 package dao;
 
 import domain.Event;
+import domain.Member;
 import java.util.Collection;
 
 /**
@@ -12,7 +13,9 @@ public interface EventDAO {
     Event getEvent(String eventID);
     Collection<Event> getEvents();
     void deleteEvent(Event event);
-    void updateEvent(Event event);
+    Event updateEvent(Event event);
     Event saveEvent(Event event);
-    
+    Collection<Event> getEvents();
+    void registerForEvent(Event event, Member member);
+    void withdrawFromEvent(Event event, Member member);
 }
