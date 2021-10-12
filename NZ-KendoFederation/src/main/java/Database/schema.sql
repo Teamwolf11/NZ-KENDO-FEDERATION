@@ -245,14 +245,9 @@ INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (58,4,INTERVAL '6 year', '6 Dan',13);
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (59,4,INTERVAL '10 year', '7 Dan',14);		
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (60,4,NULL, '8 Dan',15);
- 
-SELECT * FROM member;
- 
-INSERT INTO event (name, club_id, status, start_date_time, grading_id) VALUES ('kendo event', 1, 'on going', '02/10/2020', 15);
-INSERT INTO event (name, club_id, status, start_date_time, grading_id) VALUES ('iaido event', 2, 'completed', '03/10/2020', 30);
-INSERT INTO event (name, club_id, status, start_date_time, grading_id) VALUES ('jodo event', 3, 'delayed', '04/10/2020', 45);
-INSERT INTO event (name, club_id, status, start_date_time, grading_id) VALUES ('naginata event', 4,'', '04/10/2020', 60);
 
+INSERT INTO club (mem_num, name, location,email, phone,description)
+VALUES (15,'Auckland Club', 'Auckland','ccool@gmail.com','012301230','Great description');
 
 ALTER SEQUENCE grading_grading_id_seq RESTART WITH 61;
 ALTER SEQUENCE martial_arts_martial_art_id_seq RESTART WITH 5;
