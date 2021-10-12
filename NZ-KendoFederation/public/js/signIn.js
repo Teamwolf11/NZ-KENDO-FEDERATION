@@ -18,14 +18,14 @@ module.factory('signInAPI', function ($resource) {
 });
 
 module.config(function ($sessionStorageProvider, $httpProvider) {
-   // get the auth token from the session storage
-   let authToken = $sessionStorageProvider.get('authToken');
+    // get the auth token from the session storage
+    let authToken = $sessionStorageProvider.get('authToken');
 
-   // does the auth token actually exist?
-   if (authToken) {
-      // add the token to all HTTP requests
-      $httpProvider.defaults.headers.common.Authorization = 'Basic ' + authToken;
-   }
+    // does the auth token actually exist?
+    if (authToken) {
+        // add the token to all HTTP requests
+        $httpProvider.defaults.headers.common.Authorization = 'Basic ' + authToken;
+    }
 });
 
 module.controller('MemberController', function (registerAPI, $window, signInAPI, $sessionStorage, $http) {
@@ -55,27 +55,35 @@ module.controller('MemberController', function (registerAPI, $window, signInAPI,
             // alias 'this' so that we can access it inside callback functions
             let ctrl = this;
             this.signIn = function (email, password) {
+                console.log("In sign in function")
+                
                 // generate authentication token
                 let authToken = $window.btoa(email + ":" + password);
-
                 // store token
                 $sessionStorage.authToken = authToken;
-
                 // add token to the HTTP request headers
                 $http.defaults.headers.common.Authorization = 'Basic ' + authToken;
-                
+
                 // get member from web service
                 signInAPI.get({'email': email},
                         // success callback
                                 function (member) {
-                                    // also store the retrieved member
-                                    $sessionStorage.member = member;
-                                    // redirect to home
-                                    $window.location = 'index.html';
-                                },
-                                // fail callback
-                                        function () {
-                                            ctrl.signInMessage = 'Sign in failed. Please try again.';
+                                console.log("In success callback")
+                                // also store the retrieved member
+                                $sessionStorage.member = member;
+                                // redirect to home
+                                // $window.location = 'index.html';
+                                console.log("Role Id: " + $sessionStorage.member.role.appRoleId)
+                                if ($sessionStorage.member.role.appRoleId == 3) {
+                                    $window.location = 'about.html';
+                                } else {
+                                    $window.location = 'locations.html';
+                                }
+
+                            },
+                            // fail callback
+                                    function () {
+                                        ctrl.signInMessage = 'Sign in failed. Please try again.';
                                         }
                                 );
                             };
@@ -96,4 +104,25 @@ module.controller('MemberController', function (registerAPI, $window, signInAPI,
                         }
                     };
 
+                    this.isFedLead = function () {
+                        if ($sessionStorage.member.role.appRoleId == 1) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                    this.isClubLead = function () {
+                        if ($sessionStorage.member.role.appRoleId == 2) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                    this.isMemb = function () {
+                        if ($sessionStorage.member.role.appRoleId == 3) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
                 });

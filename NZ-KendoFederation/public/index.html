@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="MemberApp">
     <head>
         <title>New Zealand Kendo Federation</title>
         <meta charset="utf-8">
@@ -10,9 +10,10 @@
         <script src="js/angular.js"></script>
         <script src="js/angular-resource.js"></script>
         <script src="js/ngStorage.js"></script>
+        <script src="js/signIn.js"></script>
     </head>
 
-    <body>
+    <body ng-controller="MemberController as membCtrl">
         <section class="top-box">
             <figure>
                 <!-- divided image size by 4 to set width and height -->
@@ -23,42 +24,31 @@
 
 
         <header>
-            <nav>
-                <ul>
-                    <li><a>Home</a></li>
-                    <li><a href="">About</a></li>
-                    <li onclick="myFunction()" class="dropbtn">Martial Arts
-                        <div id="myDropdown" class="dropdown-content">
-                            <a href="">Kendo</a>
-                            <a href="">Iaido</a>
-                            <a href="">Naginata</a>
-                            <a href="">Judo</a>
-                        </div>
-                    </li>
-                    <li><a href ="grading.html">News & Events</a></li>
-                    <li><a href ="">Locations</a></li>
-                    <li><a href ="">Contact</a></li>
-                </ul>
-            </nav>
+            <div ng-include="'menu.html'" ></div>
         </header>
 
 
         <main>
             <section class="boxes">
-                <h2>About us:</h2>
+                <h2>Welcome</h2>
                 <figure>
                     <!-- divided image size by 4 to set width and height -->
                     <!-- <img src="../images/item.png" alt="Product Image" width="86" height="125"> -->
                 </figure>
-                <p>
-                    Designed for INFO310
-                </p>
-
+                <p>Kia Ora! Greetings!</p>
+                <p>Welcome to the New Zealand Kendo Federation’s web site.</p>
+                <p>This federation supports more than 300 people of all ages, many ethnicities, male and female who train in Kendo across 11 dojo from Invercargill in the south to Auckland in the north.</p>
+                <p>The federation also supports people who train in Iaido, Naginata and Jodo. Find out more about each of these fine martial arts on this site. If you are thinking of starting either of the arts, contact your nearest club. We also welcome visitors so if you are a tourist, contact the club in the city you will be visiting.</p>
+                <p>While New Zealand Kendo is still young, with a history of just over 40 years, we punch above our weight internationally having come in the top 8 teams at the 16th World Kendo Championships in 2012. We have two 7th dan sensei and a growing number of 5th and 6th dan senior members.</p>
+                <p>All dojo have practices to cater for all levels and in many cases all schedules.</p>
+                <p>Regardless of your reason for visiting our site, please do not hesitate to enquire further. <br> Kendo is a wonderful companion for life, constantly allowing you to challenge yourself and never stop learning.</p>
+                <p>I hope to cross shinai with you some time.</p>
+                <p>Alan Stephenson<br>Chairperson<br>New Zealand Kendo Federation</p>              
             </section>
         </main>
 
         <footer class="boxes">
-            <p>stuff...</p>
+            <p>Copyright © 2021 New Zealand Kendo Federation. All Rights Reserved.</p>
         </footer>
 
     </body>
