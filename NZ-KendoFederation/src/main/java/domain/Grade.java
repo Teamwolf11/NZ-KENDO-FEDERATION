@@ -22,6 +22,7 @@ public class Grade{
     private Club club;
     private String eventName;  //event where grade was received
     private String eventId;
+    
 
     public Grade(){}
 

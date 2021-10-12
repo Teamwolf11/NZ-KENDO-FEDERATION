@@ -49,14 +49,14 @@ and open the template in the editor.
         <main>
 
             <h2>View All Grading Events</h2>
-
-            <table id="eventTable" ng-controller="EventController as eventCtrl">
+            <table id="eventTable">
                 <thead>
                     <tr>
                         <th>Venue</th>
                         <th>Type</th>
                         <th>Date</th>
-                        <th>Highest grade available</th>
+                        <th>Highest Grade Available</th>
+                        <th>Head of Grading Panel</th>
                         <th>Button</th>
                     </tr>
                 </thead>
@@ -64,11 +64,10 @@ and open the template in the editor.
                     <tr ng-repeat="event in eventCtrl.events">
                         <td>{{event.venue}}</td>
                         <td>{{event.name}}</td>
-                        <td>{{event.start_date}}</td>
-                        <td>{{event.highest_grade_available}}</td>
+                        <td>{{event.startDateTime}}</td>
+                        <td>{{event.highestGradeAvailable.grade}}</td>
                         <td>{{event.headOfGradingPanel}}</td>
-                        <td>{{event.otherMembersOfGradingPanel}}</td>
-                        <td></td>
+                        <td><button type="button" ng-click="eventCtrl.bookEvent(event)">Book Grading</button></td>
                     </tr>
                 </tbody>
             </table>

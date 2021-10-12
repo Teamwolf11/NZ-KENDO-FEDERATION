@@ -8,34 +8,61 @@
 // create a new module, and load the other pluggable modules
 var module = angular.module('GradingApp', ['ngResource', 'ngStorage']);
 
-module.factory('adminCreateEvent', function ($resource) {
+module.factory('adminCreateEventAPI', function ($resource) {
     return $resource('/api/adminCreateEvent');
 });
 
-module.factory('eventAPI', function($resource) {
-   return $resource('/api/events/:id'); 
+module.factory('eventAPI', function ($resource) {
+    return $resource('/api/events/:id');
 });
 
-module.controller('EventController', function (adminCreateEvent, eventAPI, $window) {
-// Ben Scobie you can add a thing for client join event above just like what I have done with adminCreateEvenet
+module.factory('getEventsAPI', function ($resource) {
+    return $resource('/api/events');
+});
+
+module.factory('bookEventAPI', function ($resource) {
+    return $resource('/api/bookEvents');
+});
+
+module.controller('EventController', function (adminCreateEventAPI, eventAPI, getEventsAPI, bookEventAPI, $window, $sessionStorage) {
+ let ctrl = this;
+    this.events = eventAPI.query();
+
 
     this.registerEvent = function (event) {
-        adminCreateEvent.save(null, event,
-            // success callback
-            function () {
-                $window.location = 'adminEvent.html';
-            },
-            // error callback
-            function (error) {
-                console.log(error);
-            }
-        );
-    };
-    
-    this.events = eventAPI.query();
-    this.selectAll = function () {
-        this.events = eventAPI.query();
-    };
-});
+        adminCreateEventAPI.save(null, event,
+                // success callback
+                        function () {
+                            $window.location = 'grading.html';
+                        },
+                        // error callback
+                                function (error) {
+                                    console.log(error);
+                                }
+                        );
+                    };
+
+            this.selectAll = function () {
+                this.events = getEventsAPI.query();
+            };
+           
+            this.bookEvent = function (eventId) {
+                var memberId = $sessionStorage.member;
+                console.log(memberId);
+                bookEventAPI.save({'eventId': eventId, 'memberId': memberId},
+                        // success callback
+                                function (eventId) {
+                                    $window.location = 'grading.html';
+                                    console.log(eventId)
+                                },
+                                // error callback
+                                        function (error) {
+                                            console.log('hello2')
+                                            console.log(error);
+                                            console.log('hello2')
+                                        }
+                                );
+                            };
+                });
 
 

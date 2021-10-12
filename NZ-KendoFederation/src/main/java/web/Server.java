@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package web;
 
 import com.google.gson.Gson;
@@ -11,6 +7,8 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+
+import domain.Event;
 import org.jooby.Jooby;
 import org.jooby.Results;
 import org.jooby.json.Gzon;
@@ -19,11 +17,11 @@ import org.jooby.json.Gzon;
  *
  * @author Will
  */
-public class Server extends Jooby {
-
-    MemberDAO memberDao = new MemberJdbcDAO();
-
-    Server() {
+public class Server extends Jooby{
+    MemberDAO memberDao = new MemberJdbcDAO();    
+    EventDAO eventDao = new EventJdbcDAO();
+    
+    Server(){
         port(8080);
 //        assets("/", "index.html");
 //        assets("*");
@@ -49,6 +47,7 @@ public class Server extends Jooby {
 
         use(new Gzon());
         use(new MemberModule(memberDao));
+        use(new EventModule(eventDao, memberDao));
     }
 
     public static void main(String[] args) throws Exception {

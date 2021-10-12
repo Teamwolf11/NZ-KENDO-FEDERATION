@@ -1,9 +1,9 @@
 BEGIN;
-
+ 
 DROP TRIGGER IF EXISTS mem_grade_next_date_insert ON public.member_grading;
 DROP TRIGGER IF EXISTS mem_grade_next_date ON public.member_grading;
 DROP TRIGGER IF EXISTS mem_grade_current_grade ON public.member_grading;
-
+ 
 DROP VIEW IF EXISTS vw_member_grading;
 DROP TABLE IF EXISTS public.grading_panel;
 DROP TABLE IF EXISTS public.club_role;
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS public.club
     description character varying,                     -- added description 
     PRIMARY KEY (club_id)
 );
-
+ 
 CREATE TABLE IF NOT EXISTS public.club_role
 (
     member_id integer NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS public.club_role
     role_name character varying NOT NULL,               -- added club_role   general, leader, etc...                             
     PRIMARY KEY (member_id, club_id)
 );
-
+ 
 CREATE TABLE IF NOT EXISTS public.event
 (
     event_id SERIAL NOT NULL UNIQUE,
@@ -71,14 +71,14 @@ CREATE TABLE IF NOT EXISTS public.event
     grading_id integer NOT NULL, --highest grade available.
     PRIMARY KEY (event_id)
 );
-
+ 
 CREATE TABLE IF NOT EXISTS public.event_line
 (
     event_id integer NOT NULL,
     member_id integer NOT NULL,
     PRIMARY KEY (event_id, member_id)
 );
-
+ 
 CREATE TABLE IF NOT EXISTS public.martial_arts
 (
     martial_art_id SERIAL NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS public.martial_arts
     "desc" character varying,
     PRIMARY KEY (martial_art_id)
 );
-
+ 
 CREATE TABLE IF NOT EXISTS public.member_grading
 (
     club_id integer NOT NULL,
@@ -97,14 +97,14 @@ CREATE TABLE IF NOT EXISTS public.member_grading
     event_id character varying,
     PRIMARY KEY (member_id, club_id, grading_id)
 );
-
+ 
 CREATE TABLE IF NOT EXISTS public.app_role
 (
     app_role_id SERIAL NOT NULL,
     name character varying NOT NULL,
     PRIMARY KEY (app_role_id)
 );
-
+ 
 CREATE TABLE IF NOT EXISTS public.member
 (
     member_id SERIAL NOT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS public.member
     phone_num character varying,
     PRIMARY KEY (member_id)
 );
-
+ 
 CREATE TABLE IF NOT EXISTS public.grading
 	(
 	grading_id SERIAL NOT NULL,
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS public.grading
 	grade_level int NOT NULL,	
 	primary key (grading_id)
 );
-
+ 
 ALTER TABLE public.club_role
     ADD FOREIGN KEY (member_id)
     REFERENCES public.member (member_id)
@@ -143,32 +143,32 @@ ALTER TABLE public.club_role
     ADD FOREIGN KEY (club_id)
     REFERENCES public.club (club_id)
     NOT VALID;
-
+ 
 ALTER TABLE public.event
     ADD FOREIGN KEY (club_id)
     REFERENCES public.club (club_id)
     NOT VALID;
-
+ 
 ALTER TABLE public.event_line
     ADD FOREIGN KEY (member_id)
     REFERENCES public.member (member_id)
     NOT VALID;
-
+ 
 ALTER TABLE public.event_line
     ADD FOREIGN KEY (event_id)
     REFERENCES public.event (event_id)
     NOT VALID;
-
+ 
 ALTER TABLE public.member_grading
     ADD FOREIGN KEY (member_id)
     REFERENCES public.member (member_id)
     NOT VALID;
-
+ 
 ALTER TABLE public.member_grading
     ADD FOREIGN KEY (grading_id)
     REFERENCES public.grading (grading_id)
     NOT VALID;
-
+ 
 ALTER TABLE public.member
     ADD FOREIGN KEY (app_role_id)
     REFERENCES public.app_role (app_role_id)
@@ -199,20 +199,20 @@ CREATE OR REPLACE FUNCTION process_member_grading_next_date() RETURNS TRIGGER AS
             RETURN NEW;
     END;
 $mem_grade_next_date$ LANGUAGE plpgsql;
-
+ 
 CREATE TRIGGER mem_grade_next_date
 BEFORE INSERT OR UPDATE ON public.member_grading
     FOR EACH ROW EXECUTE PROCEDURE process_member_grading_next_date();
-
+ 
 INSERT INTO app_role (name) VALUES ('Admin');
 INSERT INTO app_role (name) VALUES ('Club Leader');
 INSERT INTO app_role (name) VALUES ('General Member');
-
+ 
 INSERT INTO martial_arts (name,martial_art_id) VALUES ('Kendo',1);
 INSERT INTO martial_arts (name,martial_art_id) VALUES ('Iaido',2);
 INSERT INTO martial_arts (name,martial_art_id) VALUES ('Jodo',3);
 INSERT INTO martial_arts (name,martial_art_id) VALUES ('Naginata',4);
-
+ 
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (1,1,NULL, '7 Kyu',1);
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (2,1,NULL, '6 Kyu',2);
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (3,1,NULL, '5 Kyu',3);
@@ -228,7 +228,7 @@ INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (13,1,INTERVAL '6 year', '6 Dan',13);
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (14,1,INTERVAL '10 year', '7 Dan',14);		
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (15,1,NULL, '8 Dan',15);
-
+ 
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (16,2,NULL, '7 Kyu',1);
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (17,2,NULL, '6 Kyu',2);
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (18,2,NULL, '5 Kyu',3);
@@ -244,7 +244,7 @@ INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (28,2,INTERVAL '6 year', '6 Dan',13);
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (29,2,INTERVAL '10 year', '7 Dan',14);		
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (30,2,NULL, '8 Dan',15);
-
+ 
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (31,3,NULL, '7 Kyu',1);
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (32,3,NULL, '6 Kyu',2);
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (33,3,NULL, '5 Kyu',3);
@@ -260,7 +260,7 @@ INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (43,3,INTERVAL '6 year', '6 Dan',13);
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (44,3,INTERVAL '10 year', '7 Dan',14);		
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (45,3,NULL, '8 Dan',15);
-
+ 
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (46,4,NULL, '7 Kyu',1);
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (47,4,NULL, '6 Kyu',2);
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (48,4,NULL, '5 Kyu',3);
@@ -277,10 +277,13 @@ INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (59,4,INTERVAL '10 year', '7 Dan',14);		
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (60,4,NULL, '8 Dan',15);
 
+INSERT INTO club (mem_num, name, location,email, phone,description)
+VALUES (15,'Auckland Club', 'Auckland','ccool@gmail.com','012301230','Great description');
+
 ALTER SEQUENCE grading_grading_id_seq RESTART WITH 61;
 ALTER SEQUENCE martial_arts_martial_art_id_seq RESTART WITH 5;
 ALTER SEQUENCE member_nzkf_membership_id_seq RESTART WITH 10000;
-
+ 
 REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM javaapp;
 REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public FROM javaapp;
 REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public FROM javaapp;
@@ -293,11 +296,11 @@ REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA email FROM javaapp;
 REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA email FROM javaapp;
 REVOKE ALL PRIVILEGES ON SCHEMA email FROM javaapp;
 DROP USER javaapp;
-
-
+ 
+ 
 CREATE USER javaapp WITH PASSWORD 'D4h/XW57%sw31';
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO javaapp;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO javaapp;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO javaapp;
-
+ 
 COMMIT;
