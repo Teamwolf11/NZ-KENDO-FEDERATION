@@ -4,8 +4,10 @@ import domain.AppRoles;
 import domain.Club;
 import domain.Member;
 import java.sql.SQLException;
+import java.util.List;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -108,6 +110,24 @@ public class ClubDAOTest {
         club1.setClubName("TestClub1");
         assertNotEquals(club1.toString(), clubCheck2.toString());  //club check
         
+        clubJdbc.deleteClub(club1);
+    }
+    
+    @Test
+    public void testClubRole(){
+        club1 = clubJdbc.saveClub(club1);
+        
+        clubJdbc.saveClubRole(club1.getClubId(), member1, "leader");
+        List<Member> roleCheck1 = clubJdbc.getClubMembers(club1.getClubId());
+        assertTrue(roleCheck1.size() == 1);
+        
+        clubJdbc.saveClubRole(club1.getClubId(), member2, "general member");
+        List<Member> roleCheck2 = clubJdbc.getClubMembers(club1.getClubId());
+        assertTrue(roleCheck2.size() == 2);
+        
+        
+        clubJdbc.deleteClubRole(club1, member1);
+        clubJdbc.deleteClubRole(club1, member2);
         clubJdbc.deleteClub(club1);
     }
 }
