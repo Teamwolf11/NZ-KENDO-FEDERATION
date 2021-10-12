@@ -19,7 +19,7 @@
                 <!-- divided image size by 4 to set width and height -->
                 <img src="images/kendoLogo.png" alt="Kendo Logo"> 
             </figure>
-            
+
             <div id="logInBox" ng-include="'logInOutButton.html'" ng-init="membCtrl.checkSignIn()"></div>
         </section>
 
@@ -28,30 +28,31 @@
         </header>
 
         <main ng-controller="EventController as eventCtrl">
-
-            <h2>View All Grading Events</h2>
-            <table id="eventTable">
-                <thead>
-                    <tr>
-                        <th>Venue</th>
-                        <th>Type</th>
-                        <th>Date</th>
-                        <th>Highest Grade Available</th>
-                        <th>Head of Grading Panel</th>
-                        <th>Button</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="event in eventCtrl.events">
-                        <td>{{event.venue}}</td>
-                        <td>{{event.name}}</td>
-                        <td>{{event.startDateTime}}</td>
-                        <td>{{event.highestGradeAvailable.grade}}</td>
-                        <td>{{event.headOfGradingPanel}}</td>
-                        <td><button type="button" ng-click="eventCtrl.bookEvent(event)">Book Grading</button></td>
-                    </tr>
-                </tbody>
-            </table>
+            <section class="boxes">
+                <h2>View All Grading Events</h2>
+                <table id="eventTable">
+                    <thead>
+                        <tr>
+                            <th>Venue</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Highest Grade Available</th>
+                            <th>Head of Grading Panel</th>
+                            <th>Button</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="event in eventCtrl.events">
+                            <td>{{event.venue}}</td>
+                            <td>{{event.name}}</td>
+                            <td>{{event.startDateTime}}</td>
+                            <td>{{event.highestGradeAvailable.grade}}</td>
+                            <td>{{event.headOfGradingPanel}}</td>
+                            <td><button type="button" ng-click="eventCtrl.bookEvent(event)">Book Grading</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
         </main>
     </body>
 </html>

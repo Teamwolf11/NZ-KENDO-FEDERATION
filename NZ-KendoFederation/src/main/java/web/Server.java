@@ -57,9 +57,6 @@ public class Server extends Jooby {
 
     public static void main(String[] args) throws Exception {
 
-        Gson bob = new Gson();
-        System.out.println(bob.toJson(LocalDate.now()));
-
         System.out.println("\nStarting Server.");
 
         Server server = new Server();
