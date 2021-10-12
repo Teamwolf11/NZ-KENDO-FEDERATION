@@ -91,7 +91,7 @@ public class EventJdbcDAO implements EventDAO {
 
     @Override
     public Collection<Event> getEvents() {
-        String sql = "SELECT event.event_id,event.name AS e_name, club_role.member_id, event.club_id, event.venue, event.status, event.description AS e_desc, event.start_date_time, event.end_date_time, event.grading_id, club.mem_num, club.name AS c_name, club.location, club.email, club.phone, club.description AS c_desc, grading.name as g_name, grading_panel.grading_member_name as gm_name, martial_arts.martial_art_id as marts_id, martial_arts.name AS ma_name FROM public.event JOIN public.club ON event.club_id = club.club_id JOIN public.grading ON event.grading_id = grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id LEFT JOIN public.club_role ON club.club_id = club_role.club_id AND role_name = 'leader' LEFT JOIN public.grading_panel ON grading_panel.event_id = event.event_id AND grading_panel.grading_role = 'Head' WHERE event.event_id = ?";
+        String sql = "SELECT event.event_id,event.name AS e_name, club_role.member_id AS club_leader_id, event.club_id, event.venue, event.status, event.description AS e_desc, event.start_date_time, event.end_date_time, event.grading_id AS g_id, club.mem_num, club.name AS c_name, club.location, club.email, club.phone, club.description AS c_desc, grading.name as g_name, grading_panel.grading_member_name as gm_name, martial_arts.martial_art_id as marts_id, martial_arts.name AS ma_name FROM public.event JOIN public.club ON event.club_id = club.club_id JOIN public.grading ON event.grading_id = grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id LEFT JOIN public.club_role ON club.club_id = club_role.club_id AND role_name = 'leader' LEFT JOIN public.grading_panel ON grading_panel.event_id = event.event_id AND grading_panel.grading_role = 'Head'";
 //                + "SELECT event.event_id, event.name AS e_name, club_role.member_id AS club_leader_id, event.club_id, event.venue, event.status, event.description AS e_desc, event.start_date_time, event.end_date_time, event.grading_id, club.mem_num, club.name AS c_name, club.location, club.email, club.phone, club.description AS c_desc, grading.name AS g_name, martial_arts.martial_art_id AS marts_id, martial_arts.name AS ma_name FROM public.event JOIN public.club ON event.club_id = club.club_id JOIN public.grading ON event.grading_id = grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id LEFT JOIN public.club_role ON club.club_id = club_role.club_id AND role_name = 'leader'";
 
         try {
@@ -106,7 +106,7 @@ public class EventJdbcDAO implements EventDAO {
             while (rs.next()) {
                 // grade fields
                 String gradeId = Integer.toString(rs.getInt("g_id"));
-                String artId = Integer.toString(rs.getInt("gm_id"));
+                String artId = Integer.toString(rs.getInt("marts_id"));
                 String gradeName = rs.getString("g_name");
                 String martialArt = rs.getString("ma_name");
                 Grade grade = new Grade(gradeName, martialArt, null, null, gradeId, artId, null, null, null);
