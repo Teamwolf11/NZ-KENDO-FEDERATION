@@ -43,6 +43,19 @@ public class Event {
         this.status = status;
     }
 
+    public Event(String name, Club club, String venue, Grade highestGradeAvailable, String headOfGradingPanel, List<String> otherMembersOfGradingPanel, String desc, String startDateTime, String endDateTime, String status) {
+        this.name = name;
+        this.club = club;
+        this.venue = venue;
+        this.highestGradeAvailable = highestGradeAvailable;
+        this.headOfGradingPanel = headOfGradingPanel;
+        this.otherMembersOfGradingPanel = otherMembersOfGradingPanel;
+        this.desc = desc;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.status = status;
+    }
+
     public void addGrade(Grade grade){
         grades.add(grade);
     }
