@@ -245,7 +245,10 @@ INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (58,4,INTERVAL '6 year', '6 Dan',13);
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (59,4,INTERVAL '10 year', '7 Dan',14);		
 INSERT INTO grading (grading_id, martial_art_id, time_in_grade, name,grade_level) VALUES (60,4,NULL, '8 Dan',15);
- 
+
+INSERT INTO club (mem_num, name, location,email, phone,description)
+VALUES (15,'Auckland Club', 'Auckland','ccool@gmail.com','012301230','Great description');
+
 ALTER SEQUENCE grading_grading_id_seq RESTART WITH 61;
 ALTER SEQUENCE martial_arts_martial_art_id_seq RESTART WITH 5;
 ALTER SEQUENCE member_nzkf_membership_id_seq RESTART WITH 10000;
