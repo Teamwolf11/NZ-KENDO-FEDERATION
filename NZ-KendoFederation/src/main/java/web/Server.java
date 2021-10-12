@@ -21,7 +21,7 @@ public class Server extends Jooby{
         port(8080);
         use(new Gzon());
         use(new MemberModule(studentDao));
-        use(new EventModule(eventDAO));
+        use(new EventModule(eventDAO, studentDao));
         assets("/", "index.html");
         assets("*");
     }

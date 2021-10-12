@@ -278,7 +278,21 @@ public class EventJdbcDAO implements EventDAO {
                 registerForEventstmt.setString(2, member.getMemberId());
 
                 int row = registerForEventstmt.executeUpdate();
+                
+                if (row == 0) {
+                    throw new SQLException("Creating eventline failed, no rows affected.");
+                }
+                //Get EventId from previous insert statement and add to member
+                try ( ResultSet generatedKeys = registerForEventstmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        event.setEventId(Integer.toString(generatedKeys.getInt(1)));
+                        System.out.println("value returned");
+                    } else {
+                        throw new SQLException("Updating nextEventLine failed.");
+                    }
+                }
             }
+            
         } catch (SQLException ex) {
             Logger.getLogger(EventJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

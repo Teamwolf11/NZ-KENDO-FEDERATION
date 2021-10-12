@@ -47,13 +47,13 @@ module.controller('EventController', function (adminCreateEventAPI, eventAPI, ge
             };
            
             this.bookEvent = function (eventId) {
-                var memberId = $sessionStorage.member.member_id;
+                var memberId = $sessionStorage.member;
                 console.log(memberId);
                 bookEventAPI.save({'eventId': eventId, 'memberId': memberId},
                         // success callback
                                 function (eventId) {
                                     $window.location = 'grading.html';
-                                    console.log('hello')
+                                    console.log(eventId)
                                 },
                                 // error callback
                                         function (error) {
