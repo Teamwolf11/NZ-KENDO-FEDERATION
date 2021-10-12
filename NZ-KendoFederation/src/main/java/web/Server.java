@@ -1,4 +1,3 @@
-
 package web;
 
 import com.google.gson.Gson;
@@ -9,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import domain.Event;
+import java.util.ArrayList;
 import org.jooby.Jooby;
 import org.jooby.Results;
 import org.jooby.json.Gzon;
@@ -17,11 +17,12 @@ import org.jooby.json.Gzon;
  *
  * @author Will
  */
-public class Server extends Jooby{
-    MemberDAO memberDao = new MemberJdbcDAO();    
+public class Server extends Jooby {
+
+    MemberDAO memberDao = new MemberJdbcDAO();
     EventDAO eventDao = new EventJdbcDAO();
-    
-    Server(){
+
+    Server() {
         port(8080);
 //        assets("/", "index.html");
 //        assets("*");
@@ -41,7 +42,9 @@ public class Server extends Jooby{
         assets("/", "index.html");
 
         // List of paths that should not be protected
-        List<String> noAuth = Arrays.asList("/api/register");
+        List<String> noAuth = new ArrayList<>();
+        noAuth.add("/api/register");
+        noAuth.add("/api/events");
         // Add auth filter
         use(new BasicHttpAuthenticator(memberDao, noAuth));
 

@@ -9,6 +9,9 @@
 // create a new module, and load the other pluggable modules
 var module = angular.module('MemberApp', ['ngResource', 'ngStorage']);
 
+/* ==============================
+ * Factories for MemberModule
+ * ============================== */
 module.factory('registerAPI', function ($resource) {
     return $resource('/api/register');
 });
@@ -27,6 +30,27 @@ module.config(function ($sessionStorageProvider, $httpProvider) {
         $httpProvider.defaults.headers.common.Authorization = 'Basic ' + authToken;
     }
 });
+
+/* ==============================
+ * Factories for EventModule
+ * ============================== */
+module.factory('adminCreateEventAPI', function ($resource) {
+    return $resource('/api/adminCreateEvent');
+});
+
+module.factory('eventAPI', function ($resource) {
+    return $resource('/api/events/:id');
+});
+
+module.factory('getEventsAPI', function ($resource) {
+    return $resource('/api/events');
+});
+
+module.factory('bookEventAPI', function ($resource) {
+    return $resource('/api/bookEvents');
+});
+
+
 
 module.controller('MemberController', function (registerAPI, $window, signInAPI, $sessionStorage, $http) {
 
@@ -57,7 +81,7 @@ module.controller('MemberController', function (registerAPI, $window, signInAPI,
             let ctrl = this;
             this.signIn = function (email, password) {
                 console.log("In sign in function")
-                
+
                 // generate authentication token
                 let authToken = $window.btoa(email + ":" + password);
                 // store token
@@ -69,24 +93,24 @@ module.controller('MemberController', function (registerAPI, $window, signInAPI,
                 signInAPI.get({'email': email},
                         // success callback
                                 function (member) {
-                                console.log("In success callback")
-                                // also store the retrieved member
-                                $sessionStorage.member = member;
-                                // redirect to home
-                                // $window.location = 'index.html';
-                                console.log("Role Id: " + $sessionStorage.member.role.appRoleId)
+                                    console.log("In success callback")
+                                    // also store the retrieved member
+                                    $sessionStorage.member = member;
+                                    // redirect to home
+                                    // $window.location = 'index.html';
+                                    console.log("Role Id: " + $sessionStorage.member.role.appRoleId)
 //                                if ($sessionStorage.member.role.appRoleId == 3) {
 //                                    $window.location = 'index.html';
 //                                } else {
 //                                    $window.location = 'locations.html';
 //                                }
-                                $window.location = 'index.html';
+                                    $window.location = 'index.html';
 
 
-                            },
-                            // fail callback
-                                    function () {
-                                        ctrl.signInMessage = 'Sign in failed. Please try again.';
+                                },
+                                // fail callback
+                                        function () {
+                                            ctrl.signInMessage = 'Sign in failed. Please try again.';
                                         }
                                 );
                             };
@@ -129,3 +153,44 @@ module.controller('MemberController', function (registerAPI, $window, signInAPI,
                         }
                     }
                 });
+
+module.controller('EventController', function (adminCreateEventAPI, eventAPI, getEventsAPI, bookEventAPI, $window, $sessionStorage) {
+            let ctrl = this;
+            this.events = eventAPI.query();
+
+
+            this.registerEvent = function (event) {
+                adminCreateEventAPI.save(null, event,
+                        // success callback
+                                function () {
+                                    $window.location = 'grading.html';
+                                },
+                                // error callback
+                                        function (error) {
+                                            console.log(error);
+                                        }
+                                );
+                            };
+
+                    this.selectAll = function () {
+                        this.events = getEventsAPI.query();
+                    };
+
+                    this.bookEvent = function (eventId) {
+                        var memberId = $sessionStorage.member;
+                        console.log(memberId);
+                        bookEventAPI.save({'eventId': eventId, 'memberId': memberId},
+                                // success callback
+                                        function (eventId) {
+                                            $window.location = 'grading.html';
+                                            console.log(eventId)
+                                        },
+                                        // error callback
+                                                function (error) {
+                                                    console.log('hello2')
+                                                    console.log(error);
+                                                    console.log('hello2')
+                                                }
+                                        );
+                                    };
+                        });
