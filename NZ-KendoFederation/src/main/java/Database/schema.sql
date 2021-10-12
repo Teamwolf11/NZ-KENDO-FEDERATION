@@ -15,7 +15,17 @@ DROP TABLE IF EXISTS public.member_martial_arts;
 DROP TABLE IF EXISTS public.martial_arts;
 DROP TABLE IF EXISTS public.member;
 DROP TABLE IF EXISTS public.user;
+DROP TABLE IF EXISTS public.role_path;
 DROP TABLE IF EXISTS public.app_role;
+
+CREATE TABLE IF NOT EXISTS public.role_path
+(
+	row_id SERIAL NOT NULL,
+	app_role_id integer,
+	path character varying,
+	PRIMARY KEY (row_id)
+);
+
 
 CREATE TABLE IF NOT EXISTS public.club
 (
@@ -156,6 +166,11 @@ ALTER TABLE public.member
 ALTER TABLE public.grading
    	ADD FOREIGN KEY (martial_art_id)
     REFERENCES public.martial_arts (martial_art_id)
+    NOT VALID;
+	
+ALTER TABLE public.role_path
+   	ADD FOREIGN KEY (app_role_id)
+    REFERENCES public.app_role (app_role_id)
     NOT VALID;
 	
 ALTER TABLE public.member ALTER COLUMN join_date SET DEFAULT TO_CHAR(now(), 'DD/MM/YYYY');
