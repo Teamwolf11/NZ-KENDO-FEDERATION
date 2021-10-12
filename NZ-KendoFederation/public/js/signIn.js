@@ -32,6 +32,7 @@ module.controller('MemberController', function (registerAPI, $window, signInAPI,
 
     this.signInMessage = "";
     this.registerMessage = "";
+    this.welcome = "Welcome"
 
     if ($sessionStorage.member) {
         this.welcome = "Welcome " + $sessionStorage.member.fName;
