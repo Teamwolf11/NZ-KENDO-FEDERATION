@@ -62,7 +62,6 @@ public class EventDAOTest {
         event1.setEndDateTime(str);
         event1.setHighestGradeAvailable(grade1);
         event1.setHeadOfGradingPanel(headGrad);
-
         event1.setOtherMembersOfGradingPanel(secondGrad);
     }
 
