@@ -16,7 +16,11 @@ module.factory('eventAPI', function($resource) {
    return $resource('/api/events/:id'); 
 });
 
-module.controller('EventController', function (adminCreateEventAPI, eventAPI, $window) {
+module.factory('getEventsAPI', function($resource) {
+    return $resource('/api/events');
+});
+
+module.controller('EventController', function (adminCreateEventAPI, eventAPI, getEventsAPI, $window) {
 // Ben Scobie you can add a thing for client join event above just like what I have done with adminCreateEvenet
     this.events = eventAPI.query();
     
@@ -34,7 +38,7 @@ module.controller('EventController', function (adminCreateEventAPI, eventAPI, $w
     };
     
     this.selectAll = function () {
-        this.events = eventAPI.query();
+        this.events = getEventsAPI.query();
     };
 });
 
