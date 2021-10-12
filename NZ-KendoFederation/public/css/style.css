@@ -35,8 +35,13 @@ body {
     color: inherit;
     background-image: linear-gradient(to bottom, #f5f7fa, #c3cfe2);
 }
-.top-box a {
+
+#logInBox {
     margin: auto 5% auto auto;
+}
+
+#logInBox a {
+    
     border: black solid;
     border-radius: 80px;
     background: white;

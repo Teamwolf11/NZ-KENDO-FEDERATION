@@ -19,7 +19,8 @@
                 <!-- divided image size by 4 to set width and height -->
                 <img src="images/kendoLogo.png" alt="Kendo Logo"> 
             </figure>
-            <a href ="signIn.html">Login</a>
+            
+            <div id="logInBox" ng-include="'logInOutButton.html'" ng-init="membCtrl.checkSignIn()"></div>
         </section>
 
 

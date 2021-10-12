@@ -49,8 +49,6 @@
         <li ng-if="membCtrl.signedIn"><a href ="grading.html">Grading Events</a></li>
         <li ng-if="membCtrl.isMemb()"><a href ="/member/payment.html">Payments</a></li>
         <li ng-if="membCtrl.isClubLead()"><a href ="/clubLeader/adminEvent.html">Create Events</a></li>
-        
-        <li ng-if="membCtrl.signedIn"><a href="#" ng-click="membCtrl.signOut()">Sign Out</a></li>
     </ul>
     
     <div id="welcome">{{membCtrl.welcome}}</div>
