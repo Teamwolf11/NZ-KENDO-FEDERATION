@@ -1,9 +1,8 @@
 package dao;
 
-import domain.Club;
 import domain.Event;
-import domain.MartialArt;
-import java.sql.Date;
+import domain.Member;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,6 +55,16 @@ public class EventCollectionsDAO implements EventDAO {
     public Collection<Event> getEvents(){
         return eventsList;
     }
+
+    @Override
+    public void registerForEvent(Event event, Member member) {
+
+    }
+
+    @Override
+    public void withdrawFromEvent(Event event, Member member) {
+
+    }
     // delete event
     // update event
 
@@ -65,7 +74,7 @@ public class EventCollectionsDAO implements EventDAO {
     }
 
     @Override
-    public void updateEvent(Event event) {
+    public Event updateEvent(Event event) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
