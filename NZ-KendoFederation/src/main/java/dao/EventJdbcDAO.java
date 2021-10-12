@@ -34,7 +34,7 @@ public class EventJdbcDAO implements EventDAO {
             DatabaseConnector db = new DatabaseConnector();
             Connection con = db.connect();
 
-            String sql = "SELECT event.event_id,event.name AS e_name, club_role.member_id, event.club_id, event.venue, event.status, event.description AS e_desc, event.start_date_time, event.end_date_time, event.grading_id, club.mem_num, club.name AS c_name, club.location, club.email, club.phone, club.description AS c_desc, grading.name as g_name, martial_arts.martial_art_id as marts_id, martial_arts.name AS ma_name FROM public.event JOIN public.club ON event.club_id = club.club_id JOIN public.grading ON event.grading_id = grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id LEFT JOIN public.club_role ON club.club_id = club_role.club_id AND role_name = 'leader' WHERE event_id = ?";
+            String sql = "SELECT event.event_id,event.name AS e_name, club_role.member_id, event.club_id, event.venue, event.status, event.description AS e_desc, event.start_date_time, event.end_date_time, event.grading_id, club.mem_num, club.name AS c_name, club.location, club.email, club.phone, club.description AS c_desc, grading.name as g_name, grading_panel.grading_member_name as gm_name, martial_arts.martial_art_id as marts_id, martial_arts.name AS ma_name FROM public.event JOIN public.club ON event.club_id = club.club_id JOIN public.grading ON event.grading_id = grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id LEFT JOIN public.club_role ON club.club_id = club_role.club_id AND role_name = 'leader' LEFT JOIN public.grading_panel ON grading_panel.event_id = event.event_id AND grading_panel.grading_role = 'Head' WHERE event.event_id = ?";
             try ( PreparedStatement stmt = con.prepareStatement(sql);) {
                 stmt.setInt(1, Integer.parseInt(eventId));
                 ResultSet rs = stmt.executeQuery();
@@ -66,8 +66,10 @@ public class EventJdbcDAO implements EventDAO {
                     String desc = rs.getString("e_desc");
                     String startDateTime = rs.getString("start_date_time");
                     String endDateTime = rs.getString("end_date_time");
-
-                    Event event = new Event(eventId, eName, club, venue, grade, null, null, desc, startDateTime, endDateTime, status);
+                    String headGrader = rs.getString("gm_name");
+                    List<String> otherGradingPanel = get2ndEventGrader(eventId);
+                                 
+                    Event event = new Event(eventId, eName, club, venue, grade, headGrader, otherGradingPanel, desc, startDateTime, endDateTime, status);
 
                     grade.setEventId(event.getEventId());
                     grade.setEventName(event.getName());
@@ -89,7 +91,7 @@ public class EventJdbcDAO implements EventDAO {
 
     @Override
     public Collection<Event> getEvents() {
-        String sql = "SELECT event.event_id, event.name AS e_name, event.club_id, event.venue, event.status, event.description AS e_desc, event.start_date_time, event.end_date_time, event.grading_id, club_role.member_id AS club_leader_id, club.mem_num, club.name AS c_name, club.location, club.email, club.phone, club.description AS c_desc, grading.name as g_name, grading.grading_id AS g_id, grading.martial_art_id AS gm_id, martial_arts.martial_art_id as marts_id, martial_arts.name AS ma_name FROM public.event JOIN public.club ON event.club_id = club.club_id JOIN public.grading ON event.grading_id = grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id LEFT JOIN public.club_role ON club.club_id = club_role.club_id AND role_name = 'Club Leader';";
+        String sql = "SELECT event.event_id,event.name AS e_name, club_role.member_id, event.club_id, event.venue, event.status, event.description AS e_desc, event.start_date_time, event.end_date_time, event.grading_id, club.mem_num, club.name AS c_name, club.location, club.email, club.phone, club.description AS c_desc, grading.name as g_name, grading_panel.grading_member_name as gm_name, martial_arts.martial_art_id as marts_id, martial_arts.name AS ma_name FROM public.event JOIN public.club ON event.club_id = club.club_id JOIN public.grading ON event.grading_id = grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id LEFT JOIN public.club_role ON club.club_id = club_role.club_id AND role_name = 'leader' LEFT JOIN public.grading_panel ON grading_panel.event_id = event.event_id AND grading_panel.grading_role = 'Head' WHERE event.event_id = ?";
 //                + "SELECT event.event_id, event.name AS e_name, club_role.member_id AS club_leader_id, event.club_id, event.venue, event.status, event.description AS e_desc, event.start_date_time, event.end_date_time, event.grading_id, club.mem_num, club.name AS c_name, club.location, club.email, club.phone, club.description AS c_desc, grading.name AS g_name, martial_arts.martial_art_id AS marts_id, martial_arts.name AS ma_name FROM public.event JOIN public.club ON event.club_id = club.club_id JOIN public.grading ON event.grading_id = grading.grading_id JOIN public.martial_arts ON grading.martial_art_id = martial_arts.martial_art_id LEFT JOIN public.club_role ON club.club_id = club_role.club_id AND role_name = 'leader'";
 
         try {
@@ -128,8 +130,10 @@ public class EventJdbcDAO implements EventDAO {
                 String desc = rs.getString("e_desc");
                 String startDateTime = rs.getString("start_date_time");
                 String endDateTime = rs.getString("end_date_time");
-
-                Event event = new Event(eventid, eName, club, venue, grade, null, null, desc, startDateTime, endDateTime, status);
+                String headGrader = rs.getString("gm_name");
+                    List<String> otherGradingPanel = get2ndEventGrader(eventid);
+                                 
+                    Event event = new Event(eventid, eName, club, venue, grade, headGrader, otherGradingPanel, desc, startDateTime, endDateTime, status);
 
                 grade.setEventId(event.getEventId());
                 grade.setEventName(event.getName());

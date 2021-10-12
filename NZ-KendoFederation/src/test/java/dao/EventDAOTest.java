@@ -83,6 +83,9 @@ public class EventDAOTest {
         grade1.setEventName(event1.getName());
         grade1.setEventId(event1.getEventId());
 
+        System.out.println(event1.toString());
+        System.out.println(eventCheck.toString());
+        
         assertTrue(event1.toString().equals(eventCheck.toString()));
     }
 
