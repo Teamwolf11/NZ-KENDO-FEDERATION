@@ -721,11 +721,11 @@ ALTER SEQUENCE martial_arts_martial_art_id_seq RESTART WITH 5;
 ALTER SEQUENCE member_nzkf_membership_id_seq RESTART WITH 10000;
 
 /* example data */
-INSERT INTO public.member (email, password, date_of_birth, nzkf_membership_renew_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES ('login.test','login','08/09/2002','12-12-9999','FirstName1','MiddleName1','LastName1','M','NZ European','123456789');
-INSERT INTO public.member (email, password, date_of_birth, nzkf_membership_renew_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES ('example.email2','q2weadfe4','21/01/1997','12-12-9999','FirstName2','MiddleName2','LastName2','F','Maori','1312346243');
-INSERT INTO public.member (email, password, date_of_birth, nzkf_membership_renew_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES ('example.email3','Password123','07/12/1962','12-12-9999','FirstName3','MiddleName3','LastName3','M','NZ European','2374523412');
-INSERT INTO public.member (email, password, date_of_birth, nzkf_membership_renew_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES ('example.email4','1111111','08/09/1999','12-12-9999','FirstName4','MiddleName4','LastName4','F','Other','3456234575');
-INSERT INTO public.member (email, password, date_of_birth, nzkf_membership_renew_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES ('example.email5','dasIsGood','11/03/1995','12-12-9999','FirstName5','MiddleName5','LastName5','M','NZ European','21346467454');
+INSERT INTO public.member (email, password, date_of_birth, nzkf_membership_renew_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES ('login.test@test.co.nz','login','08/09/2002','12-12-9999','FirstName1','MiddleName1','LastName1','M','NZ European','123456789');
+INSERT INTO public.member (email, password, date_of_birth, nzkf_membership_renew_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES ('example.email2@test.co.nz','q2weadfe4','21/01/1997','12-12-9999','FirstName2','MiddleName2','LastName2','F','Maori','1312346243');
+INSERT INTO public.member (email, password, date_of_birth, nzkf_membership_renew_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES ('example.email3@test.co.nz','Password123','07/12/1962','12-12-9999','FirstName3','MiddleName3','LastName3','M','NZ European','2374523412');
+INSERT INTO public.member (email, password, date_of_birth, nzkf_membership_renew_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES ('example.email4@test.co.nz','1111111','08/09/1999','12-12-9999','FirstName4','MiddleName4','LastName4','F','Other','3456234575');
+INSERT INTO public.member (email, password, date_of_birth, nzkf_membership_renew_date, first_name, last_name, middle_name, sex, ethnicity, phone_num) VALUES ('example.email5@test.co.nz','dasIsGood','11/03/1995','12-12-9999','FirstName5','MiddleName5','LastName5','M','NZ European','21346467454');
 
 INSERT INTO public.club (name, location, mem_num, email, phone, description) VALUES ('example1','Dunedin', 5,'example.club.email1','123456789','example club 1');     
 INSERT INTO public.club (name, location, mem_num, email, phone, description) VALUES ('example2','Auckland', 2,'example.club.email2','123456789','example club 2'); 
@@ -744,7 +744,7 @@ INSERT INTO public.event (name, club_id, venue, description, start_date_time, en
 INSERT INTO public.grading_panel (event_id, grading_member_name,grading_role) VALUES (1,'Head Grader Steve','Head');
 INSERT INTO public.grading_panel (event_id, grading_member_name,grading_role) VALUES (1,'Barbara','second');
 INSERT INTO public.grading_panel (event_id, grading_member_name,grading_role) VALUES (1,'Michael','second');
-INSERT INTO public.grading_panel (event_id, grading_member_name,grading_role) VALUES (1,'John','Head');
+INSERT INTO public.grading_panel (event_id, grading_member_name,grading_role) VALUES (2,'John','Head');
 
 INSERT INTO public.member_grading (grading_id, date_received, member_id,club_id, event_id) VALUES (3,'13/10/2021',1,1,1);
 INSERT INTO public.member_grading (grading_id, date_received, member_id,club_id, event_id) VALUES (4,'13/10/2021',1,1,1);
@@ -758,7 +758,7 @@ INSERT INTO public.event_line (event_id, member_id) VALUES (1,1);
 INSERT INTO public.event_line (event_id, member_id) VALUES (1,2);
 INSERT INTO public.event_line (event_id, member_id) VALUES (1,3);
   
-INSERT INTO public.member (email, password, date_of_birth, nzkf_membership_renew_date, first_name, last_name, middle_name, app_role_id) VALUES ('admin','admin','12/12/9999','12-12-9999','Admin','Admin','Admin',2);
+INSERT INTO public.member (email, password, date_of_birth, nzkf_membership_renew_date, first_name, last_name, middle_name, app_role_id) VALUES ('admin@test.co.nz','admin','12/12/9999','12-12-9999','Admin','Admin','Admin',2);
 
 
 CREATE USER javaapp WITH PASSWORD 'D4h/XW57%sw31';
