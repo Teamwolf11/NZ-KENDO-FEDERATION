@@ -23,6 +23,37 @@ DROP TABLE IF EXISTS audit.martial_arts_audit;
 DROP TABLE IF EXISTS audit.member_audit;
 DROP TABLE IF EXISTS audit.app_role_audit;
 
+CREATE TABLE IF NOT EXISTS audit.grading_panel_audit
+(
+	operation char(1) NOT NULL,
+    stamp timestamp NOT NULL,
+	gp_row_num SERIAL NOT NULL,
+	event_id integer NOT NULL,
+	grading_member_name character varying NOT NULL,
+	grading_role character varying NOT NULL,
+	PRIMARY KEY (event_id, grading_member_name, grading_role)
+);
+
+CREATE OR REPLACE FUNCTION process_grading_panel_audit() RETURNS TRIGGER AS $grading_panel_audit$
+    BEGIN
+        IF (TG_OP = 'DELETE') THEN
+            INSERT INTO audit.grading_panel_audit SELECT 'D', now(), OLD.*;
+            RETURN OLD;
+        ELSIF (TG_OP = 'UPDATE') THEN
+            INSERT INTO audit.grading_panel_audit SELECT 'U', now(), NEW.*;
+            RETURN NEW;
+        ELSIF (TG_OP = 'INSERT') THEN
+            INSERT INTO audit.grading_panel_audit SELECT 'I', now(), NEW.*;
+            RETURN NEW;
+        END IF;
+        RETURN NULL; -- result is ignored since this is an AFTER trigger
+    END;
+$grading_panel_audit$ LANGUAGE plpgsql;
+
+CREATE TRIGGER grading_panel_audit
+AFTER INSERT OR UPDATE OR DELETE ON public.grading_panel
+    FOR EACH ROW EXECUTE PROCEDURE process_grading_panel_audit();
+
 
 CREATE TABLE IF NOT EXISTS audit.member_audit
 (
