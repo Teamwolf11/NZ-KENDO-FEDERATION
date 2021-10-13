@@ -148,6 +148,10 @@ form {
     text-align: center;
 }
 
+#createEvent {
+    width: 500px;
+}
+
 fieldset {
     background-color: white;
     color: black;
@@ -157,7 +161,7 @@ fieldset {
     box-shadow: 5px 10px 10px #888888;
 }
 
-input, #sex, #ethnicity, #highestGradeAvailable {
+input, #sex, #ethnicity, #highestGradeAvailable{
     width: 70%;
     background-color: #f2f2f2;
     color: black;
@@ -169,8 +173,11 @@ input, #sex, #ethnicity, #highestGradeAvailable {
     border-radius: 4px;
 }
 
-#sex, #ethnicity, #highestGradeAvailable {
+#sex, #ethnicity {
     width: 77%
+}
+#highestGradeAvailable {
+    width: 74%;
 }
 
 input[type=submit] {
@@ -224,16 +231,38 @@ input[type=submit]:hover {
 /* Styling for tables */
 
 #eventTable {
-    margin: auto;
-    border-collapse: collapse;
-    border: 1px solid black;
-    /*width: 50%;*/   
+    border-collapse: separate;
+    border: solid #0073e6 2px;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-spacing: 0;
+
+    margin: 20px auto auto auto;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
-th, td {
-    background-color: #D7D7D7;
-    border: 1px solid black;
-    text-align: center;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    width: 100px;
+
+#eventTable thead tr {
+    background-color: #0073e6;
+    color: #ffffff;
+    text-align: left;
+}
+
+#eventTable th, #eventTable td {
+    padding: 18px 30px;
+}
+
+#eventTable tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+#eventTable tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+#eventTable tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
 }
