@@ -19,6 +19,7 @@ dependencies {
     implementation group: 'org.jooby', name: 'jooby-netty', version: joobyVer
     implementation group: 'org.jooby', name: 'jooby-gson', version: joobyVer
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.3'
     def junitVer = '5.6.2'
    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVer
    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVer

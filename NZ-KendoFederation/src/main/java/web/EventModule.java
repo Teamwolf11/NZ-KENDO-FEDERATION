@@ -1,80 +1,86 @@
 package web;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+ 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.EventDAO;
 import domain.Club;
-import dao.EventJdbcDAO;
 import domain.Event;
 import domain.Grade;
-import domain.Member;
 import dao.MemberDAO;
 import dao.MemberJdbcDAO;
-import java.lang.reflect.Type;
+import domain.Member;
 import org.jooby.Jooby;
 import org.jooby.Status;
-import java.util.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.json.*;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
+ 
 /**
  * @author Mike Cui
  */
 public class EventModule extends Jooby {
-
+ 
     public EventModule(EventDAO eventDao, MemberDAO memberDao) {
         get("/api/events", () -> eventDao.getEvents());
-
+ 
         get("/api/events/:id", (req) -> {
             String id = req.param("event_id").value();
             return eventDao.getEvent(id);
         });
+ 
+        post("/api/bookEvents/", (req, rsp) -> {
+            Event event = req.body().to(Event.class);
+            String mjson = req.param("mem").to(String.class);
+            mjson = mjson.replaceAll("[\\[\\](){}\"]", "");
+            System.out.println("Json object: " + mjson);
+            String[] bodyArray = mjson.split("\\s*,\\s*");
+ 
+            List<String> listBody = Arrays.asList(bodyArray);
+            System.out.println("List Body: " + listBody);
+            ArrayList<String> parameters = new ArrayList<>();
+            List<String> splitList = null;
+            for (String valuePair : listBody) {
+                splitList = Arrays.asList(valuePair.split(":"));
+                System.out.println("splitList: " + splitList);
 
-        post("/api/bookEvents", (req, rsp) -> {
-            String event = req.body().to(String.class);
-    
-//            System.out.println(id);
-            
-//            event = event.replaceAll("[\\[\\](){}\"]", "");
-//            System.out.println(event);
-//            String[] bodyArray = event.split("\\s*,\\s*");
-//            
-//            List<String> listBody = Arrays.asList(bodyArray);
-//            ArrayList<String> listOfString = new ArrayList<>(listBody);
-//            ArrayList<String> parameters = new ArrayList<>();
-//            System.out.println(listOfString);
-//            
-//            for (String valuePair : listOfString) {
 //                String[] elements = valuePair.split(":");
-//                System.out.println(elements.toString());
-//                parameters.add(elements[2]);
-//            }
-//            
+//                parameters.add(elements[1]);
+            }
+             
+             
+
             
-            //String member = req.body().to(String.class);
-            //System.out.println(member);
-            //Event event = req.body();
-//            String member = req.param("memberId").value();
-//            String event = req.param("eventId").value();
+            
+            
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//            Member member = objectMapper.readValue(mjson, Member.class);
+//            System.out.println(objectMapper.readValue(mjson, Member.class));
+//            System.out.println(event);
+            
+            
+            
+            
+            
+            
+//            System.out.println(member);
+//            Event event = req.body();
+//            
             //System.out.println(event.toString());
             //System.out.println(member.toString());
-            //MemberDAO mem = new MemberJdbcDAO();
-//            eventDao.registerForEvent(eventDao.getEvent(event), mem.getMember(member));
-            //eventDao.registerForEvent(event, member);
+//            MemberDAO mem = new MemberJdbcDAO();
+//            eventDao.registerForEvent(event, member);
+            
             rsp.status(Status.CREATED);
         });
-
+ 
         post("/api/adminCreateEvent", (req, rsp) -> {
             String body = req.body().to(String.class);
             System.out.println(body);
             body = body.replaceAll("[\\[\\](){}\"]", "");
             System.out.println(body);
             String[] bodyArray = body.split("\\s*,\\s*");
-
+ 
             List<String> listBody = Arrays.asList(bodyArray);
             ArrayList<String> listOfString = new ArrayList<>(listBody);
             ArrayList<String> parameters = new ArrayList<>();
@@ -88,16 +94,16 @@ public class EventModule extends Jooby {
             grade.setGradeId(parameters.get(8));
             String[] otherMembersArray = parameters.get(4).split("\\s*-\\s*");
             List<String> otherMembers = Arrays.asList(otherMembersArray);
-
-            Event event = new Event(parameters.get(0), club,
-                     parameters.get(2), grade, parameters.get(3),
-                    otherMembers, parameters.get(5), parameters.get(7), parameters.get(8), "Available");
+ 
+//            Event event = new Event(parameters.get(0), club, 
+//                    parameters.get(2), grade, parameters.get(3),
+//                    otherMembers, parameters.get(5), parameters.get(7), parameters.get(8), "Available");
             System.out.println(parameters.get(0) + club
                     + parameters.get(2) + grade + parameters.get(3)
                     + otherMembers + parameters.get(5) + parameters.get(6) + parameters.get(7));
-            eventDao.saveEvent(event);
+//            eventDao.saveEvent(event);
             rsp.status(Status.CREATED);
         });
     }
-
+ 
 }

@@ -222,7 +222,7 @@ input[type=submit]:hover {
     margin: auto;
     border-collapse: collapse;
     border: 1px solid black;
-    /*width: 50%;*/   
+    width: 50%;   
 }
 th, td {
     background-color: #D7D7D7;
