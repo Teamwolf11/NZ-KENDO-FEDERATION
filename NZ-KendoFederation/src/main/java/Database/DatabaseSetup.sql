@@ -758,6 +758,9 @@ INSERT INTO public.event_line (event_id, member_id) VALUES (1,1);
 INSERT INTO public.event_line (event_id, member_id) VALUES (1,2);
 INSERT INTO public.event_line (event_id, member_id) VALUES (1,3);
   
+INSERT INTO public.member (email, password, date_of_birth, nzkf_membership_renew_date, first_name, last_name, middle_name, app_role_id) VALUES ('admin','admin','12/12/9999','12-12-9999','Admin','Admin','Admin',2);
+
+
 CREATE USER javaapp WITH PASSWORD 'D4h/XW57%sw31';
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO javaapp;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO javaapp;
@@ -771,4 +774,3 @@ GRANT USAGE ON SCHEMA email TO javaapp;
 
  
 COMMIT;
-
