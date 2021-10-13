@@ -36,13 +36,13 @@
                         <fieldset class="textInputs">
                             <h2>Create a grading event</h2>
                             <input type="text" ng-model="gradingEvent.name" id="name"  required pattern="[a-zA-Z '-]+" placeholder="Name of Grading Session">
-                            <input type="text" ng-model="gradingEvent.clubId" id="clubId" required pattern="[0-9 ()-]+" placeholder="Club">
-                            <input type="text" ng-model="gradingEvent.venue" id="venue" required pattern="[a-zA-Z '-]+" placeholder="Venue" >
+                            <input type="text" ng-model="gradingEvent.clubId" id="clubId" required pattern="[0-9 ()-]+" placeholder="ClubID (E.g. 2)">
+                            <input type="text" ng-model="gradingEvent.venue" id="venue" required pattern="[a-zA-Z '-]+" placeholder="Venue Name" >
                             <input type="text" ng-model="gradingEvent.headOfGradingPanel" id="headOfGradingPanel" required pattern="[a-zA-Z '-]+" placeholder="Head Of Grading Panel" >
                             <input type="text" ng-model="gradingEvent.otherMembersOfGradingPanel" id="otherMembersOfGradingPanel" required pattern="[a-zA-Z '-]+" placeholder="Members Of Grading Panel" >
-                            <input type="text" ng-model="gradingEvent.desc" id="desc" required pattern="[a-zA-Z '-]+" placeholder="Description" >
-                            <input type="text" ng-model="gradingEvent.startDateTime" id="startDateTime" placeholder="Date and Start Time of session">
-                            <input type="text" ng-model="gradingEvent.endDateTime" id="endDateTime" placeholder="Date and End Time of session">
+                            <input type="text" ng-model="gradingEvent.desc" id="desc" required pattern="[a-zA-Z '-]+" placeholder="Description of Event" >
+                            <input type="text" ng-model="gradingEvent.startDateTime" id="startDateTime" placeholder="Date and Start Time (Format: DD/MM/YYYY HH:MM)">
+                            <input type="text" ng-model="gradingEvent.endDateTime" id="endDateTime" placeholder="Date and Start Time (Format: DD/MM/YYYY HH:MM)">
 
                             <select type="text" ng-model="gradingEvent.highestGradeAvailable" id="highestGradeAvailable" required placeholder="Highest Grade Available">
                                 <option value="" disabled selected hidden>Highest Grade Available</option>
