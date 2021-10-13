@@ -138,7 +138,7 @@ public class EmailJdbcDAO {
                String newEmail = mList.toString();
                Email email = new SimpleEmail();
                email.setHostName("smtp.gmail.com");
-               email.setSmtpPort(587);
+               email.setSmtpPort(465);
                email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqac"));
                email.setSSLOnConnect(true);
                List<Grade> grades;
@@ -172,7 +172,7 @@ Connection con = db.connect();
             String newEmail = mList.toString();
             Email email = new SimpleEmail();
             email.setHostName("smtp.gmail.com");
-            email.setSmtpPort(587);
+            email.setSmtpPort(465);
             email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqac"));
             email.setSSLOnConnect(true);
             try {
