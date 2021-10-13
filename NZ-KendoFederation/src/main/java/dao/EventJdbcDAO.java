@@ -363,8 +363,8 @@ public class EventJdbcDAO implements EventDAO {
             String sql = "INSERT INTO public.event_line (event_id, member_id) VALUES (?,?)";
 
             try ( PreparedStatement registerForEventstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
-                registerForEventstmt.setString(1, event.getEventId());
-                registerForEventstmt.setString(2, member.getMemberId());
+                registerForEventstmt.setInt(1, Integer.parseInt(event.getEventId()));
+                registerForEventstmt.setInt(2, Integer.parseInt(member.getMemberId()));
 
                 int row = registerForEventstmt.executeUpdate();
                 

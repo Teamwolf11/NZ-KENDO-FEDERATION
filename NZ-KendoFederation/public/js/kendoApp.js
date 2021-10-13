@@ -154,7 +154,7 @@ module.controller('MemberController', function (registerAPI, $window, signInAPI,
                     }
                 });
 
-module.controller('EventController', function (adminCreateEventAPI, eventAPI, getEventsAPI, bookEventAPI, $window, $sessionStorage) {
+        module.controller('EventController', function (adminCreateEventAPI, eventAPI, getEventsAPI, bookEventAPI, $window, $sessionStorage) {
             this.events = eventAPI.query();
 
 
@@ -176,19 +176,19 @@ module.controller('EventController', function (adminCreateEventAPI, eventAPI, ge
                     };
 
                     this.bookEvent = function (eventId) {
-                        var memberId = $sessionStorage.member;
-                        console.log(memberId);
-                        bookEventAPI.save({'eventId': eventId, 'memberId': memberId},
+
+                        var member = $sessionStorage.member;
+
+                        bookEventAPI.save({'mem': member}, eventId,
                                 // success callback
                                         function (eventId) {
                                             $window.location = 'grading.html';
-                                            console.log(eventId)
+
                                         },
                                         // error callback
                                                 function (error) {
-                                                    console.log('hello2')
                                                     console.log(error);
-                                                    console.log('hello2')
+                                                    console.log('error here');
                                                 }
                                         );
                                     };
