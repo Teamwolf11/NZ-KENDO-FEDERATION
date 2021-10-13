@@ -48,10 +48,28 @@
                             <td>{{event.startDateTime}}</td>
                             <td>{{event.highestGradeAvailable.grade}}</td>
                             <td>{{event.headOfGradingPanel}}</td>
-                            <td><button type="button" ng-click="eventCtrl.bookEvent(event)">Book Grading</button></td>
+                            <td><a href="javascript:void(0)" onclick="document.getElementById('popupBox').style.display = 'inline-block'; document.getElementById('popupBackground').style.display = 'block'">Book Event Slot</a>
+
+                                <div id="popupBox" class="white_content">
+                                    <h1>Confirm Booking</h1>
+                                    <a href="javascript:void(0)" 
+                                       onclick="document.getElementById('popupBox').style.display = 'none'; document.getElementById('popupBackground').style.display = 'none'" 
+                                       class="textright close">X</a>
+
+                                    <p style="clear: both"></p>
+                                    <div id="buttonContainer">
+                                        <a id="popupButtons" ng-click="eventCtrl.bookEvent(event)">Book Event Slot</a>
+                                        <a id="popupButtons" href="javascript:void(0)" 
+                                           onclick="document.getElementById('popupBox').style.display = 'none'; document.getElementById('popupBackground').style.display = 'none'">Cancel</a>
+                                    </div>
+                                </div>
+                                <div id="popupBackground" class="black_overlay"></div>
+                            </td>
+
                         </tr>
                     </tbody>
                 </table>
+
             </section>
         </main>
     </body>
