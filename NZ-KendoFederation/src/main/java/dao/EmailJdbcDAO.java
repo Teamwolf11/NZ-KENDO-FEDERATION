@@ -164,7 +164,9 @@ public class EmailJdbcDAO {
     
     
 public void sendExpiryEmail(List<Member> mList) throws Exception {
- 
+DatabaseConnector db = new DatabaseConnector();
+Connection con = db.connect();
+    
         CompletableFuture.runAsync(() -> {
  
             String newEmail = mList.toString();
@@ -175,17 +177,32 @@ public void sendExpiryEmail(List<Member> mList) throws Exception {
             email.setSSLOnConnect(true);
             try {
                 for (Member member : mList) {
+                    String sql = "INSERT INTO public.expiry_email_store (member_id, nzkf_membership_renew_date, status) VALUES (?, ?, 'Attempted')";
+
+                try (PreparedStatement stmt = con.prepareStatement(sql);) {
+                        stmt.setInt(1, Integer.parseInt(member.getMemberId()));
+                        stmt.setString(2, member.getNzkfRenewDate());
+                        ResultSet rs = stmt.executeQuery();
+                }   catch (SQLException ex) {
+                        Logger.getLogger(EmailJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    }
  
                     email.setFrom("benjaminm.12184@gmail.com");
                     email.setSubject("Membership expiry for " + member.getfName() + " " + member.getlName());
                     email.setMsg("Your membership for NZ Kendo federation is set to expire on " + member.getNzkfRenewDate());
                     email.addTo(newEmail);
                     email.send();
+                    
                 }
  
             } catch (EmailException ex) {
                 Logger.getLogger(MemberJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
  
+            } finally {
+            try {
+                con.close();
+            } catch (Exception e) {
+                /* Ignored */ }
             }
  
         });
@@ -196,7 +213,7 @@ public void sendExpiryEmail(List<Member> mList) throws Exception {
             DatabaseConnector db = new DatabaseConnector();
             Connection con = db.connect();
  
-            String sql = "SELECT * FROM member WHERE TO_DATE(nzkf_membership_renew_date, 'DD-MM-YYYY') <= NOW() + interval '20 days'";
+            String sql = "SELECT m.* FROM member m JOIN expiry_email_store ee ON m.member_id = ee.member_id AND m.nzkf_membership_renew_date = ee.nzkf_membership_renew_date WHERE TO_DATE(m.nzkf_membership_renew_date, 'DD-MM-YYYY') <= NOW() + interval '20 days' AND ee.status IS NULL";
  
             try ( PreparedStatement stmt = con.prepareStatement(sql);) {
  

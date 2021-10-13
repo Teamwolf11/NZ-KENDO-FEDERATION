@@ -8,6 +8,7 @@ import static java.lang.ProcessBuilder.Redirect.from;
 import static java.lang.ProcessBuilder.Redirect.to;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.Session;
@@ -162,8 +163,8 @@ public class EmailDAOTest {
     @Test
     public void testSaveEvent() {
         List<Member> mList = emailJdbc.getPotentialMembers(event1);
-        System.out.println(mList);
-        assertTrue(mList.size() == 2);
+        assertTrue(mList.contains(member1));
+        assertTrue(mList.contains(member2));
     }
     
     
