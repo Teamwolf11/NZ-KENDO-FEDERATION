@@ -77,3 +77,13 @@ sourceSets {
         }
     }
 }
+jar {
+    manifest {
+        attributes 'Main-Class': 'hello.HelloWorld',
+//                'Class-Path':
+                'Implementation-Version': 1.2
+    }
+    archiveBaseName = 'gs-gradle'
+    archiveVersion =  '0.1.2'
+//    from(configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }) {}
+}
