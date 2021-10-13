@@ -32,7 +32,7 @@
             <div class="register-grading-events-container">
 
                 <section>
-                    <form ng-submit="eventCtrl.registerEvent(gradingEvent)">
+                    <form id="createEvent" ng-submit="eventCtrl.registerEvent(gradingEvent)">
                         <fieldset class="textInputs">
                             <h2>Create a grading event</h2>
                             <input type="text" ng-model="gradingEvent.name" id="name"  required pattern="[a-zA-Z '-]+" placeholder="Name of Grading Session">
