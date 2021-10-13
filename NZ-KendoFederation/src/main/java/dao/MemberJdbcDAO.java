@@ -265,12 +265,13 @@ public class MemberJdbcDAO implements MemberDAO {
                     //Role fields
                     String roleId = Integer.toString(rs.getInt("app_role_id"));
                     String roleName = rs.getString("name");
-
+                    
                     con.close();
-
+                    
+                    
                     AppRoles role = new AppRoles(roleId, roleName);
-                    //User user = new User(userID, username, password, role);
-
+                    
+                    
                     return new Member(memberId, nzkfId, nzkfIdRenewDate, role, email, password, dob, joinDate, fName, lName, mName, sex, ethnicity, phoneNum);
                 } else {
                     con.close();
@@ -316,9 +317,9 @@ public class MemberJdbcDAO implements MemberDAO {
                     //Role fields
                     String roleId = Integer.toString(rs.getInt("app_role_id"));
                     String roleName = rs.getString("name");
-
+                    
                     con.close();
-
+                    
                     AppRoles role = new AppRoles(roleId, roleName);
 
                     return new Member(memberId, nzkfId, nzkfIdRenewDate, role, email, password, dob, joinDate, fName, lName, mName, sex, ethnicity, phoneNum);
