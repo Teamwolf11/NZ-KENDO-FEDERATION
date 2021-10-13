@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import Database.DatabaseConnector;
 import java.util.ArrayList;
 import java.util.List;
-import dao.*;
+//import dao.*;
 
 /**
  *
@@ -107,6 +107,7 @@ public class MemberJdbcDAO implements MemberDAO {
                 insertMemberstmt.setString(9, member.getEthnicity());
                 insertMemberstmt.setString(10, member.getPhoneNum());
                 
+                
                 int row = insertMemberstmt.executeUpdate();
 
                 if (row == 0) {
@@ -119,7 +120,7 @@ public class MemberJdbcDAO implements MemberDAO {
                         member.setMemberId(Integer.toString(generatedKeys.getInt(1)));
                         con.close();
                         
-                        EmailDAO emailDao = new EmailDAO();
+                        EmailJdbcDAO emailDao = new EmailJdbcDAO();
                         emailDao.sendConfirmationEmail(member);
                         
                         return member;

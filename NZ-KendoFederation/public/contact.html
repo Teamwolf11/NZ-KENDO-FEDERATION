@@ -19,7 +19,7 @@
                 <!-- divided image size by 4 to set width and height -->
                 <img src="images/kendoLogo.png" alt="Kendo Logo"> 
             </figure>
-
+            
             <div id="logInBox" ng-include="'logInOutButton.html'" ng-init="membCtrl.checkSignIn()"></div>
         </section>
 
@@ -27,32 +27,25 @@
             <div ng-include="'menu.html'" ></div>
         </header>
 
-        <main ng-controller="EventController as eventCtrl">
+        <main>
             <section class="boxes">
-                <h2>View All Grading Events</h2>
-                <table id="eventTable">
-                    <thead>
-                        <tr>
-                            <th>Venue</th>
-                            <th>Type</th>
-                            <th>Date</th>
-                            <th>Highest Grade Available</th>
-                            <th>Head of Grading Panel</th>
-                            <th>Button</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="event in eventCtrl.events">
-                            <td>{{event.venue}}</td>
-                            <td>{{event.name}}</td>
-                            <td>{{event.startDateTime}}</td>
-                            <td>{{event.highestGradeAvailable.grade}}</td>
-                            <td>{{event.headOfGradingPanel}}</td>
-                            <td><button type="button" ng-click="eventCtrl.bookEvent(event)">Book Grading</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h2>Contact</h2>
+                <figure>
+                    <!-- divided image size by 4 to set width and height -->
+                    <!-- <img src="../images/item.png" alt="Product Image" width="86" height="125"> -->
+                </figure>
+                <p>Board of Directors: bod@kendo.org.nz</p>
+                <p>Secretary: secretary@kendo.org.nz</p>
+                <p>Treasurer: treasurer@kendo.org.nz</p>
+                <p>Membership and Grading Officer: mgo@kendo.org.nz</p>
+                <p>Webmaster: webmaster@kendo.org.nz</p>           
             </section>
         </main>
+
+        <footer class="boxes">
+            <p>Copyright © 2021 New Zealand Kendo Federation. All Rights Reserved.</p>
+        </footer>
+
     </body>
+
 </html>
