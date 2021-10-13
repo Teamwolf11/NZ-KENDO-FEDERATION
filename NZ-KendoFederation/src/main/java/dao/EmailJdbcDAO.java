@@ -111,16 +111,16 @@ public class EmailJdbcDAO {
             String newEmail = member.getEmail();
             Email email = new SimpleEmail();
             email.setHostName("smtp.gmail.com");
-            email.setSmtpPort(587);
-            email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqax"));
+            email.setSmtpPort(465);
+            email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqac"));
             email.setSSLOnConnect(true);
 
             try {
                 email.setFrom("benjaminm.12184@gmail.com");
                 email.setSubject("New Member #" + member.getMemberId());
                 email.setMsg("New Member sign up details for " + member.getfName() + 
-                        " " + member.getlName() + "." + " Your username and password are " + 
-                        member.getPassword() + " and " + member.getEmail());
+                        " " + member.getlName() + "." + " Your username is " + 
+                         member.getEmail());
 
                 email.addTo(newEmail);
                 email.send();
