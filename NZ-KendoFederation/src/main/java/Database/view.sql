@@ -16,8 +16,6 @@ CREATE TABLE IF NOT EXISTS email.grading_vault
     PRIMARY KEY (member_id, club_id, grading_id)
 );
 
-COMMIT;
-
 CREATE OR REPLACE FUNCTION process_current_grade() RETURNS TRIGGER AS $current_grade$
     BEGIN 
 		 	IF (TG_OP = 'DELETE') THEN
