@@ -1,7 +1,5 @@
 package web;
  
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.EventDAO;
 import domain.Club;
 import domain.Event;
@@ -38,38 +36,20 @@ public class EventModule extends Jooby {
             List<String> listBody = Arrays.asList(bodyArray);
             System.out.println("List Body: " + listBody);
             ArrayList<String> parameters = new ArrayList<>();
-            List<String> splitList = null;
+            int count = 0;
             for (String valuePair : listBody) {
-                splitList = Arrays.asList(valuePair.split(":"));
-                System.out.println("splitList: " + splitList);
-
-//                String[] elements = valuePair.split(":");
-//                parameters.add(elements[1]);
+                String[] elements = valuePair.split(":");
+                parameters.add(elements[1]);
+                count++;
+                if (count == 1){
+                    break; 
+                }           
             }
-             
-             
-
             
-            
-            
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-//            Member member = objectMapper.readValue(mjson, Member.class);
-//            System.out.println(objectMapper.readValue(mjson, Member.class));
-//            System.out.println(event);
-            
-            
-            
-            
-            
-            
-//            System.out.println(member);
-//            Event event = req.body();
-//            
-            //System.out.println(event.toString());
-            //System.out.println(member.toString());
-//            MemberDAO mem = new MemberJdbcDAO();
-//            eventDao.registerForEvent(event, member);
+            System.out.println(parameters);
+            MemberDAO m = new MemberJdbcDAO();
+            Member registermember = m.getMember(parameters.get(0));  
+            eventDao.registerForEvent(event, registermember);
             
             rsp.status(Status.CREATED);
         });
