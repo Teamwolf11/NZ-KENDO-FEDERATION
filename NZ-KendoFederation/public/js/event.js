@@ -12,33 +12,57 @@ module.factory('adminCreateEventAPI', function ($resource) {
     return $resource('/api/adminCreateEvent');
 });
 
-module.factory('eventAPI', function($resource) {
-   return $resource('/api/events/:id'); 
+module.factory('eventAPI', function ($resource) {
+    return $resource('/api/events/:id');
 });
 
-module.factory('getEventsAPI', function($resource) {
+module.factory('getEventsAPI', function ($resource) {
     return $resource('/api/events');
 });
 
-module.controller('EventController', function (adminCreateEventAPI, eventAPI, getEventsAPI, $window) {
+module.factory('bookEventAPI', function ($resource) {
+    return $resource('/api/bookEvents');
+});
+
+module.controller('EventController', function (adminCreateEventAPI, eventAPI, getEventsAPI, bookEventAPI, $window, $sessionStorage) {
+ let ctrl = this;
     this.events = eventAPI.query();
+
 
     this.registerEvent = function (event) {
         adminCreateEventAPI.save(null, event,
-            // success callback
-            function () {
-                $window.location = 'grading.html';
-            },
-            // error callback
-            function (error) {
-                console.log(error);
-            }
-        );
-    };
-    
-    this.selectAll = function () {
-        this.events = getEventsAPI.query();
-    };
-});
+                // success callback
+                        function () {
+                            $window.location = 'grading.html';
+                        },
+                        // error callback
+                                function (error) {
+                                    console.log(error);
+                                }
+                        );
+                    };
+
+            this.selectAll = function () {
+                this.events = getEventsAPI.query();
+            };
+           
+            this.bookEvent = function (eventId) {
+                var memberId = $sessionStorage.member;
+                console.log(memberId);
+                bookEventAPI.save({'eventId': eventId, 'memberId': memberId},
+                        // success callback
+                                function (eventId) {
+                                    $window.location = 'grading.html';
+                                    console.log(eventId)
+                                },
+                                // error callback
+                                        function (error) {
+                                            console.log('hello2')
+                                            console.log(error);
+                                            console.log('hello2')
+                                        }
+                                );
+                            };
+                });
 
 

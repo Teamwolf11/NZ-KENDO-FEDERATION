@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MemberApp">
+    <head>
+        <title>New Zealand Kendo Federation</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/dropdownList.js"></script>
+        <script src="js/angular.js"></script>
+        <script src="js/angular-resource.js"></script>
+        <script src="js/ngStorage.js"></script>
+        <script src="js/signIn.js"></script>
+    </head>
+
+    <body ng-controller="MemberController as membCtrl">
+        <section class="top-box">
+            <figure>
+                <!-- divided image size by 4 to set width and height -->
+                <img src="images/kendoLogo.png" alt="Kendo Logo"> 
+            </figure>
+            
+            <div id="logInBox" ng-include="'logInOutButton.html'" ng-init="membCtrl.checkSignIn()"></div>
+        </section>
+
+        <header>
+            <div ng-include="'menu.html'" ></div>
+        </header>
+
+
+        <main>
+            <section class="boxes">
+                <h2>Naginata</h2>
+                <figure>
+                    <!-- divided image size by 4 to set width and height -->
+                    <!-- <img src="../images/item.png" alt="Product Image" width="86" height="125"> -->
+                </figure>
+                <p>During the Tokugawa period, the naginata became primarily studied by women as a “hidden art” for self-defence. As such, it survives today as a budo discipline mainly practiced by women.</p>
+                <p>The naginata used in the modern sporting version consists of a bamboo blade taped onto an oak shaft, and measures 210~225cm in length. Practitioners wear similar armour to kendo with a protective mask (men), body protector (do), gauntlets (kote), and the addition of shin-guards (sune-ate). Competitors try to strike each other on these target areas, or thrust to the throat (tsuki). The target must be struck with precision, and with power born from the coalescence of body, mind, and naginata.</p>
+                <p>Being a long weapon, the naginata is held in a side-on stance and is manipulated on both sides of the body. Strikes are made with furiage (swinging the weapon overhead); mochikae (changing grip and sides that the naginata is held on); furikaeshi (twirling the naginata overhead); kurikomi and kuridashi (pulling the naginata or pushing it out to adjust the distance). Apart from full-contact sparring, there is another competitive category in naginata called “engi-kyogi” in which pairs are judged on their performance of sequences of basic attack and counter techniques (shikake-oji), or by performing All Japan Naginata Federation Kata. Nowadays, practitioners mostly train in sporting version that was developed in the postwar period, although some simultaneously study a classical style as well. Currently, Naginata is reputedly practiced by over 40,000 in Japan, mostly women.</p>
+            
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/62XsKcyUiag" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </section>
+        </main>
+
+        <footer class="boxes">
+            <p>Copyright © 2021 New Zealand Kendo Federation. All Rights Reserved.</p>
+        </footer>
+
+    </body>
+
+</html>

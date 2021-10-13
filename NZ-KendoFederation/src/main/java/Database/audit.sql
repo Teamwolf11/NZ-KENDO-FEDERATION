@@ -28,13 +28,14 @@ CREATE TABLE IF NOT EXISTS audit.member_audit
 (
     operation char(1) NOT NULL,
     stamp timestamp NOT NULL,
-    member_id SERIAL NOT NULL,
-    nzkf_membership_id character varying NOT NULL,
-    app_role_id integer NOT NULL,
+ 	member_id SERIAL NOT NULL,
+    nzkf_membership_id SERIAL NOT NULL,
+    nzkf_membership_renew_date character varying DEFAULT TO_CHAR(NOW() + interval '1 year','DD-MM-YYYY'),
+    app_role_id integer DEFAULT 3,
     password character varying NOT NULL,
     email character varying,
-    date_of_birth timestamp without time zone,
-    join_date timestamp without time zone,
+    date_of_birth character varying,
+    join_date character varying,
     first_name character varying NOT NULL,
     last_name character varying NOT NULL,
     middle_name character varying,
@@ -70,24 +71,25 @@ CREATE TABLE IF NOT EXISTS audit.club_audit
 	operation char(1) NOT NULL,
 	stamp timestamp NOT NULL,
     club_id SERIAL NOT NULL,
-	mem_num integer,
+    mem_num integer,
     name character varying NOT NULL,
     location character varying,
-	email character varying,
-	phone character varying,
+    email character varying,
+    phone character varying,
+    description character varying,
     PRIMARY KEY (club_id, stamp)
 );
 
 CREATE OR REPLACE FUNCTION process_club_audit() RETURNS TRIGGER AS $club_audit$
     BEGIN
         IF (TG_OP = 'DELETE') THEN
-            INSERT INTO club_audit SELECT 'D', now(), OLD.*;
+            INSERT INTO audit.club_audit SELECT 'D', now(), OLD.*;
             RETURN OLD;
         ELSIF (TG_OP = 'UPDATE') THEN
-            INSERT INTO club_audit SELECT 'U', now(), NEW.*;
+            INSERT INTO audit.club_audit SELECT 'U', now(), NEW.*;
             RETURN NEW;
         ELSIF (TG_OP = 'INSERT') THEN
-            INSERT INTO club_audit SELECT 'I', now(), NEW.*;
+            INSERT INTO audit.club_audit SELECT 'I', now(), NEW.*;
             RETURN NEW;
         END IF;
         RETURN NULL; -- result is ignored since this is an AFTER trigger
@@ -104,20 +106,20 @@ CREATE TABLE IF NOT EXISTS audit.club_role_audit
 	stamp timestamp NOT NULL,
     member_id integer NOT NULL,
     club_id integer NOT NULL,
-    name character varying NOT NULL,
+    role_name character varying NOT NULL, 
     PRIMARY KEY (member_id, club_id, stamp)
 );
 
 CREATE OR REPLACE FUNCTION process_club_role_audit() RETURNS TRIGGER AS $club_role_audit$
     BEGIN
         IF (TG_OP = 'DELETE') THEN
-            INSERT INTO club_role_audit SELECT 'D', now(), OLD.*;
+            INSERT INTO audit.club_role_audit SELECT 'D', now(), OLD.*;
             RETURN OLD;
         ELSIF (TG_OP = 'UPDATE') THEN
-            INSERT INTO club_role_audit SELECT 'U', now(), NEW.*;
+            INSERT INTO audit.club_role_audit SELECT 'U', now(), NEW.*;
             RETURN NEW;
         ELSIF (TG_OP = 'INSERT') THEN
-            INSERT INTO club_role_audit SELECT 'I', now(), NEW.*;
+            INSERT INTO audit.club_role_audit SELECT 'I', now(), NEW.*;
             RETURN NEW;
         END IF;
         RETURN NULL; -- result is ignored since this is an AFTER trigger
@@ -132,12 +134,14 @@ CREATE TABLE IF NOT EXISTS audit.event_audit
 (
     operation char(1) NOT NULL,
 	stamp timestamp NOT NULL,
-	event_id SERIAL NOT NULL UNIQUE,
+	event_id SERIAL NOT NULL,
     name character varying NOT NULL,
-	start_date timestamp without time zone,
     club_id integer NOT NULL,
     venue character varying,
-	status character NOT NULL,
+    status character varying NOT NULL DEFAULT 'on going',
+    description character varying,
+    start_date_time character varying NOT NULL,
+    end_date_time character varying,
     grading_id integer NOT NULL, --highest grade available.
     PRIMARY KEY (event_id,stamp)
 );
@@ -145,13 +149,13 @@ CREATE TABLE IF NOT EXISTS audit.event_audit
 CREATE OR REPLACE FUNCTION process_event_audit() RETURNS TRIGGER AS $event_audit$
     BEGIN
         IF (TG_OP = 'DELETE') THEN
-            INSERT INTO event_audit SELECT 'D', now(), OLD.*;
+            INSERT INTO audit.event_audit SELECT 'D', now(), OLD.*;
             RETURN OLD;
         ELSIF (TG_OP = 'UPDATE') THEN
-            INSERT INTO event_audit SELECT 'U', now(), NEW.*;
+            INSERT INTO audit.event_audit SELECT 'U', now(), NEW.*;
             RETURN NEW;
         ELSIF (TG_OP = 'INSERT') THEN
-            INSERT INTO event_audit SELECT 'I', now(), NEW.*;
+            INSERT INTO audit.event_audit SELECT 'I', now(), NEW.*;
             RETURN NEW;
         END IF;
         RETURN NULL; -- result is ignored since this is an AFTER trigger
@@ -174,13 +178,13 @@ CREATE TABLE IF NOT EXISTS audit.event_line_audit
 CREATE OR REPLACE FUNCTION process_event_line_audit() RETURNS TRIGGER AS $event_line_audit$
     BEGIN
         IF (TG_OP = 'DELETE') THEN
-            INSERT INTO event_line_audit SELECT 'D', now(), OLD.*;
+            INSERT INTO audit.event_line_audit SELECT 'D', now(), OLD.*;
             RETURN OLD;
         ELSIF (TG_OP = 'UPDATE') THEN
-            INSERT INTO event_line_audit SELECT 'U', now(), NEW.*;
+            INSERT INTO audit.event_line_audit SELECT 'U', now(), NEW.*;
             RETURN NEW;
         ELSIF (TG_OP = 'INSERT') THEN
-            INSERT INTO event_line_audit SELECT 'I', now(), NEW.*;
+            INSERT INTO audit.event_line_audit SELECT 'I', now(), NEW.*;
             RETURN NEW;
         END IF;
         RETURN NULL; -- result is ignored since this is an AFTER trigger
@@ -204,13 +208,13 @@ CREATE TABLE IF NOT EXISTS audit.martial_arts_audit
 CREATE OR REPLACE FUNCTION process_martial_arts_audit() RETURNS TRIGGER AS $martial_arts_audit$
     BEGIN
         IF (TG_OP = 'DELETE') THEN
-            INSERT INTO martial_arts_audit SELECT 'D', now(), OLD.*;
+            INSERT INTO audit.martial_arts_audit SELECT 'D', now(), OLD.*;
             RETURN OLD;
         ELSIF (TG_OP = 'UPDATE') THEN
-            INSERT INTO martial_arts_audit SELECT 'U', now(), NEW.*;
+            INSERT INTO audit.martial_arts_audit SELECT 'U', now(), NEW.*;
             RETURN NEW;
         ELSIF (TG_OP = 'INSERT') THEN
-            INSERT INTO martial_arts_audit SELECT 'I', now(), NEW.*;
+            INSERT INTO audit.martial_arts_audit SELECT 'I', now(), NEW.*;
             RETURN NEW;
         END IF;
         RETURN NULL; -- result is ignored since this is an AFTER trigger
@@ -228,20 +232,22 @@ CREATE TABLE IF NOT EXISTS audit.member_grading_audit
 	club_id integer NOT NULL,
     member_id integer NOT NULL,
     grading_id integer NOT NULL,
-	date_received timestamp without time zone NOT NULL,
+    date_received character varying NOT NULL,  --update date
+    date_next_grade_available character varying,
+    event_id character varying,
     PRIMARY KEY (member_id, club_id, grading_id,stamp)
 );
 
 CREATE OR REPLACE FUNCTION process_member_grading_audit() RETURNS TRIGGER AS $member_grading_audit$
     BEGIN
         IF (TG_OP = 'DELETE') THEN
-            INSERT INTO member_grading_audit SELECT 'D', now(), OLD.*;
+            INSERT INTO audit.member_grading_audit SELECT 'D', now(), OLD.*;
             RETURN OLD;
         ELSIF (TG_OP = 'UPDATE') THEN
-            INSERT INTO member_grading_audit SELECT 'U', now(), NEW.*;
+            INSERT INTO audit.member_grading_audit SELECT 'U', now(), NEW.*;
             RETURN NEW;
         ELSIF (TG_OP = 'INSERT') THEN
-            INSERT INTO member_grading_audit SELECT 'I', now(), NEW.*;
+            INSERT INTO audit.member_grading_audit SELECT 'I', now(), NEW.*;
             RETURN NEW;
         END IF;
         RETURN NULL; -- result is ignored since this is an AFTER trigger
@@ -264,13 +270,13 @@ CREATE TABLE IF NOT EXISTS audit.app_role_audit
 CREATE OR REPLACE FUNCTION process_app_role_audit() RETURNS TRIGGER AS $app_role_audit$
     BEGIN
         IF (TG_OP = 'DELETE') THEN
-            INSERT INTO app_role_audit SELECT 'D', now(), OLD.*;
+            INSERT INTO audit.app_role_audit SELECT 'D', now(), OLD.*;
             RETURN OLD;
         ELSIF (TG_OP = 'UPDATE') THEN
-            INSERT INTO app_role_audit SELECT 'U', now(), NEW.*;
+            INSERT INTO audit.app_role_audit SELECT 'U', now(), NEW.*;
             RETURN NEW;
         ELSIF (TG_OP = 'INSERT') THEN
-            INSERT INTO app_role_audit SELECT 'I', now(), NEW.*;
+            INSERT INTO audit.app_role_audit SELECT 'I', now(), NEW.*;
             RETURN NEW;
         END IF;
         RETURN NULL; -- result is ignored since this is an AFTER trigger
@@ -289,19 +295,20 @@ CREATE TABLE IF NOT EXISTS audit.grading_audit
 	martial_art_id integer NOT NULL,
 	time_in_grade INTERVAL,
 	name character varying NOT NULL,
+	grade_level int NOT NULL,
 	primary key (grading_id,stamp)
 );
 
 CREATE OR REPLACE FUNCTION process_grading_audit() RETURNS TRIGGER AS $grading_audit$
     BEGIN
         IF (TG_OP = 'DELETE') THEN
-            INSERT INTO grading_audit SELECT 'D', now(), OLD.*;
+            INSERT INTO audit.grading_audit SELECT 'D', now(), OLD.*;
             RETURN OLD;
         ELSIF (TG_OP = 'UPDATE') THEN
-            INSERT INTO grading_audit SELECT 'U', now(), NEW.*;
+            INSERT INTO audit.grading_audit SELECT 'U', now(), NEW.*;
             RETURN NEW;
         ELSIF (TG_OP = 'INSERT') THEN
-            INSERT INTO grading_audit SELECT 'I', now(), NEW.*;
+            INSERT INTO audit.grading_audit SELECT 'I', now(), NEW.*;
             RETURN NEW;
         END IF;
         RETURN NULL; -- result is ignored since this is an AFTER trigger

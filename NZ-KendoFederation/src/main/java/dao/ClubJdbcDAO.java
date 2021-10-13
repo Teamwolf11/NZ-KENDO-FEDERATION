@@ -2,13 +2,16 @@ package dao;
 
 import Database.DatabaseConnector;
 import domain.Club;
+import domain.Member;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
 
 /**
  *
@@ -146,6 +149,95 @@ public class ClubJdbcDAO implements ClubDAO {
         } catch (SQLException ex) {
             Logger.getLogger(ClubJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+        finally{
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
+    }
+    
+
+    public List<Member> getClubMembers(String clubID) {
+        List<Member> mList = new ArrayList<>();
+        try {
+            DatabaseConnector db = new DatabaseConnector();
+            Connection con = db.connect();
+
+                              
+             String sql = "SELECT member.* FROM public.member JOIN club_role ON member.member_id = club_role.member_id AND club_role.club_id = ?";
+             
+            try (PreparedStatement stmt = con.prepareStatement(sql);) {
+                stmt.setInt(1, Integer.parseInt(clubID));
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    //Member fields
+                    String memberId = rs.getString("member_id");
+                    String nzkfId = rs.getString("nzkf_membership_id");
+                    String joinDate = rs.getString("join_date");
+                    String nzkfIdRenewDate = rs.getString("nzkf_membership_renew_date");
+                    String fName = rs.getString("first_name");
+                    String lName = rs.getString("last_name");
+                    String mName = rs.getString("middle_name");
+                    char sex = rs.getString("sex").charAt(0);
+                    String ethnicity = rs.getString("ethnicity");
+                    String email = rs.getString("email");
+                    String dob = rs.getString("date_of_birth");
+                    String password = rs.getString("password");
+                    String phoneNum = rs.getString("phone_num");
+                    
+                    mList.add(new Member(memberId, nzkfId, nzkfIdRenewDate, null, email, password, dob, joinDate, fName, lName, mName, sex, ethnicity, phoneNum));
+                }
+
+                    return mList;
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClubJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+         finally{
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
+    }
+
+    public void deleteClubRole(Club club, Member member) {
+        try {
+            DatabaseConnector db = new DatabaseConnector();
+            con = db.connect();
+            
+            String sql = "DELETE FROM public.club_role WHERE club_id = ? AND member_id = ?";
+            
+            try (PreparedStatement stmt = con.prepareStatement(sql);) {
+                stmt.setInt(1, Integer.parseInt(club.getClubId()));
+                stmt.setInt(2, Integer.parseInt(member.getMemberId()));
+
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClubJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+         finally{
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
+    }
+
+   
+    public void saveClubRole(String clubId, Member member, String role) {
+        try {
+            DatabaseConnector db = new DatabaseConnector();
+            con = db.connect();
+
+            String sql = "INSERT INTO public.club_role (club_id, member_id, role_name) VALUES (?,?,?);";     
+            try (PreparedStatement insertClubstmt = con.prepareStatement(sql);) {
+                insertClubstmt.setInt(1, Integer.parseInt(clubId));
+                insertClubstmt.setInt(2, Integer.parseInt(member.getMemberId()));
+                insertClubstmt.setString(3, role);
+
+                int row = insertClubstmt.executeUpdate();
+                
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClubJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally{
             try { con.close(); } catch (Exception e) { /* Ignored */ }

@@ -11,6 +11,7 @@ import domain.Event;
 import domain.Grade;
 import domain.Member;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,6 +34,8 @@ public class GradeDAOTest {
     private Club club1, club2;
     private Event event1, event2;
     String str = "08/09/2002";
+    private String headGrad;
+    private List<String> secondGrad;
 
     @BeforeEach
     public void setUp() throws SQLException, ClassNotFoundException {
@@ -41,6 +44,11 @@ public class GradeDAOTest {
         gradeJdbc = new GradeJdbcDAO();
         clubJdbc = new ClubJdbcDAO();
         eventJdbc = new EventJdbcDAO();
+        
+        headGrad = "Head";
+        secondGrad = new ArrayList<>();
+        secondGrad.add("Person 1");
+        secondGrad.add("Person 2");
 
         AppRoles role = new AppRoles("3", "General Member");
 
@@ -124,6 +132,8 @@ public class GradeDAOTest {
         event1.setStartDateTime(str);
         event1.setEndDateTime(str);
         event1.setHighestGradeAvailable(grade1);
+        event1.setHeadOfGradingPanel(headGrad);
+        event1.setOtherMembersOfGradingPanel(secondGrad);
         
         member1 = gradeJdbc.saveGrade(grade1, member1);
     }
@@ -205,6 +215,10 @@ public class GradeDAOTest {
         gradeJdbc.deleteGrade(grade2, member1.getMemberId());
         gradeJdbc.deleteGrade(grade3, member2.getMemberId());
         memberJdbc.deleteMember(member2);
+        eventJdbc.deleteGraderEvent(event1, headGrad);
+        for (int i = 0; i < event1.getOtherMembersOfGradingPanel().size(); i++) {
+            eventJdbc.deleteGraderEvent(event1, event1.getOtherMembersOfGradingPanel().get(i));
+        }
         eventJdbc.deleteEvent(event1);
     }
     

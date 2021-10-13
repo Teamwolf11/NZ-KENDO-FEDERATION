@@ -5,6 +5,7 @@ DROP TRIGGER IF EXISTS mem_grade_next_date ON public.member_grading;
 DROP TRIGGER IF EXISTS mem_grade_current_grade ON public.member_grading;
  
 DROP VIEW IF EXISTS vw_member_grading;
+DROP TABLE IF EXISTS public.grading_panel;
 DROP TABLE IF EXISTS public.club_role;
 DROP TABLE IF EXISTS public.event_line;
 DROP TABLE IF EXISTS public.member_grading;
@@ -15,8 +16,28 @@ DROP TABLE IF EXISTS public.member_martial_arts;
 DROP TABLE IF EXISTS public.martial_arts;
 DROP TABLE IF EXISTS public.member;
 DROP TABLE IF EXISTS public.user;
+DROP TABLE IF EXISTS public.role_path;
 DROP TABLE IF EXISTS public.app_role;
- 
+
+CREATE TABLE IF NOT EXISTS public.grading_panel
+(
+	gp_row_num SERIAL NOT NULL,
+	event_id integer NOT NULL,
+	grading_member_name character varying NOT NULL,
+	grading_role character varying NOT NULL,
+	PRIMARY KEY (event_id, grading_member_name, grading_role)
+);
+
+CREATE TABLE IF NOT EXISTS public.role_path
+(
+	row_id SERIAL NOT NULL,
+	app_role_id integer NOT NULL,
+	path character varying NOT NULL,
+	method character varying NOT NULL,
+	PRIMARY KEY (app_role_id,path)
+);
+
+
 CREATE TABLE IF NOT EXISTS public.club
 (
     club_id SERIAL NOT NULL,
@@ -158,6 +179,16 @@ ALTER TABLE public.grading
     REFERENCES public.martial_arts (martial_art_id)
     NOT VALID;
 	
+ALTER TABLE public.role_path
+   	ADD FOREIGN KEY (app_role_id)
+    REFERENCES public.app_role (app_role_id)
+    NOT VALID;
+	
+ALTER TABLE public.grading_panel
+	ADD FOREIGN KEY (event_id)
+	REFERENCES public.event (event_id)
+	NOT VALID;
+	
 ALTER TABLE public.member ALTER COLUMN join_date SET DEFAULT TO_CHAR(now(), 'DD/MM/YYYY');
 		
 CREATE OR REPLACE FUNCTION process_member_grading_next_date() RETURNS TRIGGER AS $mem_grade_next_date$
@@ -260,10 +291,10 @@ REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA audit FROM javaapp;
 REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA audit FROM javaapp;
 REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA audit FROM javaapp;
 REVOKE ALL PRIVILEGES ON SCHEMA audit FROM javaapp;
---REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA email FROM javaapp;
---REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA email FROM javaapp;
---REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA email FROM javaapp;
---REVOKE ALL PRIVILEGES ON SCHEMA email FROM javaapp;
+REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA email FROM javaapp;
+REVOKE ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA email FROM javaapp;
+REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA email FROM javaapp;
+REVOKE ALL PRIVILEGES ON SCHEMA email FROM javaapp;
 DROP USER javaapp;
  
  

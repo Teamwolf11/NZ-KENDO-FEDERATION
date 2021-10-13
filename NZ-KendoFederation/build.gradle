@@ -14,9 +14,11 @@ dependencies {
     //jdbc 'org.postgresql:postgresql:42.2.0'
     // https://mvnrepository.com/artifact/org.postgresql/postgresql
     implementation 'org.postgresql:postgresql:42.2.23'
+    implementation 'org.json:json:20171018'
     def joobyVer = '1.6.8'
     implementation group: 'org.jooby', name: 'jooby-netty', version: joobyVer
     implementation group: 'org.jooby', name: 'jooby-gson', version: joobyVer
+    implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
     def junitVer = '5.6.2'
    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVer
    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVer
