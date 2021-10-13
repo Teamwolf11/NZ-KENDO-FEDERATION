@@ -112,15 +112,15 @@ public class EmailJdbcDAO {
             Email email = new SimpleEmail();
             email.setHostName("smtp.gmail.com");
             email.setSmtpPort(465);
-            email.setAuthenticator(new DefaultAuthenticator("info301.nzkendofed@gamil.com", "info301kendo"));
+            email.setAuthenticator(new DefaultAuthenticator("info301.nzkendofed@gmail.com", "info301kendo"));
             email.setSSLOnConnect(true);
 
             try {
-                email.setFrom("benjaminm.12184@gmail.com");
+                email.setFrom("info301.nzkendofed@gmail.com");
                 email.setSubject("New Member #" + member.getMemberId());
-                email.setMsg("New Member sign up details for " + member.getfName() + 
-                        " " + member.getlName() + "." + " Your username is " + 
-                         member.getEmail());
+                email.setMsg("Hello " + member.getfName() + 
+                        " " + member.getlName() + "," + " thanks for signing up for the New Zealand Kendo Federation! Your username is " + 
+                         member.getEmail() + ". Sign in now to view your account details or to find more information."); 
 
                 email.addTo(newEmail);
                 email.send();
@@ -139,14 +139,14 @@ public class EmailJdbcDAO {
                Email email = new SimpleEmail();
                email.setHostName("smtp.gmail.com");
                email.setSmtpPort(465);
-               email.setAuthenticator(new DefaultAuthenticator("info301.nzkendofed@gamil.com", "info301kendo"));
+               email.setAuthenticator(new DefaultAuthenticator("info301.nzkendofed@gmail.com", "info301kendo"));
                email.setSSLOnConnect(true);
                List<Grade> grades;
 
                try {
                     for (Member member : mList){
                         grades = member.getGrades();
-                            email.setFrom("benjaminm.12184@gmail.com");
+                            email.setFrom("info301.nzkendofed@gmail.com");
                        email.setSubject("Upcoming Grading Event" + event.getStartDateTime());
                        email.setMsg("New grading event: " + event.getName()+ 
                                " is being held on " + event.getStartDateTime()+ "." + 
@@ -173,7 +173,7 @@ Connection con = db.connect();
             Email email = new SimpleEmail();
             email.setHostName("smtp.gmail.com");
             email.setSmtpPort(465);
-            email.setAuthenticator(new DefaultAuthenticator("info301.nzkendofed@gamil.com", "info301kendo"));
+            email.setAuthenticator(new DefaultAuthenticator("info301.nzkendofed@gmail.com", "info301kendo"));
             email.setSSLOnConnect(true);
             try {
                 for (Member member : mList) {
@@ -187,7 +187,7 @@ Connection con = db.connect();
                         Logger.getLogger(EmailJdbcDAO.class.getName()).log(Level.SEVERE, null, ex);
                     }
  
-                    email.setFrom("benjaminm.12184@gmail.com");
+                    email.setFrom("info301.nzkendofed@gmail.com");
                     email.setSubject("Membership expiry for " + member.getfName() + " " + member.getlName());
                     email.setMsg("Your membership for NZ Kendo federation is set to expire on " + member.getNzkfRenewDate());
                     email.addTo(newEmail);
