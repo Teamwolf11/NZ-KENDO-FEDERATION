@@ -112,7 +112,7 @@ public class EmailJdbcDAO {
             Email email = new SimpleEmail();
             email.setHostName("smtp.gmail.com");
             email.setSmtpPort(465);
-            email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqac"));
+            email.setAuthenticator(new DefaultAuthenticator("info301.nzkendofed@gamil.com", "info301kendo"));
             email.setSSLOnConnect(true);
 
             try {
@@ -139,7 +139,7 @@ public class EmailJdbcDAO {
                Email email = new SimpleEmail();
                email.setHostName("smtp.gmail.com");
                email.setSmtpPort(465);
-               email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqac"));
+               email.setAuthenticator(new DefaultAuthenticator("info301.nzkendofed@gamil.com", "info301kendo"));
                email.setSSLOnConnect(true);
                List<Grade> grades;
 
@@ -173,7 +173,7 @@ Connection con = db.connect();
             Email email = new SimpleEmail();
             email.setHostName("smtp.gmail.com");
             email.setSmtpPort(465);
-            email.setAuthenticator(new DefaultAuthenticator("benjaminm.12184", "Y3y3dqac"));
+            email.setAuthenticator(new DefaultAuthenticator("info301.nzkendofed@gamil.com", "info301kendo"));
             email.setSSLOnConnect(true);
             try {
                 for (Member member : mList) {
