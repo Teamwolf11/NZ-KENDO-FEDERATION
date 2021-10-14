@@ -74,14 +74,15 @@ public class EventModule extends Jooby {
             grade.setGradeId(parameters.get(8));
             String[] otherMembersArray = parameters.get(4).split("\\s*-\\s*");
             List<String> otherMembers = Arrays.asList(otherMembersArray);
- 
-//            Event event = new Event(parameters.get(0), club, 
-//                    parameters.get(2), grade, parameters.get(3),
-//                    otherMembers, parameters.get(5), parameters.get(7), parameters.get(8), "Available");
-            System.out.println(parameters.get(0) + club
-                    + parameters.get(2) + grade + parameters.get(3)
-                    + otherMembers + parameters.get(5) + parameters.get(6) + parameters.get(7));
-//            eventDao.saveEvent(event);
+
+            
+            Event event = new Event(parameters.get(0), club, 
+                    parameters.get(2), grade, parameters.get(3),
+                    otherMembers, parameters.get(5), parameters.get(7), parameters.get(8), "Available");
+            //System.out.println(parameters.get(0) + club
+            //        + parameters.get(2) + grade + parameters.get(3)
+            //        + otherMembers + parameters.get(5) + parameters.get(6) + parameters.get(7));
+            eventDao.saveEvent(event);
             rsp.status(Status.CREATED);
         });
     }
