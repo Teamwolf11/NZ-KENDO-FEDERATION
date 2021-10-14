@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MemberApp">
+    <head>
+        <title>New Zealand Kendo Federation</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/dropdownList.js"></script>
+        <script src="js/angular.js"></script>
+        <script src="js/angular-resource.js"></script>
+        <script src="js/ngStorage.js"></script>
+        <script src="js/kendoApp.js"></script>
+    </head>
+
+    <body ng-controller="MemberController as membCtrl">
+        <section class="top-box">
+            <figure>
+                <!-- divided image size by 4 to set width and height -->
+                <img src="images/kendoLogo.png" alt="Kendo Logo"> 
+            </figure>
+        </section>
+
+        <header>
+            <div ng-include="'menu.html'" ></div>
+        </header>
+
+
+        <main>
+
+            <div class="grid-container">
+                <section>
+                    <form ng-submit="membCtrl.signIn(email, password)">
+                        <fieldset class="textInputs">
+                            <h2>Sign in</h2>
+                            <p>{{membCtrl.signInMessage}}</p>
+                            <input type="email" ng-model="email" id="email" tabindex="1" required placeholder="Email address">
+                            <input type="password" ng-model="password" id="password" tabindex="2" required placeholder="Password">
+                            <p><a href="">Forgot your password?</a></p>
+                            <input type="submit" name="submit" value="Sign In">
+                        </fieldset>
+                    </form>
+                </section>
+
+                <section>
+                    <form ng-submit="membCtrl.registerMember(member)">
+                        <fieldset class="textInputs">
+                            <h2>Create an account</h2>
+                            <p>{{membCtrl.registerMessage}}</p>
+                            <input type="text" ng-model="member.fName" id="fName" tabindex="3" required pattern="[a-zA-Z '-]+" placeholder="First name">
+                            <input type="text" ng-model="member.lName" id="lName" tabindex="4" required pattern="[a-zA-Z '-]+" placeholder="Last name">
+                            <input type="email" ng-model="member.email" id="email" tabindex="5" required placeholder="Email address">
+                            <input type="tel" ng-model="member.phone" id="phone" tabindex="6" required pattern="[0-9 ()-]+" placeholder="Phone number">
+                            <input type="text" ng-model="member.dob" id="dob" tabindex="7" required placeholder="Birthday" onfocus="(this.type = 'date')">
+
+                            <select id="ethnicity" ng-model="member.ethnicity" tabindex="8" required placeholder="Ethnicity">
+                                <option value="" disabled selected hidden>Ethnicity</option>
+                                <option value="NZ European">NZ European</option>
+                                <option value="NZ Maori">NZ Maori</option>
+                                <option value="Pacific Peoples">Pacific Peoples</option>
+                                <option value="Asian">Asian</option>
+                                <option value="Middle Eastern">Middle Eastern</option>
+                                <option value="African">African</option>
+                                <option value="Latin American">Latin American</option>
+                                <option value="Other">Other</option>
+                            </select>                            
+                            <select id="sex" ng-model="member.sex" tabindex="9" required placeholder="Sex">
+                                <option value="" disabled selected hidden>Sex</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="O">Other</option>
+                            </select>
+                            <input type="password" ng-model="member.password" id="password" tabindex="10" required placeholder="Password">
+                            <label><input type="submit" name="submit" value="Create Account"></label>
+                        </fieldset>
+                    </form>
+                </section>
+            </div>
+        </main>
+    </body>
+
+</html>
